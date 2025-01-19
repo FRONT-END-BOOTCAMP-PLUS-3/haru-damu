@@ -1,0 +1,36 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "import/order": [
+      "error", // 이 규칙을 위반하면 오류로 처리합니다.
+      {
+        "groups": [
+          "builtin", // Node.js 내장 모듈
+          "external", // 외부 모듈
+          "internal", // 내부 모듈 (예: 프로젝트 내의 모듈)
+          "parent", // 상위 모듈
+          "sibling", // 동일한 디렉토리 내의 모듈
+          "index", // 인덱스 파일
+          "object", // 객체 모듈
+          "type" // 타입 모듈 (TypeScript 타입)
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react*", // 'react'로 시작하는 패턴을 가진 import 문을
+            "group": "builtin" // 'builtin' 그룹으로 분류합니다.
+          },
+          {
+            "pattern": "@/*", // '@/'로 시작하는 패턴을 가진 import 문을
+            "group": "internal", // 'internal' 그룹으로 분류합니다.
+            "position": "after" // 'internal' 그룹의 import 문을 'builtin' 그룹 이후에 배치합니다.
+          }
+        ],
+        "newlines-between": "always", // 그룹 간에 줄 바꿈을 강제합니다. (항상)
+        "pathGroupsExcludedImportTypes": ["react*"], // 'react*' 패턴의 import 문을 'pathGroups'에서 제외합니다.
+        "alphabetize": {
+          "order": "asc" // import 문을 오름차순으로 정렬합니다.
+        }
+      }
+    ]
+  }
+}
