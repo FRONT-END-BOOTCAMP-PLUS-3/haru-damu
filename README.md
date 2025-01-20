@@ -6,6 +6,15 @@
 
 어흥냥
 
+## Skills
+
+- React
+- Next.js
+- Justand
+- Dnd-kit
+- Supabase
+- React-query
+
 ## 프로젝트 구조
 
 Clean Architecture 기반으로 블라블라~
