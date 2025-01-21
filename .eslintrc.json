@@ -1,36 +1,103 @@
 {
-  "extends": "next/core-web-vitals",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+
+   "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:security/recommended-legacy",
+    "plugin:prettier/recommended"
+  ],
+
+  "plugins": ["perfectionist", "security"],
+
+  "parser": "@typescript-eslint/parser",
+   "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+
   "rules": {
-    "import/order": [
-      "error", // 이 규칙을 위반하면 오류로 처리합니다.
+     "prettier/prettier": [
+      "error",
       {
-        "groups": [
-          "builtin", // Node.js 내장 모듈
-          "external", // 외부 모듈
-          "internal", // 내부 모듈 (예: 프로젝트 내의 모듈)
-          "parent", // 상위 모듈
-          "sibling", // 동일한 디렉토리 내의 모듈
-          "index", // 인덱스 파일
-          "object", // 객체 모듈
-          "type" // 타입 모듈 (TypeScript 타입)
-        ],
-        "pathGroups": [
-          {
-            "pattern": "react*", // 'react'로 시작하는 패턴을 가진 import 문을
-            "group": "builtin" // 'builtin' 그룹으로 분류합니다.
-          },
-          {
-            "pattern": "@/*", // '@/'로 시작하는 패턴을 가진 import 문을
-            "group": "internal", // 'internal' 그룹으로 분류합니다.
-            "position": "after" // 'internal' 그룹의 import 문을 'builtin' 그룹 이후에 배치합니다.
-          }
-        ],
-        "newlines-between": "always", // 그룹 간에 줄 바꿈을 강제합니다. (항상)
-        "pathGroupsExcludedImportTypes": ["react*"], // 'react*' 패턴의 import 문을 'pathGroups'에서 제외합니다.
-        "alphabetize": {
-          "order": "asc" // import 문을 오름차순으로 정렬합니다.
-        }
+        "singleQuote": false,
+        "parser": "typescript"
       }
-    ]
+    ],
+
+    "no-unused-vars": "off",
+
+    "perfectionist/sort-imports": [
+      "error",
+      {
+        "type": "line-length",
+        "order": "asc",
+        "groups": [
+          "react",
+          "related-react",
+          ["components"],
+          ["shared-components"],
+          ["services"],
+          ["repositories"],
+          ["entities"],
+          ["hooks"],
+          ["shared-hooks"],
+          ["internal"],
+          ["shared"],
+          ["utils"],
+          ["type", "internal-type"],
+          ["parent-type", "sibling-type", "index-type"],
+          ["parent", "sibling", "index"],
+          "side-effect",
+          "style",
+          "object",
+          "unknown"
+        ],
+        "custom-groups": {
+          "value": {
+            "react": ["react"],
+            "related-react": ["react-*"],
+            "hooks": "**/use-*",
+            "components": "**/*.tsx",
+            "services" : "**/services/**",
+            "repositories" : "**/repositories/**",
+            "entities" : "**/entities/**",
+            "shared-components": "**/shared/*.tsx",
+            "shared-hooks": "**/shared/use-*",
+            "utils": "**/utils/**"
+          },
+          "type": {
+            "react": "react"
+          }
+        },
+        "newlines-between": "always"
+      }
+    ],
+
+
+    "import/no-unresolved": "error",
+
+    "import/no-cycle": "error",
+  
+     "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "fixStyle": "separate-type-imports"
+      }
+    ],
+
+    "@typescript-eslint/no-implied-eval": "error"
   }
 }
