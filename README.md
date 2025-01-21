@@ -19,6 +19,7 @@
     - 사용자가 자신의 신체 정보(나이, 성별, 활동 수준 등)를 입력하면 맞춤형 하루 영양 목표를 생성
     - 목표와 현재 식단을 비교해 피드백 제공
 
+
 ### 프로젝트 성취 목표
 
 **React 순기능을 최대한 이용하여 코드 작성**
@@ -46,8 +47,9 @@
 - [dnd-kit](https://dndkit.com/)
 - [Supabase](https://supabase.com/)
 - [React-query](https://tanstack.com/query/latest/docs/framework/react/overview)
+- [Css-modules](https://github.com/css-modules/css-modules)
 
-## 프로젝트 구조
+## 프로젝트 폴더 구조
 
 **Clean 아키텍처 구조에 맞게 적용하기**
 
@@ -59,7 +61,7 @@ HARU-DAMU
  ┃ ┗ settings.json // 프로젝트 공통 vscode 설정, 익스텐션
  ┣ app
  ┃ ┣ (auth)
- ┃ ┣ admin
+ ┃ ┣ store
  ┃ ┣ global-error.tsx
  ┃ ┣ layout.tsx
  ┃ ┣ not-found.tsx
@@ -86,7 +88,7 @@ HARU-DAMU
     - 상품 리스트
         - 카테고리
         - 검색
-- 판매업체 관련 (admin)
+- 판매업체 관련 (store)
     - 판매자가 판매업체 정보 등록
     - 판매자가 판매업체 정보 수정
     - 판매자가 판매업체 삭제
@@ -141,116 +143,92 @@ HARU-DAMU
 
 ## Git Convention
 
+### 형식
+```
+Prefix : Commit message (한글) #이슈번호
+```
+
+|||
+|----|-----|
+|**feat**| 새로운 기능 추가 |
+|**fix** | 버그 수정 |
+|**docs** | 문서 수정 |
+|**style** | 코드 formatting, 세미콜론 누락, 코드 자체의 변경이 없는 경우 |
+|**refactor**| 코드 리팩토링 |
+|**test**   | 테스트 코드, 리팩토링 테스트 코드 추가|
+|**chore**   | 패키지 매니저 수정, 그 외 기타 수정 ex) .gitignore|
+|**design**  | CSS 등 사용자 UI 디자인 변경 |
+|**comment**  | 필요한 주석 추가 및 변경 |
+|**rename** | 파일 또는 폴더 명을 수정하거나 옮기는 작업만인 경우 |
+|**remove**  | 파일을 삭제하는 작업만 수행한 경우 |
+|**!BREAKING CHANGE** | 커다란 API 변경의 경우 |
+|**!HOTFIX**  | 급하게 치명적인 버그를 고쳐야 하는 경우 |
+
+### 규칙
+1. 깃허브 프로젝트를 칸반을 통해 태스크 관리 -> 이슈 번호 획득
+2. PR을 통해 dev branch로 2인 이상 리뷰 후 머지
+3. PR 시 작업 내용과 사진 업로드
+    ```
+        ## 이슈 제목 + #이슈번호
+
+        ### 작업 내용
+        ----
+        - 홈페이지 뷰를 구성하였습니다.
+        - 뷰를 구성하는 과정에서 컴포넌트가 깨지는 문제가 있어 ~~을 ~~하였습니다.
+        - ㅇㅇㅇ라이브러리를 사용하였습니다. 해당 라이브러리는 ~~~ 이유로 선택하였습니다.
+        
+        ### 변경 사항
+        ----
+        - `변경 전 컴포넌트명` -> `변경 후 컴포넌트명` 으로 변경
+        - 파일 이동 관련
+
+        ### 도움이 필요한 사항
+        ----
+        - ㅇㅇ에 대한 문제가 있습니다.
+        - ㅇㅇ에 대해 의사결정이 필요합니다.
+
+        ### 작업 사진 (뷰 변경이나 기능 시)
+        ---
+        -[이미지명](이미지 주소) //이미지 드래그 드랍 시 자동으로 생성 됨
+    ```
+4. 작은 이슈라도 모두 기록하는 습관 가지기 (추후 좋음...)
+
 ## Code Convention
+
+### 폴더 및 변수명
+- 폴더명 : Snake-case
+- 변수명 : Camel-case
+- 컴포넌트명 : Pascal-case
+
+### 타입 별칭
+- props 값 interface -> 별칭 : ComponentProps
+- 외의 값들은 type으로 설정 -> 별칭 : TType
+
+### style 클래스명은 [BEM (Block, Element, Modifier)](https://velog.io/@jspp120/CSS-%EB%84%A4%EC%9D%B4%EB%B0%8D-%EA%B7%9C%EC%B9%99-BEM) 방식 사용
+
+```javascript
+container__loginBox__button
+```
+
+**BEM의 장점**
+- 목적과 기능을 명확히 전달한다.
+- 요소의 구조를 효율적으로 전달한다.
+- css 명시도를 항상 낮은 수준으로 유지하기 때문에 구체성으로 인한 코드의 길어짐을 방지할 수 있다.
+
+### 함수 선언
+
+- 컴포넌트 선언 : functional 선언 / `export default function Component`
+- 이벤트 핸들러 : event명+Handler / `onclickHandler`
+- 함수 선언 위치 : 상태 > 핸들러 > useEffect 순서
 
 ## 와이어프레임
 
-## ERP (추후 수정)
+## ERD
 
-```javascript
-interface admin {
-    id : number; // PK
-    name : string;
-    registration_number : number;
-    phone : string;
-    address : string;
-    created_at : timestamp;
-    updated_at : timestamp;
-}
+![ERD](https://github.com/user-attachments/assets/f76978cb-a1f3-4736-9646-f721747eb8dd)
 
-interface user {
-    id : number;
-    email? : string; // 회원 탈퇴 시 null
-    phone? : string; // 회원 탈퇴 시 null
-    address? : string; // 회원 탈퇴 시 null
-    created_at : timestamp;
-    updated_at : timestamp;
-}
+## 기술적 도전
 
-interface health {
-    user_id : number;   // PK이자 FK. Unique값
-    name : string;
-    stature? : number;
-    weight? : number;
-    gender? : "Male" | "FeMale" ;
-    age? : "0-9" | "10-19" | "20-29" | "30-39" | "40-49" | "50-59" | "60" ;
-    momentum? : number; // 운동량
-    calorie? : number;
-    carbohydrate? : decimal(5,2); // 탄수화물
-    protein? : decimal(5,2); // 단백질
-    province? : decimal(5,2); // 지방
-    sodium? : decimal(5,2); // 나트륨
-    sugar? : decimal(5,2); // 당
-    created_at : timestamp;
-    updated_at : timestamp;
-}
+## 트러블 슈팅
 
-type nutrition_fact { // 영양성분, 영양분석
-        ingredient_name : string;
-        volume : number; // gram 기준
-        calorie : decimal(5,2);
-    } 
-
-interface item {
-    id : number;
-    admin_id : number;
-    name : string;
-    category : "";
-    price : number;
-    is_sold_out : boolean; // 품절여부
-    storage_method : string; // 보관방법
-    nutrition_facts : nutrition_fact[]
-}
-
-interface pick {
-    user_id : number; // FK
-    item_id : number; // FK
-    created_at : timestamp;
-}
-
-interface cart {
-    user_id : number; // FK
-    item_id : number; // FK
-    quantity : number;
-    created_at : timestamp;
-    updated_at : timestamp;
-}
-
-type order_item {
-    item_id : number;
-    quantity : number;
-    price : number;
-}
-
-interface order {
-    id : number; // PK
-    user_id : number; //FK
-    payments_id : number; //FK - 결제 완료 시 등록
-    address : string;
-    status : "결제 전" | "결제 완료" | "배송준비중" | "배송중" | "배송완료" ;
-    items : order_item[]
-}
-
-interface payments {  // toss페이 기준으로 작성 (https://docs.tosspayments.com/reference#%EA%B2%B0%EC%A0%9C)
-    id : number; // PK
-    order_id : number; // FK
-    type : "NORMAL" // 일반 결제만 가능
-    method : string; // 결제 방식 (카드, 가상계좌 등등)
-    totalAmount : number; // 총 금액
-    balanceAmount : number; // 취소할 수 있는 금액(잔고). 이 값은 결제 취소나 부분 취소가 되고 나서 남은 값
-    status : string; // 결제 처리 상태 READY, IN_PROGRESS, WAITING_FOR_DEPOSIT, DONE, CANCELED, PARTIAL_CANCELED, ABORTED, EXPIRED
-    requestedAt : string; // 결제가 일어난 날짜와 시간 정보
-    approvedAt : string; // 결제 승인이 일어난 날짜와 시간 정보
-    lastTransactionKey : string; // 마지막 거래의 키값 (결제 취소등을 위해 필요함)
-    // 이 외에 정보들이 많음..
-}
-
-interface review {
-    id : number; // PK
-    user_id : number; // FK
-    content : string;
-    scope : 0 | 1 | 2 | 3 | 4 | 5;
-    created_at : timestamp;
-    updated_at : timestamp;
-}
-```
+## 아키텍쳐
