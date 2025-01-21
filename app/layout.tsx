@@ -1,6 +1,9 @@
+import type { ReactNode } from "react";
+
 import type { Metadata } from "next";
+
 import "@/styles/globals.css";
-import { ReactNode } from "react";
+
 import Head from "next/head";
 
 export const metadata: Metadata = {
