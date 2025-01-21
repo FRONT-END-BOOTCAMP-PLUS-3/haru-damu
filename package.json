@@ -9,18 +9,38 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.47.13",
     "next": "15.1.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "@eslint/eslintrc": "^3",
+    "@hookform/resolvers": "^3.3.4",
+    "@microsoft/eslint-plugin-sdl": "microsoft/eslint-plugin-sdl",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8",
     "eslint-config-next": "15.1.5",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.25.0",
+    "eslint-plugin-perfectionist": "^2.5.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-perf": "^3.3.2",
+    "eslint-plugin-security": "^2.1.0",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.1.1",
+    "react-hook-form": "^7.51.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
