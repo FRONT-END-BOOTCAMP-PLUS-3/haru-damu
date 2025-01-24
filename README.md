@@ -63,8 +63,8 @@ HARU-DAMU
  ┃ ┣ (auth)
  ┃ ┣ store
  ┃ ┣ Folder
- ┃ ┣ components // 페이지에서만 사용하는 컴포넌트
- ┃ ┗ page.tsx
+ ┃ ┃ ┣ components // 페이지에서만 사용하는 컴포넌트
+ ┃ ┃ ┗ page.tsx
  ┃ ┣ global-error.tsx
  ┃ ┣ layout.tsx
  ┃ ┣ not-found.tsx
@@ -72,15 +72,17 @@ HARU-DAMU
  ┣ application
  ┃ ┗ usecases   // 비지니스 로직을 관리
  ┣ components  // 공통 컴포넌트
- ┣ constants   // 공통상수
+ ┃ ┗ common  // 최소단위 UI 컴포넌트
+ ┣ constants  // 공통상수
  ┣ domain
  ┃ ┣ entities   // database의 entity type 정의
  ┃ ┗ repositories // repository에서 사용하는 type 정의
+ ┣ hooks // react custom hook
  ┣ infrastructure
  ┃ ┗ repositories   // database와 데이터 통신
  ┣ public
- ┣ hooks
- ┣ stores
+ ┣ stores // 전역 상태 create-slice 파일
  ┣ styles
+ ┣ types 
  ┣ utils
 ```
