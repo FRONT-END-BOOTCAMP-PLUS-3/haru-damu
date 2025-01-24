@@ -47,7 +47,7 @@ export const CATEGORIES: TCategory[] = [
     order: 6,
     eng: "SideDish",
     kor: "반찬",
-    img: "/category/side_dish.png",
+    img: "/category/sidedish.png",
   },
   {
     key: "snack",
