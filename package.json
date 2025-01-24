@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.47.13",
+    "@tanstack/react-query-devtools": "^5.64.2",
+    "chart.js": "^4.4.7",
+    "lucide-react": "^0.474.0",
     "next": "15.1.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -21,7 +25,6 @@
     "@babel/preset-env": "^7.26.0",
     "@eslint/eslintrc": "^3",
     "@hookform/resolvers": "^3.3.4",
-    "@microsoft/eslint-plugin-sdl": "microsoft/eslint-plugin-sdl",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
