@@ -1,0 +1,60 @@
+.button {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: #fff;
+  cursor: pointer;
+
+  color: #333;
+  text-align: center;
+  font-family: "Noto Sans KR";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.button__green {
+  background-color: green;
+  color: white;
+}
+
+.button__green:hover {
+  background-color: darkgreen; /* hover 시 배경색을 더 어두운 초록색으로 변경 */
+  color: lightgreen; /* hover 시 글자색을 밝은 초록색으로 변경 */
+}
+
+.button__blackGreen {
+  background-color: #284521;
+  color: white;
+}
+
+.button__blackGreen:hover {
+  background-color: #1e2c1d; /* hover 시 배경색을 더 어두운 색으로 변경 */
+  color: #b0c9b1; /* hover 시 글자색을 연한 초록색으로 변경 */
+}
+
+.button__white {
+  background-color: white;
+  color: black;
+  border: 1px solid #999;
+}
+
+.button__white:hover {
+  background-color: #f0f0f0; /* hover 시 배경색을 밝은 회색으로 변경 */
+  color: #333; /* hover 시 글자색을 어두운 회색으로 변경 */
+  border: 1px solid #666; /* hover 시 테두리 색을 더 어두운 회색으로 변경 */
+}
+
+.button__gray {
+  background-color: #d9d9d9;
+  color: black;
+}
+
+.button__gray:hover {
+  background-color: #b0b0b0; /* hover 시 배경색을 더 어두운 회색으로 변경 */
+  color: white; /* hover 시 글자색을 흰색으로 변경 */
+}
