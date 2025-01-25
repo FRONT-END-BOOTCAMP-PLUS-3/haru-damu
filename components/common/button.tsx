@@ -16,7 +16,6 @@ interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "typ
   height?: string;
   icon?: boolean;
   iconSrc?: string;
-  iconFill?: string;
 }
 
 const cx = classNames.bind(styles);
@@ -30,13 +29,14 @@ export default function Button({
   color = "green",
   icon = false,
   iconSrc = "default.svg",
+  ...rest
 }: ButtonProps) {
   const classNames = cx("button", className, {
     [`button__${color}`]: color,
   });
   const iconPath = `/icon/${iconSrc}`;
   return (
-    <button onClick={onClick} className={classNames} style={{ width, height }}>
+    <button onClick={onClick} className={classNames} style={{ width, height }} {...rest}>
       {icon && <Image src={iconPath} alt="buttonIcon" width={20} height={20} />}
       {text}
     </button>
