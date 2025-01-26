@@ -50,11 +50,21 @@
 }
 
 .button__gray {
-  background-color: #d9d9d9;
+  background-color: #999;
   color: black;
 }
 
 .button__gray:hover {
   background-color: #b0b0b0;
   color: white;
+}
+
+.button__red {
+  background-color: #ea4335;
+  color: white;
+}
+
+.button__red:hover {
+  background-color: #d93025;
+  color: lightcoral;
 }

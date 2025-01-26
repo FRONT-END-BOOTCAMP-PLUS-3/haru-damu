@@ -7,11 +7,11 @@ import Image from "next/image";
 import classNames from "classnames/bind";
 
 interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type" | "onClick"> {
-  type: "button";
   text: string;
   onClick: () => void;
+  color: "green" | "blackGreen" | "white" | "gray" | "red";
+  type?: "button";
   className?: string;
-  color: "green" | "blackGreen" | "white" | "gray";
   width?: string;
   height?: string;
   icon?: boolean;
@@ -21,7 +21,7 @@ interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "typ
 const cx = classNames.bind(styles);
 
 export default function Button({
-  text,
+  text = "",
   onClick,
   className,
   width = "100%",
