@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import styles from './modal.module.css';
+import { useState } from "react";
+import styles from "./modal.module.css";
 
 export function Modal({ children }: { children: React.ReactNode }) {
     // 함수나 자바스크립트 코드 영역
