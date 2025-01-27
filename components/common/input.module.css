@@ -1,0 +1,35 @@
+.wrapper {
+    padding: 5px 10px;
+
+    display: flex;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.horizontal {
+    flex-direction: row;
+}
+
+.input_label {
+    min-width: 85px;
+    padding: 12.5px 0px;
+
+    text-align: center;
+}
+
+.msg_wrapper {
+    display: flex;
+}
+
+.input {
+    padding: 10px;
+    border : 1px solid var(--secondary-color);
+    border-radius: 10px;
+}
+
+.warning_msg {
+    padding: 2px 12px;
+    color: var(--important-color)
+}
