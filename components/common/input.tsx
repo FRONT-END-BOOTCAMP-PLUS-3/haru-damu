@@ -11,6 +11,7 @@ const cx = classNames.bind(style);
 
 interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   label: string;
+  width?: number | string;
   direction?: "vertical" | "horizontal";
   placeholder?: string;
   inputValue?: string | number;
@@ -19,6 +20,7 @@ interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChan
 }
 
 export default function Input({
+  width = "100%",
   label,
   direction = "horizontal",
   type = "text",
@@ -43,7 +45,7 @@ export default function Input({
   };
 
   return (
-    <div className={cx(wrapper, isVertical ? vertical : horizontal)}>
+    <div className={cx(wrapper, isVertical ? vertical : horizontal)} style={{ width }}>
       <label htmlFor={label} className={cx(input_label, "text-md-b")}>
         {label}
       </label>
