@@ -1,0 +1,43 @@
+.title-lg-b {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.title-md-b {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.title-md {
+    font-size: 24px;
+}
+
+.title-sm {
+    font-size: 20px;
+}
+
+.text-lg {
+    font-size: 18px;
+}
+
+.text-md-b {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.text-md {
+    font-size: 16px;
+}
+
+.text-sm-b {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.text-sm {
+    font-size: 14px;
+}
+
+.text-xsm {
+    font-size: 12px;
+}
