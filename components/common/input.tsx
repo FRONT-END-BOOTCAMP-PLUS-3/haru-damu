@@ -24,7 +24,7 @@ export default function Input({
   label,
   direction = "horizontal",
   type = "text",
-  placeholder = "값을 입력해주세요.",
+  placeholder = "",
   inputValue = "",
   onChange,
   waringMsg,
