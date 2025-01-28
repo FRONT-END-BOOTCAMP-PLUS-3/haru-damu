@@ -16,7 +16,7 @@ interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChan
   placeholder?: string;
   inputValue?: string | number;
   onChange?: (value: string | number) => void;
-  waringMsg?: string;
+  warningMsg?: string;
 }
 
 export default function Input({
@@ -27,7 +27,7 @@ export default function Input({
   placeholder = "",
   inputValue = "",
   onChange,
-  waringMsg,
+  warningMsg,
   ...rest
 }: InputProps) {
   const { wrapper, vertical, horizontal, input_label, msg_wrapper, input, warning_msg } = style;
@@ -59,7 +59,7 @@ export default function Input({
           onChange={onChangeHandler}
           {...rest}
         />
-        {waringMsg && <span className={`${warning_msg} text-sm`}>{waringMsg}</span>}
+        {warningMsg && <span className={`${warning_msg} text-sm`}>{warningMsg}</span>}
       </div>
     </div>
   );
