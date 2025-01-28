@@ -1,0 +1,30 @@
+.button {
+    /* button 기본 style 제거 */
+    border: none;
+    outline: none;
+    background-color: inherit ;
+    cursor: pointer;
+
+    /* a 기본 style 제거 */
+    color: inherit;
+    text-decoration-line: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover {
+    color: var(--secondary-color);
+}
+
+.image_wrapper {
+    width: 114px;
+    height: 114px;
+
+    margin-bottom: 10px;
+    border-radius: calc(infinity * 1px);
+
+    overflow: hidden;
+}
