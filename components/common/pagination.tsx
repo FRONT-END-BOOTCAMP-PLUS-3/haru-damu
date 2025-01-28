@@ -22,14 +22,14 @@ export default function Pagination({ current = 1, total = 1, onClick }: Paginati
 
   const buttonStyle = cx(button);
 
-  const onClickHandler = (page: number | "previous" | "next", current = 1) => {
-    // 누른 버튼에 따라 page 번호를 계산하는 함수입니다.
-    const getPage = (page: number | "previous" | "next", current: number) => {
-      if (page === "previous") return current - 1;
-      if (page === "next") return current + 1;
-      return page;
-    };
+  // 누른 버튼에 따라 page 번호를 계산하는 함수입니다.
+  const getPage = (page: number | "previous" | "next", current: number) => {
+    if (page === "previous") return current - 1;
+    if (page === "next") return current + 1;
+    return page;
+  };
 
+  const onClickHandler = (page: number | "previous" | "next", current = 1) => {
     const changedPage = getPage(page, current);
 
     setCurrentPage(changedPage);
