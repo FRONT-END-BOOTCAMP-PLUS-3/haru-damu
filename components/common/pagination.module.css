@@ -1,0 +1,34 @@
+.wrapper {
+    width: fit-content;
+    height: 20px;
+
+    border : 1px solid var(--base-content-sub-text);
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.page_wrapper {
+    width: fit-content;
+    height: 20px;
+
+    padding: 0px 3px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.button {
+    width: 30px;
+    height: 100%;
+
+    border: none;
+    outline: none;
+    background-color: inherit ;
+    cursor: pointer;
+}
+
+.current_page {
+    background: var(--secondary-color);
+}
