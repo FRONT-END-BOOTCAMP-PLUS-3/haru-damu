@@ -45,6 +45,7 @@
         "type": "line-length",
         "order": "asc",
         "groups": [
+          "next",
           "react",
           "related-react",
           ["components"],
@@ -57,6 +58,7 @@
           ["internal"],
           ["shared"],
           ["utils"],
+          ["style"],
           ["type", "internal-type"],
           ["parent-type", "sibling-type", "index-type"],
           ["parent", "sibling", "index"],
@@ -67,6 +69,7 @@
         ],
         "custom-groups": {
           "value": {
+            "next" : ["next/**"],
             "react": ["react"],
             "related-react": ["react-*"],
             "hooks": "**/use-*",
@@ -76,7 +79,8 @@
             "entities" : "**/entities/**",
             "shared-components": "**/shared/*.tsx",
             "shared-hooks": "**/shared/use-*",
-            "utils": "**/utils/**"
+            "utils": "**/utils/**",
+            "style" : ["**/**.module.css", "**/style/**"]
           },
           "type": {
             "react": "react"
