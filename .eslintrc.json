@@ -65,7 +65,8 @@
           "side-effect",
           "style",
           "object",
-          "unknown"
+          "unknown",
+          "constants"
         ],
         "custom-groups": {
           "value": {
@@ -80,7 +81,8 @@
             "shared-components": "**/shared/*.tsx",
             "shared-hooks": "**/shared/use-*",
             "utils": "**/utils/**",
-            "style" : ["**/**.module.css", "**/style/**"]
+            "style" : ["**/**.module.css", "**/style/**"],
+            "constants" : "**/constants/**"
           },
           "type": {
             "react": "react"
