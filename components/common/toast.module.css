@@ -1,0 +1,22 @@
+.toast {
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  max-width: 300px;
+  display: inline-block;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    opacity 2s ease,
+    transform 0.5s ease;
+}
+
+.toast.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast.hidden {
+  transform: translateX(100%);
+  opacity: 0;
+}

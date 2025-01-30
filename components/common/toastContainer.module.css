@@ -1,0 +1,32 @@
+.toast-container {
+  position: fixed;
+  bottom: 20px; /* 화면의 아래쪽에 위치 */
+  right: 20px; /* 화면의 오른쪽에 위치 */
+  display: flex;
+  flex-direction: column; /* 여러 개의 토스트가 쌓이도록 설정 */
+  gap: 10px; /* 토스트 간의 간격 */
+  z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+}
+
+.toast {
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  background-color: #007bff !important;
+  opacity: 1;
+  transition: opacity 2s ease-out; /* opacity 변화에 대한 애니메이션 설정 */
+  animation: slideIn 0.5s forwards; /* 오른쪽에서 왼쪽으로 등장하는 애니메이션 */
+}
+
+.toast.hidden {
+  opacity: 0; /* 사라질 때의 opacity */
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%); /* 오른쪽에서 시작 */
+  }
+  to {
+    transform: translateX(0); /* 원래 위치로 이동 */
+  }
+}
