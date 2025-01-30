@@ -1,0 +1,29 @@
+/* 모달 오버레이 (배경) */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* 모달 박스 */
+.modal {
+    background-color: white;
+    max-width: 1080px; /* 최대 넓이 1080px */
+    max-height: 80%; /* 최대 높이 80% */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+/* 모달 내용 */
+.modalContent {
+    max-height: calc(80vh - 20px); /* 최대 높이 제한 */
+    overflow-y: auto; /* 내부에 내용이 많으면 스크롤 활성화 */
+    padding: 20px;
+}
