@@ -12,7 +12,6 @@
   padding: 10px 20px;
   border-radius: 5px;
   color: white;
-  background-color: #007bff !important;
   opacity: 1;
   transition: opacity 2s ease-out; /* opacity 변화에 대한 애니메이션 설정 */
   animation: slideIn 0.5s forwards; /* 오른쪽에서 왼쪽으로 등장하는 애니메이션 */
