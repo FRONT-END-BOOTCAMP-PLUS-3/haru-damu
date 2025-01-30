@@ -1,11 +1,18 @@
+"use client";
+
 import ReactDOM from "react-dom";
 
-import { useModalState } from "../../hooks/use_modal_state"; // useModalState 훅을 사용
+import { modalStore } from "../../hooks/modalstore";
 
 import styles from "./modal.module.css";
 
+import classNames from "classnames/bind";
+
+const cx = classNames.bind(styles);
+
 export function Modal({ children }: { children: React.ReactNode }) {
-  const { isOpen, closeModal } = useModalState();
+  const isOpen = modalStore((state) => state.modal.isOpen);
+  const closeModal = modalStore((state) => state.closeModal);
 
   if (!isOpen) return null;
 
@@ -16,9 +23,9 @@ export function Modal({ children }: { children: React.ReactNode }) {
   };
 
   return ReactDOM.createPortal(
-    <div className={styles.overlay} onClick={handleOverlayClick}>
-      <div className={styles.modal}>
-        <div className={styles.modalContent}>{children}</div>
+    <div className={cx("overlay")} onClick={handleOverlayClick}>
+      <div className={cx("modal")}>
+        <div className={cx("modalContent")}>{children}</div>
       </div>
     </div>,
     document.body,
