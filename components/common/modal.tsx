@@ -2,11 +2,10 @@
 
 import ReactDOM from "react-dom";
 
-import { modalStore } from "../../hooks/modalstore";
-
-import styles from "./modal.module.css";
+import styles from "@/components/common/modal.module.css";
 
 import classNames from "classnames/bind";
+import { modalStore } from "@/hooks/modalstore";
 
 const cx = classNames.bind(styles);
 

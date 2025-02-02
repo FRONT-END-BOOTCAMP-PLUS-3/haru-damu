@@ -41,7 +41,7 @@ export const modalStore = create<State>()(
   subscribeWithSelector(
     persist(
       (set, get, store) => ({
-        ...createModalSlice(set, get, store), // 3개 인자 전달
+        ...createModalSlice(set, get, store), // 3개 인자 전달(왜...? 3개가 필수인지를 모르겠습니다.)
       }),
       {
         version: 144,
