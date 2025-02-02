@@ -2,3 +2,8 @@
 @import url("./mixin.css");
 @import url("./font.css");
 @import url("./color.css");
+
+.container {
+  width: 1080px;
+  margin: 0 auto;
+}
