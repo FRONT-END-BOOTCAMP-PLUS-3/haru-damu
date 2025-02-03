@@ -1,6 +1,3 @@
-//import type { State } from "@app/shared/types";
-import type { StateCreator } from "zustand";
-//import createTabSlice from "@app/tab/create-slice";
 import type { TModalSlice } from "@/stores/modal";
 import type { StateStorage } from "zustand/middleware";
 
@@ -11,35 +8,23 @@ import { persist, createJSONStorage, subscribeWithSelector } from "zustand/middl
 
 const storage: StateStorage = {
   removeItem: async (name: string): Promise<void> => {
-    window.localStorage.delete(name);
+    window.localStorage.removeItem(name);
   },
   setItem: async (name: string, value: string): Promise<void> => {
-    window.localStorage.set(name, JSON.parse(value));
+    window.localStorage.setItem(name, JSON.parse(value));
   },
   getItem: async (name: string): Promise<string | null> => {
-    const value = window.localStorage.get(name);
+    const value = window.localStorage.getItem(name);
     return value !== undefined ? JSON.stringify(value) : null;
   },
 };
 
-// TODO : 예시/ 삭제 예정
-type TExSlice = {
-  ex: string;
-};
-
-// TODO : 예시/ 삭제 예정 + 모달 상태 추가
-export type State = TExSlice & TModalSlice;
-
-// TODO : 예시/ 삭제 예정
-const createExSlice: StateCreator<Partial<State>, [], [], TExSlice> = (set, get) => ({
-  ex: "",
-});
+export type State = TModalSlice;
 
 export const useStore = create<State>()(
   subscribeWithSelector(
     persist(
       (...a) => ({
-        ...createExSlice(...a),
         ...createModalSlice(...a),
       }),
       {
