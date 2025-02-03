@@ -6,7 +6,7 @@ import {
   calcRecommendedKcal,
   calcSalt,
   calcSugar,
-} from "./oneday_kcal";
+} from "@/utils/oneday_kcal";
 
 // 식사별 영양소 계산
 type MealNutrients = {
@@ -24,16 +24,12 @@ export function calcOneMeals(
   age: number,
   isMale: boolean,
   activityLevel: number,
-<<<<<<< HEAD
 ): {
   breakfast: MealNutrients;
   lunch: MealNutrients;
   dinner: MealNutrients;
   total: MealNutrients;
 } {
-=======
-): { breakfast: MealNutrients; lunch: MealNutrients; dinner: MealNutrients } {
->>>>>>> 68169feebb8a36b83aab045fe1e865568bc274a7
   // BMR 계산
   const bmr = calcBmr(weight, height, age, isMale);
 
@@ -52,16 +48,11 @@ export function calcOneMeals(
       carbohydrates: calcCarbohydrates(mealCalories),
       fat: calcFat(mealCalories),
       sugar: calcSugar(mealCalories),
-<<<<<<< HEAD
       sodium: calcSalt() * mealRatio, // calcSalt 함수 호출로 변경
-=======
-      sodium: calcSalt * mealRatio,
->>>>>>> 68169feebb8a36b83aab045fe1e865568bc274a7
     };
   };
 
   // 각 식사별 계산
-<<<<<<< HEAD
   const breakfast = calcMealNutrients(mealRatios.breakfast);
   const lunch = calcMealNutrients(mealRatios.lunch);
   const dinner = calcMealNutrients(mealRatios.dinner);
@@ -77,11 +68,4 @@ export function calcOneMeals(
   };
 
   return { breakfast, lunch, dinner, total };
-=======
-  return {
-    breakfast: calcMealNutrients(mealRatios.breakfast),
-    lunch: calcMealNutrients(mealRatios.lunch),
-    dinner: calcMealNutrients(mealRatios.dinner),
-  };
->>>>>>> 68169feebb8a36b83aab045fe1e865568bc274a7
 }
