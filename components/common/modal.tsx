@@ -4,10 +4,7 @@ import ReactDOM from "react-dom";
 
 import styles from "@/components/common/modal.module.css";
 
-import classNames from "classnames/bind";
 import { modalStore } from "@/hooks/modalstore";
-
-const cx = classNames.bind(styles);
 
 export function Modal({ children }: { children: React.ReactNode }) {
   const isOpen = modalStore((state) => state.modal.isOpen);
@@ -17,14 +14,16 @@ export function Modal({ children }: { children: React.ReactNode }) {
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      closeModal(); // 모달 외부 클릭 시 닫기
+      closeModal();
     }
   };
 
+  const { modal_overlay, modal__box, modal__modalContent } = styles;
+
   return ReactDOM.createPortal(
-    <div className={cx("overlay")} onClick={handleOverlayClick}>
-      <div className={cx("modal")}>
-        <div className={cx("modalContent")}>{children}</div>
+    <div className={modal_overlay} onClick={handleOverlayClick}>
+      <div className={modal__box}>
+        <div className={modal__modalContent}>{children}</div>
       </div>
     </div>,
     document.body,
