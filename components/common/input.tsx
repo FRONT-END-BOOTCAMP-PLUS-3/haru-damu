@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ChangeEvent, InputHTMLAttributes } from "react";
 
 import style from "@/components/common/input.module.css";
@@ -43,6 +43,10 @@ export default function Input({
     setValue(value);
     onChange && onChange(value);
   };
+
+  useEffect(() => {
+    setValue(inputValue);
+  }, [inputValue]);
 
   return (
     <div className={cx(wrapper, isVertical ? vertical : horizontal)} style={{ width }}>
