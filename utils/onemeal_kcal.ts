@@ -24,7 +24,12 @@ export function calcOneMeals(
   age: number,
   isMale: boolean,
   activityLevel: number,
-): { breakfast: MealNutrients; lunch: MealNutrients; dinner: MealNutrients } {
+): {
+  breakfast: MealNutrients;
+  lunch: MealNutrients;
+  dinner: MealNutrients;
+  total: MealNutrients;
+} {
   // BMR 계산
   const bmr = calcBmr(weight, height, age, isMale);
 
@@ -43,14 +48,24 @@ export function calcOneMeals(
       carbohydrates: calcCarbohydrates(mealCalories),
       fat: calcFat(mealCalories),
       sugar: calcSugar(mealCalories),
-      sodium: calcSalt * mealRatio,
+      sodium: calcSalt() * mealRatio, // calcSalt 함수 호출로 변경
     };
   };
 
   // 각 식사별 계산
-  return {
-    breakfast: calcMealNutrients(mealRatios.breakfast),
-    lunch: calcMealNutrients(mealRatios.lunch),
-    dinner: calcMealNutrients(mealRatios.dinner),
+  const breakfast = calcMealNutrients(mealRatios.breakfast);
+  const lunch = calcMealNutrients(mealRatios.lunch);
+  const dinner = calcMealNutrients(mealRatios.dinner);
+
+  // 하루 총 영양소 계산
+  const total: MealNutrients = {
+    calories: breakfast.calories + lunch.calories + dinner.calories,
+    protein: breakfast.protein + lunch.protein + dinner.protein,
+    carbohydrates: breakfast.carbohydrates + lunch.carbohydrates + dinner.carbohydrates,
+    fat: breakfast.fat + lunch.fat + dinner.fat,
+    sugar: breakfast.sugar + lunch.sugar + dinner.sugar,
+    sodium: breakfast.sodium + lunch.sodium + dinner.sodium,
   };
+
+  return { breakfast, lunch, dinner, total };
 }

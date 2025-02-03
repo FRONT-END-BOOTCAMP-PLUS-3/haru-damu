@@ -1,5 +1,5 @@
 // BMR 계산
-export function calcBMR(weight: number, height: number, age: number, isMale: boolean): number {
+export function calcBmr(weight: number, height: number, age: number, isMale: boolean): number {
   return isMale ? 10 * weight + 6.25 * height - 5 * age + 5 : 10 * weight + 6.25 * height - 5 * age - 161;
 }
 
@@ -32,4 +32,6 @@ export function calcSugar(recommendedKcal: number): number {
 }
 
 // 나트륨 계산 (고정값)
-export const calcSalt = 2000; // 2000mg
+export function calcSalt(salt?: number): number {
+  return salt ?? 2000;
+}
