@@ -1,0 +1,12 @@
+:root {
+    --base-white: #ffffff;
+    --base-black: #000000;
+    --base-content-dark-text: #222222;
+    --base-content-sub-text: #999999;
+
+    --primary-color: #284521; 
+    --secondary-color: #8E9866;
+    --accent-color: #FA8125;
+    --warning-color: #FBBC05;
+    --important-color: #EA4335;
+}
