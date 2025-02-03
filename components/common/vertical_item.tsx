@@ -1,13 +1,14 @@
 "use client";
 
-import type { TItem } from "@/types";
-
-import style from "@/components/common/vertical_item.module.css";
-
 import Link from "next/link";
 import Image from "next/image";
-import classNames from "classnames/bind";
+
 import Button from "@/components/common/button";
+import style from "@/components/common/vertical_item.module.css";
+
+import type { TItem } from "@/types";
+
+import classNames from "classnames/bind";
 import { ImageOff, ShoppingBasket } from "lucide-react";
 
 const cx = classNames.bind(style);
