@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import styles from "./toastContainer.module.css";
+import styles from "@/components/common/toast.module.css";
 
 import classNames from "classnames/bind";
 
@@ -12,7 +12,7 @@ interface ToastProps {
   onClickEvent?: () => void;
 }
 
-const Toast: React.FC<ToastProps> = ({ message, backgroundColor, onClickEvent }) => {
+export default function Toast({ message, backgroundColor, onClickEvent }: ToastProps) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -29,9 +29,7 @@ const Toast: React.FC<ToastProps> = ({ message, backgroundColor, onClickEvent })
       style={{ backgroundColor }}
       onClick={onClickEvent}
     >
-      {message}
+      <div className="text-lg">{message}</div>
     </div>
   );
-};
-
-export default Toast;
+}

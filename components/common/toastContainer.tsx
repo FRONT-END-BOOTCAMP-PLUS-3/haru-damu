@@ -1,10 +1,7 @@
-import React from "react";
-
-import Toast from "./toast";
-
-import styles from "./toastContainer.module.css";
+import styles from "@/components/common/toastContainer.module.css";
 
 import classNames from "classnames/bind";
+import Toast from "@/components/common/toast";
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +9,7 @@ interface ToastContainerProps {
   messages: Array<{ id: number; message: string; backgroundColor: string; onClickEvent?: () => void }>; // onClickEvent 추가
 }
 
-const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
+function ToastContainer({ messages }: ToastContainerProps) {
   return (
     <div className={cx("toast-container")}>
       {messages.map((toast) => (
@@ -25,6 +22,6 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
       ))}
     </div>
   );
-};
+}
 
 export default ToastContainer;
