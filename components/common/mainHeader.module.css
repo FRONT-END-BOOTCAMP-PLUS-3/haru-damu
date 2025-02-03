@@ -1,0 +1,124 @@
+/* 헤더 전체 */
+.header {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 헤더 컨테이너 */
+.header__container {
+width: 100%;
+max-width: 1080px;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+/* 첫 번째 줄: 회원가입 / 로그인 */
+.header__top {
+width: 100%;
+text-align: right;
+padding: 5px 0;
+font-size: 14px;
+}
+
+.header__auth {
+display: flex;
+justify-content: flex-end;
+}
+
+.header__auth_link {
+color: #2d411a;
+text-decoration: none;
+margin: 0 5px;
+}
+
+.header__divider {
+color: #aaa;
+}
+
+/* 두 번째 줄: 로고, 장바구니 & 사용자 아이콘 */
+.header__middle {
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px 0;
+}
+
+.header__logo {
+display: flex;
+align-items: center;
+}
+
+.header__logo_text {
+font-size: 1.5rem;
+font-weight: bold;
+color: #2d411a;
+margin-left: 8px;
+}
+
+.header__icons {
+display: flex;
+align-items: center;
+}
+
+.header__icon {
+font-size: 24px;
+margin-left: 10px;
+cursor: pointer;
+}
+
+/* 세 번째 줄: 카테고리 버튼, 검색창, 1일 식단 장바구니 안내 */
+.header__bottom {
+width: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px 0;
+border-top: 1px solid #ddd;
+}
+
+.header__menu_button {
+display: flex;
+align-items: center;
+background: none;
+border: none;
+font-size: 16px;
+cursor: pointer;
+color: #2d411a;
+}
+
+.header__search {
+display: flex;
+align-items: center;
+flex-grow: 1;
+margin-left: 80px;
+}
+
+.header__search_input {
+width: 600px;
+padding: 8px;
+border: 1px solid #aaa;
+border-radius: 5px;
+}
+
+.header__search_button {
+background: none;
+border: none;
+cursor: pointer;
+font-size: 18px;
+margin-left: 8px;
+}
+
+.header__diet_button {
+background-color: #f4f4f4;
+border: 1px solid #ccc;
+padding: 8px 12px;
+font-size: 14px;
+cursor: pointer;
+color: #2d411a;
+border-radius: 4px;
+}
