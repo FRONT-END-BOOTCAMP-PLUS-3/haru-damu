@@ -1,7 +1,7 @@
 "use client";
 import type { ButtonHTMLAttributes } from "react";
 
-import styles from "./button.module.css";
+import styles from "@/components/common/button.module.css";
 
 import Image from "next/image";
 import classNames from "classnames/bind";
