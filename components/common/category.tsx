@@ -10,12 +10,12 @@ interface CategoryProps {
 }
 
 export default function Category({ category }: CategoryProps) {
-  const { button, image_wrapper } = style;
+  const { category__button, category__image__wrapper } = style;
 
   return (
     <li key={category.order}>
-      <Link className={button} href={`/category?value=${category.key}`}>
-        <div className={image_wrapper}>
+      <Link className={category__button} href={`/category?value=${category.key}`}>
+        <div className={category__image__wrapper}>
           <Image src={category.img} alt={category.key} width={114} height={114} />
         </div>
         <span className="text-md">{category.kor}</span>

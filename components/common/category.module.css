@@ -1,4 +1,4 @@
-.button {
+.category__button {
     /* button 기본 style 제거 */
     border: none;
     outline: none;
@@ -15,11 +15,11 @@
     align-items: center;
 }
 
-.button:hover {
+.category__button:hover {
     color: var(--secondary-color);
 }
 
-.image_wrapper {
+.category__image__wrapper {
     width: 114px;
     height: 114px;
 
