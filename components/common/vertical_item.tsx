@@ -18,7 +18,13 @@ interface VerticalItemProps {
 }
 
 export default function VerticalItem({ item }: VerticalItemProps) {
-  const { vertical_item__image__wrapper, vertical_item__no__image, vertical_item__image, vertical_item__link } = style;
+  const {
+    vertical_item__image__wrapper,
+    vertical_item__no__image,
+    vertical_item__image,
+    vertical_item__link,
+    vertical_item__name,
+  } = style;
 
   const { item_id, item_name, item_price, img, blurImg } = item;
 
@@ -40,7 +46,7 @@ export default function VerticalItem({ item }: VerticalItemProps) {
           )}
         </div>
         <Button text="담기" iconComponent={<ShoppingBasket />} />
-        <span className="text-lg">{item_name}</span>
+        <span className={cx(vertical_item__name, "text-lg")}>{item_name}</span>
         <span className="text-lg-b">{item_price}원</span>
       </Link>
     </li>

@@ -33,3 +33,11 @@
     color : var(--base-content-dark-text);
     text-decoration: none;
 }
+
+.vertical_item__name {
+    width: 100%;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
