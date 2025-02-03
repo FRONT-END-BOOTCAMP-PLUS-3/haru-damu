@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "@/components/common/toast.module.css";
 
@@ -24,11 +24,7 @@ export default function Toast({ message, backgroundColor, onClickEvent }: ToastP
   }, []);
 
   return (
-    <div
-      className={cx("toast", { visible: isVisible, hidden: !isVisible })}
-      style={{ backgroundColor }}
-      onClick={onClickEvent}
-    >
+    <div className={cx("toast", { toast__hidden: !isVisible })} style={{ backgroundColor }} onClick={onClickEvent}>
       <div className="text-lg">{message}</div>
     </div>
   );
