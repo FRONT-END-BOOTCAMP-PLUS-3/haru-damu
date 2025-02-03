@@ -17,12 +17,12 @@ interface PaginationProps {
 }
 
 export default function Pagination({ current = 1, total = 1, limit = 5, onClick }: PaginationProps) {
-  const { wrapper, page_wrapper, current_page, button } = style;
+  const { pagination__wrapper, pagination__page__wrapper, pagination__current__page, pagination__button } = style;
 
   const [currentPage, setCurrentPage] = useState<number>(current);
   const [pages, setPages] = useState<number[]>([1]);
 
-  const buttonStyle = cx(button);
+  const buttonStyle = cx(pagination__button);
 
   // 누른 버튼에 따라 page 번호를 계산하는 함수입니다.
   const getPage = (page: number | "previous" | "next", current: number) => {
@@ -60,7 +60,7 @@ export default function Pagination({ current = 1, total = 1, limit = 5, onClick 
   }, [current]);
 
   return (
-    <div className={cx(wrapper, "text-xsm")}>
+    <div className={cx(pagination__wrapper, "text-xsm")}>
       <button
         className={buttonStyle}
         disabled={currentPage === 1}
@@ -68,11 +68,11 @@ export default function Pagination({ current = 1, total = 1, limit = 5, onClick 
       >
         <ChevronLeft size={18} />
       </button>
-      <ul className={page_wrapper}>
+      <ul className={pagination__page__wrapper}>
         {pages.map((page) => (
           <li key={page}>
             <button
-              className={cx(currentPage === page && current_page, buttonStyle)}
+              className={cx(currentPage === page && pagination__current__page, buttonStyle)}
               onClick={() => onClickHandler(page)}
             >
               {page}

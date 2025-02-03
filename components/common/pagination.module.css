@@ -1,4 +1,4 @@
-.wrapper {
+.pagination__wrapper {
     width: fit-content;
     height: 20px;
 
@@ -9,7 +9,7 @@
     flex-direction: row;
 }
 
-.page_wrapper {
+.pagination__page__wrapper {
     width: fit-content;
     height: 20px;
 
@@ -19,7 +19,7 @@
     flex-direction: row;
 }
 
-.button {
+.pagination__button {
     width: 30px;
     height: 100%;
 
@@ -29,6 +29,6 @@
     cursor: pointer;
 }
 
-.current_page {
+.pagination__current__page {
     background: var(--secondary-color);
 }
