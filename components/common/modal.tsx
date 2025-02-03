@@ -4,11 +4,11 @@ import ReactDOM from "react-dom";
 
 import styles from "@/components/common/modal.module.css";
 
-import { modalStore } from "@/hooks/modalstore";
+import { useStore } from "@/hooks/usestore";
 
 export function Modal({ children }: { children: React.ReactNode }) {
-  const isOpen = modalStore((state) => state.modal.isOpen);
-  const closeModal = modalStore((state) => state.closeModal);
+  const isOpen = useStore((state) => state.modal.isOpen);
+  const closeModal = useStore((state) => state.closeModal);
 
   if (!isOpen) return null;
 
