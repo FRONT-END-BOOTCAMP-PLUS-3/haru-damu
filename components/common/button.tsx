@@ -1,43 +1,38 @@
 "use client";
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 import styles from "@/components/common/button.module.css";
 
-import Image from "next/image";
 import classNames from "classnames/bind";
 
-interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type" | "onClick"> {
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
   text: string;
-  onClick: () => void;
-  color: "green" | "blackGreen" | "white" | "gray" | "red";
+  color?: "primary" | "delete";
   type?: "button";
   className?: string;
   width?: string;
   height?: string;
-  icon?: boolean;
-  iconSrc?: string;
+  iconComponent?: ReactNode;
 }
 
 const cx = classNames.bind(styles);
 
 export default function Button({
   text = "",
-  onClick,
   className,
   width = "100%",
   height = "40px",
-  color = "green",
-  icon = false,
-  iconSrc = "default.svg",
+  color = "primary",
+  iconComponent,
   ...rest
 }: ButtonProps) {
-  const classNames = cx("button", className, {
+  const classNames = cx("button", "text-sm-b", className, {
     [`button__${color}`]: color,
   });
-  const iconPath = `/icon/${iconSrc}`;
+
   return (
-    <button onClick={onClick} className={classNames} style={{ width, height }} {...rest}>
-      {icon && <Image src={iconPath} alt="buttonIcon" width={20} height={20} />}
+    <button className={classNames} style={{ width, height }} {...rest}>
+      {iconComponent && <div>{iconComponent}</div>}
       {text}
     </button>
   );
