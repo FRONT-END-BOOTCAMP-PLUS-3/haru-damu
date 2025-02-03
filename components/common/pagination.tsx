@@ -4,17 +4,19 @@ import { useEffect, useState } from "react";
 
 import style from "@/components/common/pagination.module.css";
 
-import classNames from "classnames";
+import classNames from "classnames/bind";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const cx = classNames.bind(style);
 
 interface PaginationProps {
   current?: number;
   total?: number;
+  limit?: number;
   onClick: (page: number) => void;
 }
 
-export default function Pagination({ current = 1, total = 1, onClick }: PaginationProps) {
+export default function Pagination({ current = 1, total = 1, limit = 5, onClick }: PaginationProps) {
   const { wrapper, page_wrapper, current_page, button } = style;
 
   const [currentPage, setCurrentPage] = useState<number>(current);
@@ -38,20 +40,24 @@ export default function Pagination({ current = 1, total = 1, onClick }: Paginati
   };
 
   useEffect(() => {
-    // 현재 페이지를 기준으로 5개의 페이지를 보여주고 있습니다.
-    const length = total < 5 ? total : 5;
+    const length = total < limit ? total : limit;
+    const halfLimit = Math.ceil(limit / 2);
+    const remainderPage = total - currentPage;
 
     const newPages = Array.from({ length }, (v, i) => {
-      if (total < 5) return i + 1;
-      if (currentPage < 3) return i + 1;
-      if (total === currentPage) return i + (currentPage - 4);
-      if (total - currentPage < 2) return i + (currentPage - 3);
+      if (total < limit || currentPage <= halfLimit) return i + 1;
+      if (total === currentPage) return i + (currentPage - (limit - 1));
+      if (remainderPage < halfLimit) return i + (currentPage - (limit - remainderPage - 1));
 
-      return i + (currentPage - 2);
+      return i + (currentPage - halfLimit);
     });
 
     setPages(newPages);
-  }, [currentPage, total]);
+  }, [currentPage, total, limit]);
+
+  useEffect(() => {
+    setCurrentPage(current);
+  }, [current]);
 
   return (
     <div className={cx(wrapper, "text-xsm")}>
@@ -60,7 +66,7 @@ export default function Pagination({ current = 1, total = 1, onClick }: Paginati
         disabled={currentPage === 1}
         onClick={() => onClickHandler("previous", currentPage)}
       >
-        {"<"}
+        <ChevronLeft size={18} />
       </button>
       <ul className={page_wrapper}>
         {pages.map((page) => (
@@ -79,7 +85,7 @@ export default function Pagination({ current = 1, total = 1, onClick }: Paginati
         disabled={currentPage === total}
         onClick={() => onClickHandler("next", currentPage)}
       >
-        {">"}
+        <ChevronRight size={18} />
       </button>
     </div>
   );
