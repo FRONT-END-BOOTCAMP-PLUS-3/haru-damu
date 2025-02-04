@@ -1,5 +1,18 @@
 export type TDateForm = `${number}. ${string}. ${string}.`;
 
+export type TCart = {
+  user_id: number;
+  item_id: number;
+  wrapper_id: string | null;
+  quantity: number;
+  created_at: string;
+  updated_at: string;
+  item_name: string;
+  item_price: number;
+  img: string | undefined;
+  blurImg: string | undefined;
+};
+
 export type TItem = {
   item_id: number;
   store_id: number;
