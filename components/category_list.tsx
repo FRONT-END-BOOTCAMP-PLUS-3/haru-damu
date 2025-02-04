@@ -9,29 +9,29 @@ import { AlignJustify } from "lucide-react";
 
 const cx = classNames.bind(styles);
 
-interface Category {
+type TCategory = {
   id?: number;
   category: string;
   icon?: React.ReactNode;
   path?: string;
-}
+};
 
 interface CategoryListProps {
-  categoryList: Category[];
+  categoryList: TCategory[];
   width?: string;
   height?: string;
 }
 
 export default function CategoryList({ categoryList, width = "200px", height = "auto" }: CategoryListProps) {
   return (
-    <div className={cx("categoryList")} style={{ width, height }}>
-      <div className={cx("categoryList__button")}>
+    <div className={cx("categorylist")} style={{ width, height }}>
+      <div className={cx("categorylist__button")}>
         <AlignJustify width={16} height={14} />
         카테고리
-        <ul className={cx("categoryList__dropdown")}>
+        <ul className={cx("categorylist__dropdown")}>
           {categoryList.map((category, index) => (
-            <li key={category.id ?? index + 1} className={cx("categoryList__item")}>
-              <Link href={category.path ?? "/"} className={cx("categoryList__link")}>
+            <li key={category.id ?? index + 1} className={cx("categorylist__item")}>
+              <Link href={category.path ?? "/"} className={cx("categorylist__link")}>
                 <div>{category.icon}</div>
                 <span>{category.category}</span>
               </Link>
