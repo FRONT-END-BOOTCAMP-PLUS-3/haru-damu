@@ -14,20 +14,27 @@ interface DropdownProps<T = string> extends Omit<InputHTMLAttributes<HTMLInputEl
   currentItem?: T;
   itemList: T[];
   width?: string;
-  onClick: (value: T) => void;
+  onClick?: (value: T) => void;
 }
 
-export default function Dropdown({ placeHolder, currentItem, itemList, width, onClick, ...rest }: DropdownProps) {
-  const [inputValue, setInputValue] = useState(currentItem || "");
-  const [selectedValue, setSelectedValue] = useState<string | null>(currentItem || null);
+export default function Dropdown<T = string>({
+  placeHolder = "검색...",
+  currentItem,
+  itemList,
+  width,
+  onClick,
+  ...rest
+}: DropdownProps<T>) {
+  const [inputValue, setInputValue] = useState(currentItem ? String(currentItem) : "");
+  const [selectedValue, setSelectedValue] = useState<T | null>(currentItem ?? null);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (value: string) => {
-    setInputValue(value);
+  const handleSelect = (value: T) => {
+    setInputValue(String(value));
     setSelectedValue(value);
     setIsOpen(false);
-    onClick(value);
+    if (onClick) onClick(value);
   };
 
   useEffect(() => {
@@ -47,9 +54,9 @@ export default function Dropdown({ placeHolder, currentItem, itemList, width, on
         <input
           type="text"
           value={inputValue}
-          placeholder={placeHolder || "검색..."}
+          placeholder={placeHolder}
           onChange={(e) => setInputValue(e.target.value)}
-          onFocus={() => setInputValue(selectedValue || "")}
+          onFocus={() => setInputValue(String(selectedValue) || "")}
           className={cx("dropdown__input")}
           {...rest}
         />
@@ -65,11 +72,11 @@ export default function Dropdown({ placeHolder, currentItem, itemList, width, on
           {itemList.length > 0 &&
             itemList.map((option) => (
               <li
-                key={option}
+                key={typeof option === "object" ? JSON.stringify(option) : String(option)}
                 onClick={() => handleSelect(option)}
                 className={cx("dropdown__item", { "dropdown__item--selected": selectedValue === option })}
               >
-                {option}
+                {String(option)}
               </li>
             ))}
         </ul>

@@ -35,8 +35,23 @@
   border: 1px solid var(--secondary-color);
   background: var(--base-white);
   box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.10);
+
+  max-height: 200px; 
+  overflow-y: auto;  
 }
 
+.dropdown__list::-webkit-scrollbar {
+  width: 6px; 
+}
+
+.dropdown__list::-webkit-scrollbar-thumb {
+  background-color: var(--light-gray-color); 
+  border-radius: 10px;
+}
+
+.dropdown__list::-webkit-scrollbar-track {
+  background: transparent; 
+}
 .dropdown__item {
   display: block;
   padding: 10px;
