@@ -7,12 +7,12 @@ import styles from "@/components/common/modal.module.css";
 import { useStore } from "@/hooks/usestore";
 
 export function Modal({ children }: { children: React.ReactNode }) {
-  const isOpen = useStore((state) => state.modal.isOpen);
-  const closeModal = useStore((state) => state.closeModal);
+  const { isOpenModal, closeModal } = useStore();
 
-  if (!isOpen) return null;
+  if (!isOpenModal) return null;
 
   const handleOverlayClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (e.target === e.currentTarget) {
       closeModal();
     }
