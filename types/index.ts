@@ -74,7 +74,7 @@ export type THealth = {
 
 // unit_converter ===================================================================
 export type ValidConversions = {
-  mg:'g';
+  mg: "g";
   g: "kg";
   kg: "g";
   ml: "l";
