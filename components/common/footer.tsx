@@ -7,6 +7,7 @@ import Image from "next/image";
 import classNames from "classnames/bind";
 import { ExternalLink } from "lucide-react";
 import logo from "@/public/haruDamu_grayscale_logo.svg";
+import { BRAND_NAMES, EXTERNAL_URLS } from "@/constants";
 
 const cx = classNames.bind(styles);
 
@@ -17,20 +18,20 @@ export default function Footer() {
       <div className={cx(footer, `container`)}>
         <Link href={"/"} className={footer__left}>
           <Image src={logo} alt="logo" width={50} height={50} />
-          <p className="title-lg-b">하루담은</p>
+          <p className="title-lg-b">{BRAND_NAMES.KOREAN}</p>
         </Link>
         <div className={footer__center}>
-          <p className="text-md">Copyright © {new Date().getFullYear()} - All right reserved</p>
+          <p className="text-md">Copyright © 2025 - All right reserved</p>
         </div>
         <Link
-          href={"https://github.com/FRONT-END-BOOTCAMP-PLUS-3/haru-damu"}
+          href={EXTERNAL_URLS.GITHUB}
           className={footer__right}
           target="_blank"
           prefetch={false}
           rel="noopener noreferrer"
         >
-          <p className="text-md">haru-damu</p>
-          <ExternalLink size={16} aria-label="haru-damu github link" />
+          <p className="text-md">{BRAND_NAMES.LOWERCASE_ENGLISH}</p>
+          <ExternalLink size={16} aria-label={`${BRAND_NAMES.LOWERCASE_ENGLISH} github link`} />
         </Link>
       </div>
     </footer>
