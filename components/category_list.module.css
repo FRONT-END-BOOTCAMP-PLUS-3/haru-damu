@@ -21,7 +21,7 @@
   min-width: max-content;
   background: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  border-radius: 0 4px 4px 0;
   padding: 8px 0;
   opacity: 0;
   transform: translateY(-10px);
@@ -42,7 +42,6 @@
 
 .categoryList__dropdown::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
 }
 
 .categoryList__dropdown::-webkit-scrollbar-track {
@@ -59,7 +58,6 @@
   white-space: nowrap;
   width: 100%;
   box-sizing: border-box;
-  border-radius: 3px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
