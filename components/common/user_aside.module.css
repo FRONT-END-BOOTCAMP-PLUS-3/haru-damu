@@ -1,0 +1,105 @@
+.user_aside__wrapper {
+    width: 352px;
+    height: 100%;
+
+    border : 1px solid var(--primary-color);
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.user_aside__div {
+    width: 100%;
+    height: 170px;
+
+    box-sizing: border-box;
+    padding: 0px 40px;
+    
+    color: var(--base-white);
+    background: var(--primary-color);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.user_aside__name__div {
+    max-width: 140px;
+
+    margin-left: 3px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.user_aside__name {
+    width: 100%;
+
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+}
+
+.aside_button {
+    all: unset;
+
+    width: 100%;
+
+    padding: 30px 0px;
+    border-top : 1px solid var(--secondary-color);
+
+    color : var(--base-content-dark-text);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.aside_button:hover{
+    color : var(--base-white);
+    background: var(--primary-color);
+}
+
+.aside_button__is_current {
+    background: var(--secondary-color);
+}
+
+.aside_button__span__is_current {
+    color: var(--base-white);
+}
+
+.aside_chart__wrapper {
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.aside_chart__title {
+    padding-bottom: 20px;
+}
+
+.aside_chart__sub {
+    padding: 10px;
+}
+
+.aside_chart__list {
+    padding: 5px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.aside_chart__list__div {
+    width: 14px;
+    height: 14px;
+
+    margin-right: 5px;
+}

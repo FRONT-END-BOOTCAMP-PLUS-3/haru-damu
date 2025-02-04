@@ -4,6 +4,7 @@ import type { StateStorage } from "zustand/middleware";
 import { create } from "zustand";
 import { createModalSlice } from "@/stores/modal";
 import { createSelectorFunctions } from "auto-zustand-selectors-hook";
+import { createMypageSlice, type TMypageSlice } from "@/stores/mypage_store";
 import { persist, createJSONStorage, subscribeWithSelector } from "zustand/middleware";
 
 const storage: StateStorage = {
@@ -19,13 +20,14 @@ const storage: StateStorage = {
   },
 };
 
-export type State = TModalSlice;
+export type State = TModalSlice & TMypageSlice;
 
 export const useStore = create<State>()(
   subscribeWithSelector(
     persist(
       (...a) => ({
         ...createModalSlice(...a),
+        ...createMypageSlice(...a),
       }),
       {
         version: 144,
