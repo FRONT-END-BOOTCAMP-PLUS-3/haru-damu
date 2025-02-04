@@ -5,11 +5,16 @@ export function calcBmr(weight: number, height: number, age: number, gender: "M"
 
 // 권장 칼로리 계산
 export function calcRecommendedKcal(bmr: number, activityLevel: number): number {
-  const calcActivity = [1.2, 1.37, 1.55, 1.725, 1.9];
-  // [매우 적은 활동량, 가벼운 활동, 보통 활동, 활발한 활동, 매우 활발];
-  return bmr * calcActivity[activityLevel - 1];
-}
+  const activityMultiplier: Record<number, number> = {
+    1: 1.2, // 매우 적은 활동량
+    2: 1.37, // 가벼운 활동
+    3: 1.55, // 보통 활동
+    4: 1.725, // 활발한 활동
+    5: 1.9, // 매우 활발
+  };
 
+  return activityMultiplier[activityLevel] ? bmr * activityMultiplier[activityLevel] : bmr;
+}
 // 단백질 계산(단백질은 체중의 1.2배)
 export function calcProtein(weight: number, activityLevel: number): number {
   const activityRate = activityLevel <= 3 ? 0.8 : 1.2; // 활동량에 따른 단백질 배율
