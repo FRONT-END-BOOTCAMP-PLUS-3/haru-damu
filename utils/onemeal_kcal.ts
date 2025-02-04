@@ -8,7 +8,7 @@ import {
   calcSugar,
 } from "@/utils/oneday_kcal";
 
-// 식사별 영양소 계산
+// 식사별 영양소 타입
 type MealNutrients = {
   calories: number;
   protein: number;
@@ -22,7 +22,7 @@ export function calcOneMeals(
   weight: number,
   height: number,
   age: number,
-  isMale: boolean,
+  gender: "M" | "F",
   activityLevel: number,
 ): {
   breakfast: MealNutrients;
@@ -31,7 +31,7 @@ export function calcOneMeals(
   total: MealNutrients;
 } {
   // BMR 계산
-  const bmr = calcBmr(weight, height, age, isMale);
+  const bmr = calcBmr(weight, height, age, gender);
 
   // 권장 칼로리 계산
   const recommendedKcal = calcRecommendedKcal(bmr, activityLevel);
@@ -48,7 +48,7 @@ export function calcOneMeals(
       carbohydrates: calcCarbohydrates(mealCalories),
       fat: calcFat(mealCalories),
       sugar: calcSugar(mealCalories),
-      sodium: calcSalt() * mealRatio, // calcSalt 함수 호출로 변경
+      sodium: calcSalt() * mealRatio,
     };
   };
 

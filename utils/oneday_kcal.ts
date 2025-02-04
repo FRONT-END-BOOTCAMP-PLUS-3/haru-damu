@@ -1,6 +1,6 @@
 // BMR 계산
-export function calcBmr(weight: number, height: number, age: number, isMale: boolean): number {
-  return isMale ? 10 * weight + 6.25 * height - 5 * age + 5 : 10 * weight + 6.25 * height - 5 * age - 161;
+export function calcBmr(weight: number, height: number, age: number, gender: "M" | "F"): number {
+  return gender === "M" ? 10 * weight + 6.25 * height - 5 * age + 5 : 10 * weight + 6.25 * height - 5 * age - 161;
 }
 
 // 권장 칼로리 계산
