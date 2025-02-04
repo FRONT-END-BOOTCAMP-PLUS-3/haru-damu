@@ -1,0 +1,41 @@
+// BMR 계산
+export function calcBmr(weight: number, height: number, age: number, gender: "M" | "F"): number {
+  return gender === "M" ? 10 * weight + 6.25 * height - 5 * age + 5 : 10 * weight + 6.25 * height - 5 * age - 161;
+}
+
+// 권장 칼로리 계산
+export function calcRecommendedKcal(bmr: number, activityLevel: number): number {
+  const activityMultiplier: Record<number, number> = {
+    1: 1.2, // 매우 적은 활동량
+    2: 1.37, // 가벼운 활동
+    3: 1.55, // 보통 활동
+    4: 1.725, // 활발한 활동
+    5: 1.9, // 매우 활발
+  };
+
+  return activityMultiplier[activityLevel] ? bmr * activityMultiplier[activityLevel] : bmr;
+}
+// 단백질 계산(단백질은 체중의 1.2배)
+export function calcProtein(weight: number, activityLevel: number): number {
+  const activityRate = activityLevel <= 3 ? 0.8 : 1.2; // 활동량에 따른 단백질 배율
+  return weight * activityRate;
+}
+
+// 탄수화물 계산(탄수화물은 권장 칼로리의 55%)
+export function calcCarbohydrates(recommendedKcal: number): number {
+  return (recommendedKcal * 0.55) / 4; // 1g 탄수화물 = 4kcal
+}
+
+// 지방 계산(지방은 권장 칼로리의 25%)
+export function calcFat(recommendedKcal: number): number {
+  return (recommendedKcal * 0.25) / 9; // 1g 지방 = 9kcal
+}
+
+// 당 계산(당은 권장 칼로리의 7.5%)
+export function calcSugar(recommendedKcal: number): number {
+  return (recommendedKcal * 0.075) / 4; // 설탕 1g = 4kcal
+}
+// 나트륨 계산 (고정값)
+export function calcSalt(salt?: number): number {
+  return salt ?? 2000;
+}
