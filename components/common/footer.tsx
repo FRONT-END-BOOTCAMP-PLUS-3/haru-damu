@@ -1,9 +1,10 @@
 "use client";
 
-import styles from "@/components/common/footer.module.css";
-
 import Link from "next/link";
 import Image from "next/image";
+
+import styles from "@/components/common/footer.module.css";
+
 import classNames from "classnames/bind";
 import { ExternalLink } from "lucide-react";
 import logo from "@/public/haruDamu_grayscale_logo.svg";
