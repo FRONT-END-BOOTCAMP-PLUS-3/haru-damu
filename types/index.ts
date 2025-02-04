@@ -17,6 +17,14 @@ export type TItem = {
   updated_at: string;
 };
 
+export type TUser = {
+  user_id: number;
+  name: string;
+  email: string;
+    created_at: string;
+  updated_at: string;
+};
+
 export type TUnit = "g" | "ml" | "l" | "입";
 
 export type TNutrition = {
@@ -27,4 +35,22 @@ export type TNutrition = {
   fat: number;
   sodium: number;
   sugar: number;
+};
+
+export type THealth = {
+  user_id: number;
+  gender_code: "M" | "F";
+  age: number;
+  weight: number;
+  height: number;
+  activity_code: number;
+  calorie: number;
+  carbohydrates: number;
+  protein: number;
+  fat: number;
+  sodium: number;
+  sugar: number;
+  is_custom: boolean;
+  created_at: string; // ISO 날짜 형식
+  updated_at: string; // ISO 날짜 형식
 };
