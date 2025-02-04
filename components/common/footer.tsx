@@ -7,8 +7,8 @@ import styles from "@/components/common/footer.module.css";
 
 import classNames from "classnames/bind";
 import { ExternalLink } from "lucide-react";
-import logo from "@/public/haruDamu_grayscale_logo.svg";
 import { BRAND_NAMES, EXTERNAL_URLS } from "@/constants";
+import footerLogo from "@/public/haruDamu_grayscale_logo.svg";
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +18,7 @@ export default function Footer() {
     <footer className={wrapper}>
       <div className={cx(footer, `container`)}>
         <Link href={"/"} className={footer__left}>
-          <Image src={logo} alt="logo" width={50} height={50} />
+          <Image src={footerLogo} alt="logo" width={50} height={50} />
           <p className="title-lg-b">{BRAND_NAMES.KOREAN}</p>
         </Link>
         <div className={footer__center}>
