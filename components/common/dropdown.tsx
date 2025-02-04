@@ -54,6 +54,7 @@ export default function Dropdown<T = string>({
         <input
           type="text"
           value={inputValue}
+          readOnly
           placeholder={placeHolder}
           onChange={(e) => setInputValue(e.target.value)}
           onFocus={() => setInputValue(String(selectedValue) || "")}
