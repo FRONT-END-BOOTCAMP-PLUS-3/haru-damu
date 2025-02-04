@@ -2,17 +2,18 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+
 }
 
 .modal__box {
-    background-color: white;
+    background-color: var(--base-white);
     max-width: 1080px;
     max-height: 80%;
     overflow: hidden;
