@@ -1,4 +1,5 @@
 "use client";
+import type { InputHTMLAttributes } from "react";
 import { useState, useRef, useEffect } from "react";
 
 import style from "@/components/common/dropdown.module.css";
@@ -8,14 +9,17 @@ import { ChevronUp, ChevronDown } from "lucide-react";
 
 const cx = classNames.bind(style);
 
-interface DropdownProps {
-  options: string[];
-  onSelect: (value: string) => void;
+interface DropdownProps<T = string> extends Omit<InputHTMLAttributes<HTMLInputElement>, "onClick"> {
+  placeHolder?: string;
+  currentItem?: T;
+  itemList: T[];
+  width?: string;
+  onClick: (value: T) => void;
 }
 
-export default function Dropdown({ options, onSelect }: DropdownProps) {
-  const [inputValue, setInputValue] = useState("");
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+export default function Dropdown({ placeHolder, currentItem, itemList, width, onClick, ...rest }: DropdownProps) {
+  const [inputValue, setInputValue] = useState(currentItem || "");
+  const [selectedValue, setSelectedValue] = useState<string | null>(currentItem || null);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -23,7 +27,7 @@ export default function Dropdown({ options, onSelect }: DropdownProps) {
     setInputValue(value);
     setSelectedValue(value);
     setIsOpen(false);
-    onSelect(value);
+    onClick(value);
   };
 
   useEffect(() => {
@@ -38,15 +42,16 @@ export default function Dropdown({ options, onSelect }: DropdownProps) {
   }, []);
 
   return (
-    <div className={cx("dropdown")} ref={dropdownRef}>
+    <div className={cx("dropdown")} ref={dropdownRef} style={{ width }}>
       <div className={cx("dropdown__wrapper")}>
         <input
           type="text"
           value={inputValue}
-          placeholder="검색..."
+          placeholder={placeHolder || "검색..."}
           onChange={(e) => setInputValue(e.target.value)}
           onFocus={() => setInputValue(selectedValue || "")}
           className={cx("dropdown__input")}
+          {...rest}
         />
 
         {isOpen ? (
@@ -57,8 +62,8 @@ export default function Dropdown({ options, onSelect }: DropdownProps) {
       </div>
       {isOpen && (
         <ul className={cx("dropdown__list")}>
-          {options.length > 0 &&
-            options.map((option) => (
+          {itemList.length > 0 &&
+            itemList.map((option) => (
               <li
                 key={option}
                 onClick={() => handleSelect(option)}
