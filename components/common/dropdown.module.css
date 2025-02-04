@@ -1,57 +1,60 @@
 .dropdown {
   display: flex;
-  width: 350px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-.dropdown__wrapper {
-  display: flex;
-  padding: 16px 20px;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
-  border-radius: 6px;
-  border:
-    1px solid,
-    #cbc9cf;
-  background: #fff;
-}
-.dropdown__input {
   width: 100%;
-  padding: 8px;
-  padding-right: 36px; /* 버튼 공간 확보 */
-  border: none; /* 🔹 input의 테두리 제거 */
-  outline: none; /* 포커스 시 기본 아웃라인 제거 */
-  background: transparent; /* 배경색 투명화 */
-}
-.dropdown__list {
-  display: flex;
-  padding: 12px 0px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
-  align-self: stretch;
-  border-radius: 6px;
-  border: 1px solid #e5e4e7;
-  background: #fff;
-  box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
-}
-.dropdown__item {
-  display: flex; /* 🔹 가로 정렬을 위해 flex 사용 */
-  justify-content: center; /* 🔹 텍스트를 중앙 정렬 */
-  align-items: center; /* 🔹 수직 중앙 정렬 */
-  width: 100%; /* 🔹 가로 전체 너비를 차지하도록 설정 */
-  color: #111322;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 22px; /* 157.143% */
-  padding: 10px 0;
 }
 
-/* 🔹 마지막 항목을 제외한 모든 항목에 하단 구분선 추가 */
+.dropdown__wrapper {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--secondary-color);
+  background: var(--base-white);
+  cursor: pointer;
+}
+
+.dropdown__input {
+  width: 100%;
+  border: none;
+  outline: none;
+  color: var(--base-black);
+}
+
+.dropdown__list {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  gap: 5px;
+  border-radius: 6px;
+  border: 1px solid var(--secondary-color);
+  background: var(--base-white);
+  box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.10);
+}
+
+.dropdown__item {
+  display: block;
+  padding: 10px;
+  color: var(--base-black);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .dropdown__item:not(:last-child) {
-  border-bottom: 2px solid #e5e4e7;
-  width: 100%; /* 🔹 구분선이 글자 크기에 맞춰지지 않고 전체 너비를 차지하도록 설정 */
+  border-bottom: 1px solid var(--light-gray-color);
+}
+
+.dropdown__item:hover {
+  background-color: var(--light-gray-color);
+  color: var(--base-white);
+}
+
+.dropdown__item__Keyboard {
+  background-color: var(--light-gray-color);
+  color: var(--base-white);
 }
