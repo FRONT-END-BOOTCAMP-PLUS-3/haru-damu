@@ -33,9 +33,8 @@ export function calcFat(recommendedKcal: number): number {
 
 // 당 계산(당은 권장 칼로리의 7.5%)
 export function calcSugar(recommendedKcal: number): number {
-  return recommendedKcal * 0.075; // 권장 칼로리의 7.5%
+  return (recommendedKcal * 0.075) / 4; // 설탕 1g = 4kcal
 }
-
 // 나트륨 계산 (고정값)
 export function calcSalt(salt?: number): number {
   return salt ?? 2000;
