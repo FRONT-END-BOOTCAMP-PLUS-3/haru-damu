@@ -33,7 +33,7 @@ export default function UserAside({ user, health }: UserAsideProps) {
       <div className={cx("user_aside__div")}>
         <span className="title-lg">{WELCOME_TEXT}</span>
         <div className={cx("user_aside__name__div", "title-lg-b")}>
-          <span className={cx("user_aside__name")}>{`${name}ddddddsafsfsddafsdddddddddd`}</span>
+          <span className={cx("user_aside__name")}>{name}</span>
           <span>{HONORIFIC_TEXT}</span>
         </div>
       </div>
