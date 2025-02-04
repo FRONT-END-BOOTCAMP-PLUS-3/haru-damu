@@ -35,4 +35,14 @@ export const HEALTH_CHART_DATA: {
     kor: "지방",
     color: "rgba(255, 206, 86, 1)",
   },
+  {
+    eng: "sodium",
+    kor: "나트륨",
+    color: "#FFF",
+  },
+  {
+    eng: "sugar",
+    kor: "당",
+     color: "#FFF",
+  },
 ];
