@@ -1,0 +1,28 @@
+.wrapper {
+  background-color: #EEE;
+  padding: 40px 0;
+  
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__left,
+.footer__center,
+.footer__right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  color: var(--base-content-sub-text);
+}
+
+.footer__right:hover {
+  text-decoration: underline;
+}
