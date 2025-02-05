@@ -1,4 +1,4 @@
-type Banner = {
+export type Banner = {
   id: number;
   image: string;
   categoryId: number;
