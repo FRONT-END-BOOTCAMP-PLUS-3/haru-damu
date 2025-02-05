@@ -44,7 +44,7 @@ gap:5px;
 }
 .header__nav__icons {
   display: flex;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
 
 }
