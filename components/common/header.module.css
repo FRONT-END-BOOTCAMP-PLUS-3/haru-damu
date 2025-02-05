@@ -1,4 +1,3 @@
-/* 헤더 전체 */
 .header {
 width: 100%;
 background-color: var(--base-white);
@@ -21,7 +20,6 @@ padding-bottom: 10px;
   height: 67px;
 }
 
-/* 헤더 컨테이너 */
 .header__container {
 width: 100%;
 max-width: 1080px;
@@ -76,7 +74,6 @@ display: flex;
 align-items: center;
 }
 
-/* 두 번째 줄: 로고, 장바구니 & 사용자 아이콘 */
 .header__middle {
 width: 100%;
 display: flex;
@@ -109,13 +106,13 @@ margin-left: 10px;
 cursor: pointer;
 }
 
-/* 세 번째 줄: 카테고리 버튼, 검색창, 1일 식단 장바구니 안내 */
+
 .header__menu_button {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    gap: 10px; /* 간격을 적절하게 설정 */
+    gap: 10px;
     padding-bottom: 5px;
   }
 
@@ -133,10 +130,10 @@ cursor: pointer;
     cursor: pointer;
     color: var(--secondary-color);
     border-radius: 15px;
-    transition: background-color 0.3s, color 0.3s; /* 부드러운 색상 전환 */
+    transition: background-color 0.3s, color 0.3s; 
   }
   .header__diet_button:hover {
-    background-color: var(--secondary-color); /* 배경색 변경 */
-    color: var(--base-white); /* 글자색 변경 */
+    background-color: var(--secondary-color); 
+    color: var(--base-white); 
   }
   

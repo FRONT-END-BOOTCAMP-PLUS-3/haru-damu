@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation"; // ✅ Link 대신 useRouter 사용
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import CategoryList from "@/components/category_list";
 import styles from "@/components/common/header.module.css";
