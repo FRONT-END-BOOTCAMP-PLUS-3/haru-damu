@@ -5,6 +5,7 @@ export type TCart = {
   item_id: number;
   wrapper_id: string | null;
   quantity: number;
+  is_checked: boolean;
   created_at: string;
   updated_at: string;
   item_name: string;
