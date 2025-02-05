@@ -37,7 +37,7 @@ export default function HorizontalItem({ cart, isEditable, onCheck, onQuantityCh
     horizontal_item_quantity__button,
     horizontal_item_quantity__value,
   } = styles;
-  const { item_id, item_name, item_price, img, quantity, blurImg } = cart;
+  const { item_id, item_name, item_price, img, quantity, is_checked, blurImg } = cart;
   const formattedPrice = item_price.toLocaleString();
   const handlers = isEditable
     ? {
@@ -62,7 +62,12 @@ export default function HorizontalItem({ cart, isEditable, onCheck, onQuantityCh
       <div className={cx(horizontal_item, { horizontal_item__read_only: !isEditable })}>
         <div className={horizontal_item_left}>
           {isEditable && (
-            <input type="checkbox" className={horizontal_item_left__checkbox} onChange={handlers?.onCheckHandler} />
+            <input
+              type="checkbox"
+              className={horizontal_item_left__checkbox}
+              onChange={handlers?.onCheckHandler}
+              checked={is_checked}
+            />
           )}
           <Link href={`/item/${item_id}`} className={horizontal_item__link_img}>
             {img ? (
