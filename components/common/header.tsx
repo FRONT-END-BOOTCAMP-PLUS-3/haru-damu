@@ -4,12 +4,11 @@ import { useRouter } from "next/navigation";
 
 import { useState, useEffect, useCallback } from "react";
 
+import SearchBar from "@/components/searchbar";
 import CategoryList from "@/components/category_list";
 import styles from "@/components/common/header.module.css";
 
 import categoryList from "@/constants/categories_list";
-
-import SearchBar from "../searchbar";
 
 import classNames from "classnames/bind";
 import { ShoppingBasket, User } from "lucide-react";
