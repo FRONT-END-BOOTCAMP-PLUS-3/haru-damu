@@ -5,14 +5,14 @@ import Image from "next/image";
 import Button from "@/components/common/button";
 import styles from "@/components/common/horizontal_item.module.css";
 
-import type { TCart } from "@/types";
+import type { THorizontalItem } from "@/types";
 
 import classNames from "classnames/bind";
 import { ChevronLeft, ChevronRight, ImageOff, Trash2 } from "lucide-react";
 
 interface HorizontalItemProps {
-  cart: TCart;
-  isEditable: boolean;
+  horizontalItem: THorizontalItem;
+  isEditable: false;
   onCheck: (itemId: number, checked: boolean) => void;
   onQuantityChange: (itemId: number, quantity: number) => void;
   onDelete: (itemId: number) => void;
@@ -20,7 +20,13 @@ interface HorizontalItemProps {
 
 const cx = classNames.bind(styles);
 
-export default function HorizontalItem({ cart, isEditable, onCheck, onQuantityChange, onDelete }: HorizontalItemProps) {
+export default function HorizontalItem({
+  horizontalItem,
+  isEditable,
+  onCheck,
+  onQuantityChange,
+  onDelete,
+}: HorizontalItemProps) {
   const {
     wrapper,
     horizontal_item,
@@ -37,7 +43,7 @@ export default function HorizontalItem({ cart, isEditable, onCheck, onQuantityCh
     horizontal_item_quantity__button,
     horizontal_item_quantity__value,
   } = styles;
-  const { item_id, item_name, item_price, img, quantity, is_checked, blurImg } = cart;
+  const { item_id, item_name, item_price, img, quantity, is_checked, blurImg } = horizontalItem;
   const formattedPrice = item_price.toLocaleString();
   const handlers = isEditable
     ? {
