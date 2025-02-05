@@ -7,7 +7,7 @@ import Header from "@/components/common/header";
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div>
-      <Header isLogin={true} />
+      <Header isLogin={true} isPartner />
       <main>{children}</main>
       <Footer />
     </div>

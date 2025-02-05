@@ -21,7 +21,7 @@ interface HeaderProps {
 
 const cx = classNames.bind(styles);
 
-export default function Header({ isLogin, isPartner }: HeaderProps) {
+export default function Header({ isLogin, isPartner = false }: HeaderProps) {
   const [isShrunk, setIsShrunk] = useState(false);
 
   const handleScroll = useCallback(() => setIsShrunk(window.scrollY > 100), []);
@@ -32,7 +32,7 @@ export default function Header({ isLogin, isPartner }: HeaderProps) {
   }, [handleScroll]);
 
   return (
-    <header className={cx("header", { nav: isShrunk })}>
+    <header className={cx("header", { nav: !isPartner && isShrunk })}>
       <div className={cx("header__container", "text-sm")}>
         {isPartner && isLogin ? <PartnerHeader /> : <HeaderContent isLogin={isLogin} isShrunk={isShrunk} />}
       </div>
