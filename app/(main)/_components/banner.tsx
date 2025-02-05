@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { useState, useEffect } from "react";
 
@@ -17,7 +18,12 @@ const cx = classNames.bind(styles);
 
 export default function Banner({ bannerItem }: BannerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const router = useRouter();
 
+  const handleBannerClick = () => {
+    const currentBanner = bannerItem[currentIndex]; // 현재 배너 가져오기
+    router.push(`/category?id=${encodeURIComponent(currentBanner.categoryName)}`);
+  };
   const goToNext = () => {
     setCurrentIndex((prev) => (prev + 1) % bannerItem.length);
   };
@@ -36,18 +42,19 @@ export default function Banner({ bannerItem }: BannerProps) {
       <button className={cx("banner__arrow")} onClick={goToPrev}>
         <CircleArrowLeft />
       </button>
-      <div className={cx("banner__slider")}>
+      <div>
         {bannerItem.map((banner, index) => (
           <Image
-            key={banner.id}
+            key={banner.categoryId}
             src={banner.image}
-            alt={`배너 ${banner.id}`}
+            alt={`배너 ${banner.categoryName}`}
             width={1080}
             height={300}
             className={cx("banner__image", {
               "banner__image--active": index === currentIndex,
             })}
             priority
+            onClick={handleBannerClick}
           />
         ))}
       </div>

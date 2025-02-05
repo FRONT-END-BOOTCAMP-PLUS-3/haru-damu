@@ -26,6 +26,7 @@
 }
 
 .banner__image {
+  cursor: pointer;
   position: absolute;
   object-fit: cover;
   opacity: 0;

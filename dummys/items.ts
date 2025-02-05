@@ -1,3 +1,5 @@
+import type { TItem } from "@/types";
+
 const items = [
   {
     item_id: 1,
@@ -662,3 +664,102 @@ const items = [
 ];
 
 export default items;
+
+export const dummyItems: TItem[] = [
+  {
+    item_id: 1,
+    store_id: 101,
+    item_name: "유기농 사과",
+    item_price: 5000,
+    img: "/default_items.jpg",
+    blurImg: "/images/apple-blur.jpg",
+    description: "신선한 유기농 사과입니다.",
+    category_code: "FRUITS",
+    item_code: 1001,
+    unit_type: "g", // ✅ TUnit에 포함된 값으로 설정
+    volume: 1,
+    nutrition: {
+      g: 100,
+      calorie: 250,
+      carbohydrates: 30,
+      protein: 10,
+      fat: 5,
+      sodium: 200,
+      sugar: 15,
+    },
+    created_at: "2025-02-05T10:00:00Z",
+    updated_at: "2025-02-05T12:00:00Z",
+  },
+  {
+    item_id: 2,
+    store_id: 102,
+    item_name: "무염 아몬드",
+    item_price: 12000,
+    img: "/default_items.jpg",
+    blurImg: "/images/almond-blur.jpg",
+    description: "고소한 무염 아몬드 500g.",
+    category_code: "NUTS",
+    item_code: 1002,
+    unit_type: "g", // ✅ TUnit 값 중 하나여야 함
+    volume: 500,
+    nutrition: {
+      g: 100,
+      calorie: 250,
+      carbohydrates: 30,
+      protein: 10,
+      fat: 5,
+      sodium: 200,
+      sugar: 15,
+    },
+    created_at: "2025-02-04T15:30:00Z",
+    updated_at: "2025-02-05T08:20:00Z",
+  },
+  {
+    item_id: 3,
+    store_id: 103,
+    item_name: "우유",
+    item_price: 3000,
+    img: "/default_items.jpg",
+    blurImg: "/images/milk-blur.jpg",
+    description: "신선한 우유 1L",
+    category_code: "DAIRY",
+    item_code: 1003,
+    unit_type: "l", // ✅ TUnit 타입에 맞게 설정
+    volume: 1,
+    nutrition: {
+      g: 100,
+      calorie: 42,
+      carbohydrates: 5,
+      protein: 3.4,
+      fat: 1,
+      sodium: 50,
+      sugar: 5,
+    },
+    created_at: "2025-02-03T09:00:00Z",
+    updated_at: "2025-02-04T14:45:00Z",
+  },
+  {
+    item_id: 4,
+    store_id: 107,
+    item_name: "우유",
+    item_price: 3000,
+    img: "/default_items.jpg",
+    blurImg: "/images/milk-blur.jpg",
+    description: "신선한 우유 1L",
+    category_code: "DAIRY",
+    item_code: 1003,
+    unit_type: "l", // ✅ TUnit 타입에 맞게 설정
+    volume: 1,
+    nutrition: {
+      g: 100,
+      calorie: 42,
+      carbohydrates: 5,
+      protein: 3.4,
+      fat: 1,
+      sodium: 50,
+      sugar: 5,
+    },
+    created_at: "2025-02-03T09:00:00Z",
+    updated_at: "2025-02-04T14:45:00Z",
+  },
+];
