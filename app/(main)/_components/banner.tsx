@@ -5,26 +5,25 @@ import { useState, useEffect } from "react";
 
 import styles from "@/app/(main)/_components/banner.module.css";
 
+import type { Banner } from "@/constants/banner";
+
 import classNames from "classnames/bind";
 import { CircleArrowRight, CircleArrowLeft } from "lucide-react";
 
+interface BannerProps {
+  bannerItem: Banner[];
+}
 const cx = classNames.bind(styles);
 
-const banners = [
-  { id: 1, image: "/banner/bread.jpg" },
-  { id: 2, image: "/banner/fish.jpg" },
-  { id: 3, image: "/banner/meet.jpg" },
-];
-
-export default function Banner() {
+export default function Banner({ bannerItem }: BannerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % banners.length);
+    setCurrentIndex((prev) => (prev + 1) % bannerItem.length);
   };
 
   const goToPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length);
+    setCurrentIndex((prev) => (prev - 1 + bannerItem.length) % bannerItem.length);
   };
 
   useEffect(() => {
@@ -38,7 +37,7 @@ export default function Banner() {
         <CircleArrowLeft />
       </button>
       <div className={cx("banner__slider")}>
-        {banners.map((banner, index) => (
+        {bannerItem.map((banner, index) => (
           <Image
             key={banner.id}
             src={banner.image}
