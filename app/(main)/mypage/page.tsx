@@ -3,7 +3,8 @@
 import { useEffect } from "react";
 
 import UserAside from "@/components/common/user_aside";
-import OrderPage from "@/app/(main)/mypage/components/order";
+
+import OrderPage from "@/app/(main)/mypage/_components/order";
 // import HealthPage from "@/app/(main)/mypage/components/settings";
 // import PersonalPage from "@/app/(main)/mypage/components/profile";
 // import NutritionPage from "@/app/(main)/mypage/components/nutrition";

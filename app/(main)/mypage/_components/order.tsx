@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 
-import styles from "@/app/(main)/mypage/components/order.module.css";
+import HorizontalItem from "@/components/common/horizontal_item";
+
+import styles from "@/app/(main)/mypage/_components/order.module.css";
 
 import classNames from "classnames/bind";
 
