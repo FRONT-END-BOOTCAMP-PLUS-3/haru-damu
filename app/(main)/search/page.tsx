@@ -2,7 +2,7 @@ import VerticalItem from "@/components/common/vertical_item";
 
 import getBlurImg from "@/utils/get_blur_img";
 
-import styles from "@/app/search/search_page.module.css";
+import styles from "@/app/(main)/search/search_page.module.css";
 
 import type { TItem } from "@/types";
 
