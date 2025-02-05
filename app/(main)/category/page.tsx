@@ -1,33 +1,24 @@
-import VerticalItem from "@/components/common/vertical_item";
-
 import getBlurImg from "@/utils/get_blur_img";
-
-import styles from "@/app/(main)/category/category_page.module.css";
 
 import type { TItem } from "@/types";
 
 import items from "@/dummys/items";
-import classNames from "classnames/bind";
+import CategoryResult from "@/app/(main)/category/_components/category_result";
 
-const cx = classNames.bind(styles);
+export default async function CategoryPage({ searchParams }: { searchParams: { page?: string } }) {
+  const currentPage = Number(searchParams.page) || 1;
+  const itemsPerPage = 20;
 
-export default async function SearchPage() {
-  // service에서 유틸을 이용해 blur이미지 생성
-  const newItems: TItem[] = await Promise.all(
-    items.map(async (item) => {
-      const blurImg = await getBlurImg(item.img);
-      return { ...item, blurImg, img: item.img };
-    }),
-  );
+  // 현재 페이지에 해당하는 아이템들만 가져오기
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedItems = items.slice(startIndex, endIndex);
 
-  return (
-    <div className={cx("container", "category_page")}>
-      <h1 className={cx("category__title", "title-lg-b")}>카테고리 결과</h1>
-      <ul className={cx("category__item_list")}>
-        {newItems.map((item) => (
-          <VerticalItem key={item.item_id} item={item} />
-        ))}
-      </ul>
-    </div>
-  );
+  const newItems: TItem[] = [];
+  for (const item of paginatedItems) {
+    const blurImg = await getBlurImg(item.img);
+    newItems.push({ ...item, blurImg, img: item.img });
+  }
+
+  return <CategoryResult items={newItems} totalItems={items.length} />;
 }
