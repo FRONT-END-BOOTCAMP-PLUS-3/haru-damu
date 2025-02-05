@@ -1,3 +1,11 @@
+.meal_cart_item__dragging {
+    list-style-type: none;
+
+    border-radius: 10px;
+
+    opacity: 0.4;
+}
+
 .meal_cart_item__image__wrapper {
     width: 150px;
     height: 150px;
@@ -7,6 +15,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background: var(--light-gray-color);
 
     position: relative;
 
@@ -19,7 +29,6 @@
 
 .meal_cart_item__no__image {
     color: var(--base-content-sub-text);
-    border : 1px solid var(--base-content-sub-text);
 }
 
 .meal_cart_item__link {

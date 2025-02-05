@@ -9,6 +9,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    z-index: 4000;
 }
 
 .meal_cart__title {

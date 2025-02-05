@@ -4,24 +4,37 @@ import Image from "next/image";
 import type { MouseEvent } from "react";
 
 import Button from "@/components/common/button";
-import style from "@/app/(main)/cart/components/meal_cart_item.module.css";
+
+import { useStore } from "@/hooks/usestore";
+
+import style from "@/app/(main)/cart/_components/meal_cart_item.module.css";
 
 import type { TCartItem } from "@/stores/cart_store";
 
 import classNames from "classnames/bind";
 import { ImageOff, X } from "lucide-react";
-import { useStore } from "@/hooks/usestore";
+import { useSortable } from "@dnd-kit/sortable";
 
 const cx = classNames.bind(style);
 
 interface ItemListProps {
   item: TCartItem;
+  isDragging?: boolean;
 }
 
-export default function MealCartItem({ item }: ItemListProps) {
+export default function MealCartItem({ item, isDragging = false }: ItemListProps) {
   const { removeMealCartItem } = useStore();
 
   const { item_id, item_name, item_price, img, blurImg } = item;
+
+  const { listeners, setNodeRef } = useSortable({
+    id: item_id,
+    data: {
+      id: item_id,
+      type: "meal-cart-item",
+      overlayItem: <MealCartItem item={item} isDragging={true} />,
+    },
+  });
 
   const removeMealItemHandler = (event: MouseEvent) => {
     event.stopPropagation();
@@ -30,8 +43,15 @@ export default function MealCartItem({ item }: ItemListProps) {
     removeMealCartItem(item);
   };
 
+  if (!item.item_id) return null;
+
   return (
-    <li id={`meal-cart-item__${item.item_id}`}>
+    <li
+      ref={setNodeRef}
+      {...listeners}
+      id={`meal-cart-item__${item.item_id}`}
+      className={cx(isDragging && "meal_cart_item__dragging")}
+    >
       <Link href={`/item/${item_id}`} className={cx("meal_cart_item__link")}>
         <div className={cx("meal_cart_item__image__wrapper")}>
           {img ? (
@@ -44,7 +64,7 @@ export default function MealCartItem({ item }: ItemListProps) {
               blurDataURL={blurImg}
             />
           ) : (
-            <ImageOff size={80} className={cx("meal_cart_item__no__image")} />
+            <ImageOff size={60} className={cx("meal_cart_item__no__image")} />
           )}
         </div>
         <div className={cx("meal_cart_item__button__wrapper")}>

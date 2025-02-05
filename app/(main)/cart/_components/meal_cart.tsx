@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 
 import Button from "@/components/common/button";
-import style from "@/app/(main)/cart/components/meal_cart.module.css";
-import MealCartItem from "@/app/(main)/cart/components/meal_cart_item";
-import MealCartChart from "@/app/(main)/cart/components/meal_cart_chart";
+import MealCartItem from "@/app/(main)/cart/_components/meal_cart_item";
+import MealCartChart from "@/app/(main)/cart/_components/meal_cart_chart";
+
+import { useStore } from "@/hooks/usestore";
+
+import style from "@/app/(main)/cart/_components/meal_cart.module.css";
 
 import type { TItem, TNutrition } from "@/types";
 import type { TCartItem } from "@/stores/cart_store";
@@ -13,8 +16,9 @@ import type { TCartItem } from "@/stores/cart_store";
 import items from "@/dummys/items";
 import health from "@/dummys/health";
 import classNames from "classnames/bind";
-import { useStore } from "@/hooks/usestore";
+import { useDroppable } from "@dnd-kit/core";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
+import { horizontalListSortingStrategy, SortableContext } from "@dnd-kit/sortable";
 
 const cx = classNames.bind(style);
 
@@ -26,6 +30,13 @@ export default function MealCart() {
   const { mealCart, removeAllMealCartItems, wrappingMealItems } = useStore();
 
   const { calorie, carbohydrates, protein, fat, sodium, sugar } = health;
+
+  const { setNodeRef } = useDroppable({
+    id: "meal-cart-area",
+    data: {
+      type: "meal-cart-area",
+    },
+  });
 
   const isCarousel = mealCart.length > 4;
 
@@ -76,7 +87,7 @@ export default function MealCart() {
   }, [mealCart]);
 
   return (
-    <div id="meal-cart-area" className={cx("meal_cart__wrapper")}>
+    <div id="meal-cart-area" ref={setNodeRef} className={cx("meal_cart__wrapper")}>
       <span className={cx("meal_cart__title", "title-md-b")}>한끼 영양성분표</span>
       <div className={cx("meal_cart__button__wrapper")}>
         <Button
@@ -115,9 +126,14 @@ export default function MealCart() {
               className={cx("meal_cart__page_text", !isCarousel && "meal_cart__page_text__none")}
             >{`page : ${page} / ${totalPage}`}</span>
             <ul className={cx("meal_cart__ul")}>
-              {carouselItems.map((item, idx) => (
-                <MealCartItem key={idx} item={item} />
-              ))}
+              <SortableContext
+                strategy={horizontalListSortingStrategy}
+                items={carouselItems.map((item) => item.item_id)}
+              >
+                {carouselItems.map((item, idx) => (
+                  <MealCartItem key={idx} item={item} />
+                ))}
+              </SortableContext>
             </ul>
           </div>
           <button
