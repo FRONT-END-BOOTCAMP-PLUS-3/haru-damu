@@ -2,7 +2,7 @@ import VerticalItem from "@/components/common/vertical_item";
 
 import getBlurImg from "@/utils/get_blur_img";
 
-import styles from "@/app/(main)/search/search_page.module.css";
+import styles from "@/app/(main)/category/category_page.module.css";
 
 import type { TItem } from "@/types";
 
@@ -21,9 +21,9 @@ export default async function SearchPage() {
   );
 
   return (
-    <div className={cx("container", "search_page")}>
-      <h1 className={cx("search__title", "title-lg-b")}>상품 검색 결과</h1>
-      <ul className={cx("search__item_list")}>
+    <div className={cx("container", "category_page")}>
+      <h1 className={cx("category__title", "title-lg-b")}>카테고리 결과</h1>
+      <ul className={cx("category__item_list")}>
         {newItems.map((item) => (
           <VerticalItem key={item.item_id} item={item} />
         ))}
