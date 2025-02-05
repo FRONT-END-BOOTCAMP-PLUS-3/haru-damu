@@ -11,8 +11,10 @@ export type TCartItem = {
   img: string | undefined;
   blurImg: string | undefined;
   quantity: number;
-  isChecked: boolean;
+  is_checked: boolean;
   wrapper_id: string | null;
+  created_at: string;
+  updated_at: string;
 };
 
 export type TCartSlice = {
@@ -20,15 +22,24 @@ export type TCartSlice = {
   mealCart: TCartItem[];
 
   fetchCart: (items: TCartItem[]) => void;
+  getCartItem: (id: number) => TCartItem;
   getIsCheckedAllCartItems: () => boolean;
   getCheckedCartItems: () => TCartItem[];
-  changeIsCheckedAllCartItems: (isChecked: boolean) => void;
+  changeIsCheckedCartItems: (id: number, is_checked: boolean) => void;
+  changeIsCheckedAllCartItems: (is_checked: boolean) => void;
+  changeQuantityCartItem: (itemId: number, quantity: number) => void;
+  removeCartItem: (id: number) => void;
 
+  getMealCartItem: (id: number) => TCartItem;
   addMealCartItem: (item: TCartItem) => void;
   bulkAddMealCartItems: (items: TCartItem[]) => void;
   wrappingMealItems: () => void;
   removeMealCartItem: (item: TCartItem) => void;
   removeAllMealCartItems: () => void;
+
+  isDragging: boolean;
+  startDragging: () => void;
+  stopDragging: () => void;
 };
 
 export const createCartSlice: StateCreator<Partial<State>, [], [], TCartSlice> = (set, get) => ({
@@ -40,20 +51,51 @@ export const createCartSlice: StateCreator<Partial<State>, [], [], TCartSlice> =
       cart: [...items],
     }),
 
+  getCartItem: (id) => {
+    return get().cart?.find((item) => item.item_id === id) as TCartItem;
+  },
+
   getIsCheckedAllCartItems: () => {
-    return !get().cart?.find((item) => !item.isChecked);
+    return !get().cart?.find((item) => !item.is_checked);
   },
 
   getCheckedCartItems: () => {
-    return get().cart?.filter((item) => item.isChecked) || [];
+    return get().cart?.filter((item) => item.is_checked) || [];
   },
 
-  changeIsCheckedAllCartItems: (isChecked) =>
+  changeIsCheckedCartItems: (id, is_checked) =>
     set({
       cart: get().cart?.map((item) => {
-        return { ...item, isChecked };
+        if (item.item_id === id) return { ...item, is_checked };
+
+        return item;
       }),
     }),
+
+  changeIsCheckedAllCartItems: (is_checked) =>
+    set({
+      cart: get().cart?.map((item) => {
+        return { ...item, is_checked };
+      }),
+    }),
+
+  changeQuantityCartItem: (id, quantity) =>
+    set({
+      cart: get().cart?.map((item) => {
+        if (item.item_id === id) return { ...item, quantity };
+
+        return item;
+      }),
+    }),
+
+  removeCartItem: (id) =>
+    set({
+      cart: get().cart?.filter((item) => id !== item.item_id),
+    }),
+
+  getMealCartItem: (id) => {
+    return get().mealCart?.find((item) => item.item_id === id) as TCartItem;
+  },
 
   addMealCartItem: (item) =>
     set((state) => {
@@ -74,14 +116,14 @@ export const createCartSlice: StateCreator<Partial<State>, [], [], TCartSlice> =
   bulkAddMealCartItems: (items) =>
     set({
       mealCart: [...(get().mealCart || []), ...items],
-      cart: [...(get().cart?.filter((cartItem) => !cartItem.isChecked) || [])],
+      cart: [...(get().cart?.filter((cartItem) => !cartItem.is_checked) || [])],
     }),
 
   wrappingMealItems: () =>
     set((state) => {
       const wrapper_id = uuidGenerator();
       const wrappedItems = state.mealCart?.map((item) => {
-        return { ...item, wrapper_id, isChecked: true } as TCartItem;
+        return { ...item, wrapper_id, is_checked: true } as TCartItem;
       });
 
       return { cart: [...(get().cart || []), ...(wrappedItems || [])], mealCart: [] };
@@ -106,4 +148,10 @@ export const createCartSlice: StateCreator<Partial<State>, [], [], TCartSlice> =
       ],
       mealCart: [],
     }),
+
+  // dnd 관련
+  isDragging: false,
+
+  startDragging: () => set({ isDragging: true }),
+  stopDragging: () => set({ isDragging: false }),
 });
