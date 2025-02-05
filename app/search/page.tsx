@@ -1,4 +1,3 @@
-import Footer from "@/components/common/footer";
 import VerticalItem from "@/components/common/vertical_item";
 
 import getBlurImg from "@/utils/get_blur_img";
@@ -22,18 +21,13 @@ export default async function SearchPage() {
   );
 
   return (
-    <>
-      <div className={cx("container", "search_page")}>
-        <h1 className={cx("title", "title-lg-b")}>상품 검색 결과</h1>
-        <ul className={cx("item_list")}>
-          {newItems.map((item) => (
-            <VerticalItem key={item.item_id} item={item} />
-          ))}
-        </ul>
-      </div>
-      <footer>
-        <Footer />
-      </footer>
-    </>
+    <div className={cx("container", "search_page")}>
+      <h1 className={cx("title", "title-lg-b")}>상품 검색 결과</h1>
+      <ul className={cx("item_list")}>
+        {newItems.map((item) => (
+          <VerticalItem key={item.item_id} item={item} />
+        ))}
+      </ul>
+    </div>
   );
 }
