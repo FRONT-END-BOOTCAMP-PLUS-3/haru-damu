@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { useState, useEffect } from "react";
+
 import CategoryList from "@/components/category_list";
 import styles from "@/components/common/header.module.css";
 
@@ -13,8 +15,8 @@ import { ShoppingBasket, User, Cpu, Shirt, Home } from "lucide-react";
 
 interface HeaderProps {
   isLogin: boolean;
-  isShrunk: boolean;
 }
+
 const cx = classNames.bind(styles);
 
 const categoryList = [
@@ -23,8 +25,22 @@ const categoryList = [
   { id: 3, category: "홈", icon: <Home width={16} height={16} />, path: "/category/home" },
 ];
 
-export default function Header({ isLogin, isShrunk }: HeaderProps) {
+export default function Header({ isLogin }: HeaderProps) {
   const router = useRouter();
+  const [isShrunk, setIsShrunk] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsShrunk(true);
+      } else {
+        setIsShrunk(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header className={cx("header", { nav: isShrunk })}>
