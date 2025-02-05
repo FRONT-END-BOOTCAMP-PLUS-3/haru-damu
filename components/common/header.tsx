@@ -40,7 +40,7 @@ export default function Header({ isLogin, isPartner = false }: HeaderProps) {
   );
 }
 
-// ✅ 파트너 헤더
+// 파트너 헤더
 const PartnerHeader = () => {
   const router = useRouter();
   return (
@@ -59,12 +59,12 @@ const PartnerHeader = () => {
   );
 };
 
-// ✅ 일반 헤더
+// 일반 헤더
 const HeaderContent = ({ isLogin, isShrunk }: { isLogin: boolean; isShrunk: boolean }) => {
   return isShrunk ? <ShrunkNav /> : <ExpandedHeader isLogin={isLogin} />;
 };
 
-// ✅ 축소된 헤더
+// 축소된 헤더
 const ShrunkNav = () => {
   return (
     <div className={cx("header__nav")}>
@@ -78,7 +78,7 @@ const ShrunkNav = () => {
   );
 };
 
-// ✅ 확장된 헤더
+// 확장된 헤더
 const ExpandedHeader = ({ isLogin }: { isLogin: boolean }) => {
   const router = useRouter();
   return (
@@ -103,7 +103,7 @@ const ExpandedHeader = ({ isLogin }: { isLogin: boolean }) => {
   );
 };
 
-// ✅ 로그인 & 회원가입 버튼
+// 로그인 & 회원가입 버튼
 const AuthButtons = ({ isLogin }: { isLogin: boolean }) => {
   const router = useRouter();
   return (
@@ -119,7 +119,7 @@ const AuthButtons = ({ isLogin }: { isLogin: boolean }) => {
   );
 };
 
-// ✅ 네비게이션 아이콘 (장바구니 & 프로필)
+// 네비게이션 아이콘 (장바구니 & 프로필)
 const NavIcons = () => {
   const router = useRouter();
   return (
@@ -130,7 +130,7 @@ const NavIcons = () => {
   );
 };
 
-// ✅ 로고 버튼
+// 로고 버튼
 const HeaderLogo = () => {
   const router = useRouter();
   return (
