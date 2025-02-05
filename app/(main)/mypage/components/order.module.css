@@ -1,0 +1,83 @@
+.order-history-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  
+  .order-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .filter-button {
+    border: 1px solid #ccc;
+    background: white;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .divider {
+    border-top: 2px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .order-item {
+    margin-bottom: 24px;
+  }
+  
+  .order-date {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .order-details {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  
+  .order-image {
+    width: 64px;
+    height: 64px;
+    background: #ddd;
+    margin-right: 16px;
+    border-radius: 4px;
+  }
+  
+  .order-info {
+    flex-grow: 1;
+  }
+  
+  .order-name {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .order-price {
+    color: #666;
+    margin-top: 4px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  
+  .action-button {
+    border: 1px solid #ccc;
+    background: white;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  

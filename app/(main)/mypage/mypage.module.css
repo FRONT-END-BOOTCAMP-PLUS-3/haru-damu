@@ -1,0 +1,15 @@
+.mypage__wrapper {
+  display: flex; /* 두 요소를 가로로 배치 */
+  width: 100%;
+}
+
+.mypage__aside-wrapper {
+  width: 355px; /* 고정된 너비 */
+  flex-shrink: 0; /* 크기 고정 */
+}
+
+.mypage_content {
+  flex-grow: 1; /* 남은 공간 차지 */
+  padding: 20px;
+  box-sizing: border-box; /* padding을 포함한 너비 설정 */
+}
