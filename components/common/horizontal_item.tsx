@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Button from "@/components/common/button";
+
 import styles from "@/components/common/horizontal_item.module.css";
 
 import type { THorizontalItem } from "@/types";
@@ -78,6 +79,7 @@ export default function HorizontalItem({
           <Link href={`/item/${item_id}`} className={horizontal_item__link_img}>
             {img ? (
               <Image
+                fill
                 src={img}
                 alt={item_name}
                 placeholder="blur"
