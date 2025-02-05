@@ -4,7 +4,21 @@ width: 100%;
 background-color: var(--base-white);
 display: flex;
 justify-content: center;
-border-bottom: 1px solid #2d411a;
+
+border-bottom: 0.5px solid rgba(0, 0, 0, 0.1); 
+box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05); 
+backdrop-filter: blur(8px);
+background: var(--base-white);
+padding-top: 5px;
+padding-bottom: 10px;
+}
+.nav{
+  position: fixed; 
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  z-index: 1000;
+  height: 67px;
 }
 
 /* 헤더 컨테이너 */
@@ -14,9 +28,27 @@ max-width: 1080px;
 display: flex;
 flex-direction: column;
 align-items: center;
+gap:5px;
 }
+.header__nav {
+  display: flex;
+  padding: 5px 0;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+.header__nav__icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
 
-/* 첫 번째 줄: 회원가입 / 로그인 */
+}
+.header__nav__left{
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  align-items: center;
+}
 .header__top {
 width: 100%;
 text-align: right;
@@ -28,14 +60,20 @@ display: flex;
 justify-content: flex-end;
 }
 
-.header__auth_link {
+.header__auth__button {
 color: var(--secondary-color);
 text-decoration: none;
 margin: 0 5px;
+border: none;
+outline: none;
+background-color: var(--base-white);
+cursor: pointer;
 }
 
 .header__divider {
 color: var(--secondary-color);
+display: flex;
+align-items: center;
 }
 
 /* 두 번째 줄: 로고, 장바구니 & 사용자 아이콘 */
@@ -50,6 +88,9 @@ padding: 5px 0;
 .header__logo {
 display: flex;
 align-items: center;
+background: none; 
+border: none; 
+cursor: pointer;
 }
 
 .header__logo_text {
@@ -72,6 +113,7 @@ cursor: pointer;
 .header__menu_button {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     gap: 10px; /* 간격을 적절하게 설정 */
     padding-bottom: 5px;
@@ -81,33 +123,20 @@ cursor: pointer;
     max-width: 150px;
   }
   
-  .header__search {
-    display: flex;
-    align-items: center;
-    width: 600px; 
-  }
-  
-  .header__search_input {
-    width: 100%; 
-    padding: 8px;
-    border: 1px solid var(--secondary-color);
-    border-radius: 5px;
-  }
-  
-  .header__search_button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: 8px; 
-  }
-  
+ 
   .header__diet_button {
+    width: 160px;
+    height: 32px;
     background-color: var(--base-white);
     border: 1px solid var(--secondary-color);
     padding: 8px 12px;
     cursor: pointer;
     color: var(--secondary-color);
     border-radius: 15px;
-    margin-left: 155px;
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 색상 전환 */
+  }
+  .header__diet_button:hover {
+    background-color: var(--secondary-color); /* 배경색 변경 */
+    color: var(--base-white); /* 글자색 변경 */
   }
   

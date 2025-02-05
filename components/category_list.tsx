@@ -20,14 +20,24 @@ interface CategoryListProps {
   categoryList: TCategory[];
   width?: string;
   height?: string;
+  isShrunk?: boolean;
 }
 
-export default function CategoryList({ categoryList, width = "200px", height = "auto" }: CategoryListProps) {
+export default function CategoryList({ categoryList, width = "200px", height = "auto", isShrunk }: CategoryListProps) {
   return (
     <div className={cx("categorylist")} style={{ width, height }}>
       <div className={cx("categorylist__button")}>
-        <AlignJustify width={16} height={14} />
-        카테고리
+        {isShrunk ? (
+          <>
+            <AlignJustify width={24} height={21} />
+          </>
+        ) : (
+          <>
+            <AlignJustify width={16} height={14} />
+            <span>카테고리</span>
+          </>
+        )}
+
         <ul className={cx("categorylist__dropdown")}>
           {categoryList.map((category, index) => (
             <li key={category.id ?? index + 1} className={cx("categorylist__item")}>
