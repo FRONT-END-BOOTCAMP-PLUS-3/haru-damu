@@ -54,3 +54,17 @@ export type THealth = {
   created_at: string; // ISO 날짜 형식
   updated_at: string; // ISO 날짜 형식
 };
+
+export type ValidConversions = {
+  g: "kg";
+  kg: "g";
+  ml: "l";
+  l: "ml";
+};
+
+export type FromUnit = keyof ValidConversions;
+export type ToUnit<U extends FromUnit> = ValidConversions[U];
+
+export type UnitConversion<U extends FromUnit> = `${U} -> ${ToUnit<U>}`;
+
+export type AllowedConversions = UnitConversion<FromUnit>;
