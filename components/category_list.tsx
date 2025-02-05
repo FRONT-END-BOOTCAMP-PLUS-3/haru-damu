@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 
+import type { ReactNode } from "react";
+
 import styles from "@/components/category_list.module.css";
 
 import classNames from "classnames/bind";
@@ -12,7 +14,7 @@ const cx = classNames.bind(styles);
 type TCategory = {
   id?: number;
   category: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   path?: string;
 };
 

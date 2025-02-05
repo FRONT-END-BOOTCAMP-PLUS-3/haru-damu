@@ -28,6 +28,13 @@ flex-direction: column;
 align-items: center;
 gap:5px;
 }
+.header__container__partner{
+  width: 100%;
+  max-width: 1080px;
+  display: flex;
+  justify-content: space-between; /* 양쪽 끝 정렬 */
+  align-items: center; 
+}
 .header__nav {
   display: flex;
   padding: 5px 0;
