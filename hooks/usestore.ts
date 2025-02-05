@@ -3,14 +3,15 @@ import type { TUserSlice } from "@/stores/user_store";
 import type { TCartSlice } from "@/stores/cart_store";
 import type { StateStorage } from "zustand/middleware";
 import type { TToastSlice } from "@/stores/toastStore";
+import type { TMypageSlice } from "@/stores/mypage_store";
 
 import { create } from "zustand";
 import { createModalSlice } from "@/stores/modal";
 import { createUserSlice } from "@/stores/user_store";
 import { createCartSlice } from "@/stores/cart_store";
 import { createToastSlice } from "@/stores/toastStore";
+import { createMypageSlice } from "@/stores/mypage_store";
 import { createSelectorFunctions } from "auto-zustand-selectors-hook";
-import { createMypageSlice, type TMypageSlice } from "@/stores/mypage_store";
 import { persist, createJSONStorage, subscribeWithSelector } from "zustand/middleware";
 
 const storage: StateStorage = {
