@@ -12,7 +12,7 @@ import { ChevronLeft, ChevronRight, ImageOff, Trash2 } from "lucide-react";
 
 interface HorizontalItemProps {
   horizontalItem: THorizontalItem;
-  isEditable: false;
+  isEditable?: boolean;
   onCheck: (itemId: number, checked: boolean) => void;
   onQuantityChange: (itemId: number, quantity: number) => void;
   onDelete: (itemId: number) => void;
@@ -22,7 +22,7 @@ const cx = classNames.bind(styles);
 
 export default function HorizontalItem({
   horizontalItem,
-  isEditable,
+  isEditable = false,
   onCheck,
   onQuantityChange,
   onDelete,
