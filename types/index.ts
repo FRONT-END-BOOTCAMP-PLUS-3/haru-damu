@@ -1,17 +1,17 @@
 export type TDateForm = `${number}. ${string}. ${string}.`;
 
-export type TCart = {
+export type THorizontalItem = {
   user_id: number;
   item_id: number;
   wrapper_id: string | null;
   quantity: number;
   is_checked: boolean;
-  created_at: string;
-  updated_at: string;
   item_name: string;
   item_price: number;
   img: string | undefined;
   blurImg: string | undefined;
+  created_at: string;
+  updated_at: string;
 };
 
 export type TItem = {
