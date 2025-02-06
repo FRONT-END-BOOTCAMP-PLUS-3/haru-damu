@@ -1,9 +1,10 @@
+import CategoryResult from "@/app/(main)/category/_components/category_result";
+
 import getBlurImg from "@/utils/get_blur_img";
 
 import type { TItem } from "@/types";
 
 import items from "@/dummys/items";
-import CategoryResult from "@/app/(main)/category/_components/category_result";
 
 export default async function CategoryPage({ searchParams }: { searchParams: { page?: string } }) {
   const itemsPerPage = 20;
