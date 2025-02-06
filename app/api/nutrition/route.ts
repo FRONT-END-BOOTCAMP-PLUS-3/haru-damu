@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 import { calcOneMeals } from "@/utils/onemeal_kcal";
 
+import type { NextRequest } from "next/server";
+
 import health from "@/dummys/health";
 
 export async function GET() {
@@ -43,4 +45,19 @@ export async function GET() {
     recommendedNutrition,
     customNutrition,
   });
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    const { id, newData } = await request.json();
+
+    // 데이터베이스 업데이트 로직
+    // await updateUserData(id, newData);
+
+    // 응답 반환 (NextResponse 사용)
+    return NextResponse.json({ message: "User data updated successfully." }, { status: 200 });
+  } catch (error) {
+    // 오류 처리 및 응답 반환
+    return NextResponse.json({ message: "Error updating user data." }, { status: 500 });
+  }
 }
