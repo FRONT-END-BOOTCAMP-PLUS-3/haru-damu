@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import type { ChangeEvent, KeyboardEvent } from "react";
 
 import styles from "@/components/searchbar.module.css";
 
@@ -20,11 +21,11 @@ export default function SearchBar() {
       router.push(`/search?query=${encodeURIComponent(value)}`);
     }
   };
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
-  const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       navigateToSearch();
     }

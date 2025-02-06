@@ -11,16 +11,14 @@ import styles from "@/components/common/header.module.css";
 import categoryList from "@/constants/categories_list";
 
 import classNames from "classnames/bind";
+import { BRAND_NAMES } from "@/constants";
+import { useStore } from "@/hooks/usestore";
 import { ShoppingBasket, User } from "lucide-react";
-
-interface HeaderProps {
-  isLogin: boolean;
-  isPartner?: boolean;
-}
 
 const cx = classNames.bind(styles);
 
-export default function Header({ isLogin, isPartner = false }: HeaderProps) {
+export default function Header() {
+  const { isLogin, userType } = useStore();
   const [isShrunk, setIsShrunk] = useState(false);
 
   const handleScroll = useCallback(() => setIsShrunk(window.scrollY > 100), []);
@@ -31,9 +29,9 @@ export default function Header({ isLogin, isPartner = false }: HeaderProps) {
   }, [handleScroll]);
 
   return (
-    <header className={cx("header", { nav: !isPartner && isShrunk })}>
+    <header className={cx("header", { nav: userType !== "partner" && isShrunk })}>
       <div className={cx("header__container", "text-sm")}>
-        {isPartner && isLogin ? <PartnerHeader /> : <HeaderContent isLogin={isLogin} isShrunk={isShrunk} />}
+        {userType === "partner" && isLogin ? <PartnerHeader /> : <HeaderContent isShrunk={isShrunk} />}
       </div>
     </header>
   );
@@ -46,7 +44,7 @@ const PartnerHeader = () => {
     <div className={cx("header__container__partner", "text-sm")}>
       <HeaderLogo />
       <div className={cx("header__auth")}>
-        <button className={cx("header__auth__button")} onClick={() => router.push("/profile")}>
+        <button className={cx("header__auth__button")} onClick={() => router.push("/mypage")}>
           유저네임
         </button>
         <div className={cx("header__divider")}>|</div>
@@ -59,8 +57,8 @@ const PartnerHeader = () => {
 };
 
 // 일반 헤더
-const HeaderContent = ({ isLogin, isShrunk }: { isLogin: boolean; isShrunk: boolean }) => {
-  return isShrunk ? <ShrunkNav /> : <ExpandedHeader isLogin={isLogin} />;
+const HeaderContent = ({ isShrunk }: { isShrunk: boolean }) => {
+  return isShrunk ? <ShrunkNav /> : <ExpandedHeader />;
 };
 
 // 축소된 헤더
@@ -78,12 +76,12 @@ const ShrunkNav = () => {
 };
 
 // 확장된 헤더
-const ExpandedHeader = ({ isLogin }: { isLogin: boolean }) => {
+const ExpandedHeader = () => {
   const router = useRouter();
   return (
     <>
       <div className={cx("header__top")}>
-        <AuthButtons isLogin={isLogin} />
+        <AuthButtons />
       </div>
       <div className={cx("header__middle")}>
         <HeaderLogo />
@@ -94,7 +92,7 @@ const ExpandedHeader = ({ isLogin }: { isLogin: boolean }) => {
           <CategoryList categoryList={categoryList} />
         </div>
         <SearchBar />
-        <button className={cx("header__diet_button", "text-xsm")} onClick={() => router.push("/diet-info")}>
+        <button className={cx("header__diet_button", "text-xsm")} onClick={() => router.push("/")}>
           1일 식단 장바구니 안내
         </button>
       </div>
@@ -103,7 +101,8 @@ const ExpandedHeader = ({ isLogin }: { isLogin: boolean }) => {
 };
 
 // 로그인 & 회원가입 버튼
-const AuthButtons = ({ isLogin }: { isLogin: boolean }) => {
+const AuthButtons = () => {
+  const { isLogin } = useStore(); // ✅ Zustand 전역 상태 가져오기
   const router = useRouter();
   return (
     <div className={cx("header__auth")}>
@@ -135,7 +134,7 @@ const HeaderLogo = () => {
   return (
     <button className={cx("header__logo")} onClick={() => router.push("/")}>
       <Image src="/favicon.ico" alt="하루담은 로고" width={40} height={40} />
-      <span className={cx("header__logo_text", "title-md-b")}>하루담은</span>
+      <span className={cx("header__logo_text", "title-md-b")}>{BRAND_NAMES["KOREAN"]}</span>
     </button>
   );
 };
