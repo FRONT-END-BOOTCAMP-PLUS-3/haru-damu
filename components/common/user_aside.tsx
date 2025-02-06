@@ -2,6 +2,8 @@
 
 import { Pie } from "react-chartjs-2";
 
+import { useStore } from "@/hooks/usestore";
+
 import style from "@/components/common/user_aside.module.css";
 
 import { ASIDE_PATH, HEALTH_CHART_DATA, HONORIFIC_TEXT, NUTRITION_TITLE, WELCOME_TEXT } from "@/constants/aside";
@@ -10,7 +12,6 @@ import type { THealth, TUser } from "@/types";
 import type { TMypagePath } from "@/stores/mypage_store";
 
 import classNames from "classnames/bind";
-import { useStore } from "@/hooks/usestore";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 
 const cx = classNames.bind(style);
