@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import type { ChangeEvent, KeyboardEvent } from "react";
 
 import styles from "@/components/searchbar.module.css";

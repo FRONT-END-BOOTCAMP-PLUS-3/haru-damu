@@ -66,8 +66,9 @@ justify-content: flex-end;
 
 .header__auth__button {
 color: var(--secondary-color);
-text-decoration: none;
 margin: 0 5px;
+border: none;
+text-decoration: none;
 all : upset;
 background-color: var(--base-white);
 cursor: pointer;
