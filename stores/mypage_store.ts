@@ -17,8 +17,11 @@ export type TMypageSlice = {
   setMypagePath: (mypagePath: TMypagePath) => void;
 
   //nutrition
+  isCustom: boolean;
   userNutrition: TMypageNutrition[];
+  setIsCustom: (isCustom: boolean) => void;
   setUserNutrition: (userNutrition: TMypageNutrition[]) => void;
+  updateUserNutrition: (key: keyof TMypageNutrition, value: number) => void;
 };
 
 export const createMypageSlice: StateCreator<Partial<State>, [], [], TMypageSlice> = (set, get) => ({
@@ -28,7 +31,25 @@ export const createMypageSlice: StateCreator<Partial<State>, [], [], TMypageSlic
   setMypagePath: (mypagePath) => set({ mypagePath }),
 
   //nutrition
+  isCustom: false,
   userNutrition: [],
 
+  setIsCustom: (isCustom) =>
+    set({
+      isCustom,
+    }),
   setUserNutrition: (userNutrition) => set({ userNutrition }),
+  updateUserNutrition: (key, value) =>
+    set(() => {
+      return {
+        userNutrition: get().userNutrition?.map((nutrition) => {
+          if (nutrition.key === key)
+            return {
+              ...nutrition,
+              value,
+            };
+          return nutrition;
+        }),
+      };
+    }),
 });
