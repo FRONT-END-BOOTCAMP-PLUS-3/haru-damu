@@ -22,3 +22,6 @@ export const MAIN_MEAL = {
     description: "가볍고 맛있는 저녁을 즐겨보세요.",
   },
 } as const;
+
+export const DRAGGABLE_TYPES = ["cart-item", "meal-cart-item"] as const;
+export const DROPPABLE_ONLY_TYPES = ["cart-list-box", "meal-cart-area"] as const;

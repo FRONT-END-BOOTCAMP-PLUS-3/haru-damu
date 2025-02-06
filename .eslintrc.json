@@ -71,16 +71,14 @@
             "react": ["react"],
             "related-react": ["react-*"],
             "next": ["next", "next/**"],
-            "hooks": "**/use-*",
-            "components": "**/components/**",
-            "services" : "**/services/**",
-            "repositories" : "**/repositories/**",
-            "entities" : "**/entities/**",
-            "shared-components": "**/shared/*.tsx",
-            "shared-hooks": "**/shared/use-*",
             "style" : ["**/**.module.css", "**/style/**"],
-            "utils": "**/utils/**",
-            "constants" : "**/constants/**"
+            "hooks": ["**/use_*","**/hooks/**"],
+            "components":[ "**/components/**", "**/_components/**"],
+            "services" : ["**/services/**"],
+            "repositories" : ["**/repositories/**"],
+            "entities" : ["**/entities/**"],
+            "utils": ["**/utils/**"],
+            "constants" : ["**/constants/**"]
           },
           "type": {
             "react": "react"

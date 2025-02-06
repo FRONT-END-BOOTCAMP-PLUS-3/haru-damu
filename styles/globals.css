@@ -5,8 +5,12 @@
 
 body {
   min-height: 100vh;
+
   position: relative;
-  padding-bottom: 130px;
+}
+
+main {
+  padding-bottom: 230px;
 }
 
 .container {

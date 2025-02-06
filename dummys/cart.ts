@@ -1,0 +1,58 @@
+const cartItems = [
+  {
+    item_id: 1,
+    user_id: 1,
+    quantity: 4,
+    is_checked: true,
+    wrapper_id: null,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    item_id: 2,
+    user_id: 1,
+    quantity: 1,
+    is_checked: true,
+    wrapper_id: null,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    item_id: 3,
+    user_id: 1,
+    quantity: 1,
+    is_checked: false,
+    wrapper_id: null,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    item_id: 4,
+    user_id: 1,
+    quantity: 1,
+    is_checked: false,
+    wrapper_id: null,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    item_id: 5,
+    user_id: 1,
+    quantity: 1,
+    is_checked: true,
+    wrapper_id: null,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    item_id: 6,
+    user_id: 1,
+    quantity: 1,
+    is_checked: false,
+    wrapper_id: null,
+    created_at: "",
+    updated_at: "",
+  },
+];
+
+export default cartItems;

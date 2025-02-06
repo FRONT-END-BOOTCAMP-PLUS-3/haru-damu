@@ -27,6 +27,8 @@
   border-radius: 10px;
   background: #eee;
   overflow: hidden;
+
+  position: relative;
 }
 .horizontal_item__link_name{
   text-decoration: none;

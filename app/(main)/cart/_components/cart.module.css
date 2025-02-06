@@ -1,0 +1,11 @@
+
+.cart__fixed {
+    width: 1080px;
+
+    background: var(--base-white);
+
+    position: fixed;
+    top: 0;
+
+    z-index: 500;
+}

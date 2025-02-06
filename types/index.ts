@@ -69,6 +69,7 @@ export type THealth = {
   updated_at: string; // ISO 날짜 형식
 };
 
+// unit_converter ===================================================================
 export type ValidConversions = {
   g: "kg";
   kg: "g";
@@ -82,3 +83,38 @@ export type ToUnit<U extends FromUnit> = ValidConversions[U];
 export type UnitConversion<U extends FromUnit> = `${U} -> ${ToUnit<U>}`;
 
 export type AllowedConversions = UnitConversion<FromUnit>;
+// ==================================================================================
+
+// drag_direction ===================================================================
+import type { RectMap } from "@dnd-kit/core/dist/store";
+import type { DRAGGABLE_TYPES, DROPPABLE_ONLY_TYPES } from "@/constants";
+import type { Active, ClientRect, DroppableContainer } from "@dnd-kit/core";
+import type {
+  Coordinates,
+  DragEndEvent,
+  DragMoveEvent,
+  DragOverEvent,
+  DragStartEvent,
+  DragCancelEvent,
+} from "@dnd-kit/core/dist/types";
+
+export type CollisionDetectionEventArgs = {
+  active: Active;
+  collisionRect: ClientRect;
+  droppableContainers: DroppableContainer[];
+  droppableRects: RectMap;
+  pointerCoordinates: Coordinates | null;
+};
+
+export type DragEvent = DragEndEvent | DragMoveEvent | DragOverEvent | DragStartEvent | DragCancelEvent;
+
+// 드래그 가능한 컴포넌트 타입 정의
+export type DraggableComponent = (typeof DRAGGABLE_TYPES)[number];
+export type DroppableArea = (typeof DROPPABLE_ONLY_TYPES)[number];
+export type DraggableAndDroppable = (typeof DRAGGABLE_TYPES | typeof DROPPABLE_ONLY_TYPES)[number];
+
+export type FromDirection = DraggableComponent;
+export type ToDirection = DraggableAndDroppable;
+
+export type DragDirection = `${FromDirection} -> ${ToDirection}`;
+// ==================================================================================

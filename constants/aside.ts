@@ -43,6 +43,6 @@ export const HEALTH_CHART_DATA: {
   {
     eng: "sugar",
     kor: "당",
-     color: "#FFF",
+    color: "#FFF",
   },
 ];
