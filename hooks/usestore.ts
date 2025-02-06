@@ -1,9 +1,11 @@
 import type { TModalSlice } from "@/stores/modal";
+import type { TUserSlice } from "@/stores/user_store";
 import type { StateStorage } from "zustand/middleware";
 import type { TToastSlice } from "@/stores/toastStore";
 
 import { create } from "zustand";
 import { createModalSlice } from "@/stores/modal";
+import { createUserSlice } from "@/stores/user_store";
 import { createToastSlice } from "@/stores/toastStore";
 import { createSelectorFunctions } from "auto-zustand-selectors-hook";
 import { createMypageSlice, type TMypageSlice } from "@/stores/mypage_store";
@@ -22,7 +24,7 @@ const storage: StateStorage = {
   },
 };
 
-export type State = TModalSlice & TMypageSlice & TToastSlice;
+export type State = TModalSlice & TMypageSlice & TToastSlice & TUserSlice;
 
 export const useStore = create<State>()(
   subscribeWithSelector(
@@ -31,6 +33,7 @@ export const useStore = create<State>()(
         ...createModalSlice(...a),
         ...createMypageSlice(...a),
         ...createToastSlice(...a),
+        ...createUserSlice(...a),
       }),
       {
         version: 144,
