@@ -19,6 +19,7 @@ import classNames from "classnames/bind";
 import { useDroppable } from "@dnd-kit/core";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import { horizontalListSortingStrategy, SortableContext } from "@dnd-kit/sortable";
+import { REMOVE_ALL_MEAL_ITEMS_BUTTON, WRAPPING_ALL_MEAL_ITEMS_BUTTON } from "@/constants";
 
 const cx = classNames.bind(style);
 
@@ -64,9 +65,6 @@ export default function MealCart() {
       sugar,
     };
   });
-
-  const WRAPPING_ALL_MEAL_ITEMS_BUTTON = "한끼 장바구니 그룹화 하기";
-  const REMOVE_ALL_MEAL_ITEMS_BUTTON = "한끼 장바구니 모두 제거";
 
   useEffect(() => {
     const getCarouselItems = (items: TCartItem[], page: number, pageSize = 4): TCartItem[] => {
