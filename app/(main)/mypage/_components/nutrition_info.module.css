@@ -1,0 +1,123 @@
+.nutrition_info {
+    width: 100%;
+
+    padding-top: 100px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+.nutrition_info__ul {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap : wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.nutrition_info__li {
+    min-width: 35%;
+
+    padding: 10px 20px;
+}
+
+.nutrition_info__approve_button {
+    margin: 20px;
+}
+
+.nutrition_info__toggle__wrapper {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    position: absolute;
+    top: 60px;
+    right: 5px;
+}
+
+.nutrition_info__toggle__span {
+    padding: 0px 10px;
+
+    color: var(--base-content-sub-text);
+}
+
+.nutrition_info__toggle {
+    width: 80px;
+    height: 40px;
+
+    border-radius: 9999px;
+    background: var(--base-content-sub-text); /* 기본 배경색 */
+
+    cursor: pointer;
+
+    transition: background-color 0.3s ease;
+
+    position: relative;
+}
+
+.nutrition_info__toggle_circle {
+    width: 32px;
+    height: 32px;
+    
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    background-color: white;
+
+    transition: transform 0.3s ease;
+
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+.nutrition_info__toggle_text {
+    width: 32px;
+    height: 32px;
+
+    padding: 0px 2px;
+
+    color: var(--base-white);
+    
+    transition: transform 0.3s ease;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+/* 왼쪽(초록색) 상태 */
+.nutrition_info__toggle_active {
+    background-color: var(--secondary-color);
+}
+
+.nutrition_info__toggle_active .nutrition_info__toggle_circle {
+    transform: translateX(0); 
+}
+
+.nutrition_info__toggle_active .nutrition_info__toggle_text {
+    transform: translateX(35px); 
+}
+
+/* 오른쪽(회색) 상태 */
+.nutrition_info__toggle_inactive {
+    background-color: var(--base-content-sub-text);
+}
+
+.nutrition_info__toggle_inactive .nutrition_info__toggle_circle {
+    transform: translateX(40px);
+}
+
+.nutrition_info__toggle_inactive .nutrition_info__toggle_text {
+    transform: translateX(0px);
+}
