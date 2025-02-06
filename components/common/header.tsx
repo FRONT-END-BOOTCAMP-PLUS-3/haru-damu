@@ -2,26 +2,33 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 
 import SearchBar from "@/components/searchbar";
 import CategoryList from "@/components/category_list";
+
+import { useStore } from "@/hooks/usestore";
+
 import styles from "@/components/common/header.module.css";
 
 import categoryList from "@/constants/categories_list";
 
 import classNames from "classnames/bind";
 import { BRAND_NAMES } from "@/constants";
-import { useStore } from "@/hooks/usestore";
 import { ShoppingBasket, User } from "lucide-react";
 
 const cx = classNames.bind(styles);
 
 export default function Header() {
-  const { isLogin, userType } = useStore();
-  const [isShrunk, setIsShrunk] = useState(false);
+  const { isLogin, userType, isShrunk, setIsShrunk } = useStore();
 
-  const handleScroll = useCallback(() => setIsShrunk(window.scrollY > 100), []);
+  const handleScroll = useCallback(() => {
+    const y = window.scrollY;
+
+    if (y > 200) return;
+
+    setIsShrunk(y > 100);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
