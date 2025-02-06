@@ -5,11 +5,10 @@ import styles from "@/app/(main)/main_page.module.css";
 import { banners } from "@/constants/banner";
 import { CATEGORIES } from "@/constants/categories";
 
-import Banner from "./_components/banner";
-import MealList from "./_components/meal_list";
-
 import classNames from "classnames/bind";
 import { dummyItems } from "@/dummys/items";
+import Banner from "@/app/(main)/_components/banner";
+import MealList from "@/app/(main)/_components/meal_list";
 
 const cx = classNames.bind(styles);
 
