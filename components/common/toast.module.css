@@ -1,0 +1,21 @@
+.toast {
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: var(--base-white);
+  opacity: 1;
+  transition: opacity 2s ease-out, transform 2s ease-out; 
+  animation: toast__slide_in 0.5s forwards; 
+}
+
+.toast__hidden {
+  opacity: 0;
+}
+
+@keyframes toast__slide_in {
+  from {
+    transform: translateX(100%); 
+  }
+  to {
+    transform: translateX(0); 
+  }
+}

@@ -1,5 +1,19 @@
 export type TDateForm = `${number}. ${string}. ${string}.`;
 
+export type THorizontalItem = {
+  user_id: number;
+  item_id: number;
+  wrapper_id: string | null;
+  quantity: number;
+  is_checked: boolean;
+  item_name: string;
+  item_price: number;
+  img: string | undefined;
+  blurImg: string | undefined;
+  created_at: string;
+  updated_at: string;
+};
+
 export type TItem = {
   item_id: number;
   store_id: number;
@@ -21,7 +35,7 @@ export type TUser = {
   user_id: number;
   name: string;
   email: string;
-    created_at: string;
+  created_at: string;
   updated_at: string;
 };
 
@@ -54,3 +68,17 @@ export type THealth = {
   created_at: string; // ISO 날짜 형식
   updated_at: string; // ISO 날짜 형식
 };
+
+export type ValidConversions = {
+  g: "kg";
+  kg: "g";
+  ml: "l";
+  l: "ml";
+};
+
+export type FromUnit = keyof ValidConversions;
+export type ToUnit<U extends FromUnit> = ValidConversions[U];
+
+export type UnitConversion<U extends FromUnit> = `${U} -> ${ToUnit<U>}`;
+
+export type AllowedConversions = UnitConversion<FromUnit>;
