@@ -31,13 +31,14 @@
   object-fit: cover;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  z-index: 0;
   left: 50%;
   transform: translateX(-50%);
+  z-index: -1
 }
 
 .banner__image--active {
   opacity: 1;
+  z-index: -1
 }
 /* 🔹 배너에 호버하면 버튼 나타나게 */
 .banner:hover .banner__arrow {
