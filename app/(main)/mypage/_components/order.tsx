@@ -2,33 +2,31 @@
 
 import { useState } from "react";
 
+import Pagination from "@/components/common/pagination";
 import HorizontalItem from "@/components/common/horizontal_item";
 
 import styles from "@/app/(main)/mypage/_components/order.module.css";
 
+import {
+  ORDER_TITLE,
+  ORDER_DETAIL_BUTTON,
+  ORDER_SHIPMENT_BUTTON,
+  ORDER_REVIEW_BUTTON,
+  ORDER_SHIPMENT_AGAIN,
+} from "@/constants/mypage";
+
+import orders from "@/dummys/order";
 import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
-
-const orders = [
-  {
-    date: "2025. 01. 21.",
-    itemName: "Item name",
-    price: "1,000원",
-  },
-  {
-    date: "2025. 01. 20.",
-    itemName: "Item name",
-    price: "1,000원",
-  },
-];
 
 const filterOptions = ["3개월", "6개월", "1년", "3년"];
 
 export default function OrderPage() {
   const [selectedFilter, setSelectedFilter] = useState(filterOptions[0]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
 
-  // 선택된 필터에 따라 주문 목록 필터링
   const filterOrders = () => {
     const now = new Date();
     const pastDate = new Date();
@@ -51,65 +49,85 @@ export default function OrderPage() {
     }
 
     return orders.filter((order) => {
-      const orderDate = new Date(order.date.replace(/\./g, "-"));
+      const orderDate = new Date(order.created_at.replace(/\./g, "-"));
       return orderDate >= pastDate;
     });
   };
 
   const filteredOrders = filterOrders();
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+
+  const onClickHandler = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // 현재 페이지에 해당하는 주문만 표시
+  const getCurrentPageOrders = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredOrders.slice(startIndex, endIndex);
+  };
+
+  const currentOrders = getCurrentPageOrders();
 
   return (
-    <div className={cx("order-history-container")}>
-      <h2 className={cx("order-title")}>주문 내역</h2>
-      <div className={cx("button-group")}>
+    <div className={cx("order")}>
+      <h2 className={cx("order__title", "title-lg-b")}>{ORDER_TITLE}</h2>
+      <div className={cx("order__filter")}>
         {filterOptions.map((option) => (
           <button
             key={option}
-            className={cx("filter-button", { active: selectedFilter === option })}
-            onClick={() => setSelectedFilter(option)}
+            className={cx("order__filter-button", "text-sm", {
+              "order__filter-button--active": selectedFilter === option,
+            })}
+            onClick={() => {
+              setSelectedFilter(option);
+              setCurrentPage(1); // 필터 변경 시 1페이지로 리셋
+            }}
           >
             {option}
           </button>
         ))}
       </div>
-      <hr className={cx("divider")} />
-      {filteredOrders.length > 0 ? (
-        filteredOrders.map((order, index) => (
-          <div key={index} className={cx("order-item")}>
-            <div className={cx("order-date")}>{order.date}</div>
+      <hr className={cx("order__divider")} />
+      {currentOrders.length ? (
+        currentOrders.map((order, index) => (
+          <div key={index} className={cx("order__item")}>
+            <div className={cx("order__item-header")}>
+              <div className={cx("text-lg-b")}>{order.created_at}</div>
+              <button className={cx("order__item-detail-button", "text-sm")}>{ORDER_DETAIL_BUTTON}</button>
+            </div>
             <HorizontalItem
-              cart={{
-                user_id: 1,
-                item_id: 1,
-                wrapper_id: null,
-                quantity: 10,
-                created_at: "",
-                updated_at: "",
-                item_name: "[어제까지 초특가 할인] 그냥 고등어",
-                item_price: 10000,
+              horizontalItem={{
+                ...order,
                 img: undefined,
                 blurImg: undefined,
               }}
               isEditable={false}
-              onCheck={function (itemId: number, checked: boolean): void {
+              onCheck={(itemId: number, checked: boolean) => {
                 console.log("와 체크:" + checked + itemId);
               }}
-              onQuantityChange={function (itemId: number, quantity: number): void {
+              onQuantityChange={(itemId: number, quantity: number) => {
                 console.log("와 숫자 변경" + quantity + itemId);
               }}
-              onDelete={function (itemId: number): void {
+              onDelete={(itemId: number) => {
                 console.log("와 삭제" + itemId);
               }}
             />
-            <div className={cx("action-buttons")}>
-              <button className={cx("action-button")}>배송 조회</button>
-              <button className={cx("action-button")}>리뷰 작성</button>
-              <button className={cx("action-button")}>다시 담기</button>
+            <div className={cx("order__item-actions")}>
+              <button className={cx("order__item-action-button", "text-sm")}>{ORDER_SHIPMENT_BUTTON}</button>
+              <button className={cx("order__item-action-button", "text-sm")}>{ORDER_REVIEW_BUTTON}</button>
+              <button className={cx("order__item-action-button", "text-sm")}>{ORDER_SHIPMENT_AGAIN}</button>
             </div>
           </div>
         ))
       ) : (
-        <p className={cx("no-orders")}>해당 기간의 주문이 없습니다.</p>
+        <p className={cx("order__empty")}>해당 기간의 주문이 없습니다.</p>
+      )}
+      {filteredOrders.length > 0 && (
+        <div className={cx("order__pagination")}>
+          <Pagination current={currentPage} total={totalPages} onClick={onClickHandler} />
+        </div>
       )}
     </div>
   );

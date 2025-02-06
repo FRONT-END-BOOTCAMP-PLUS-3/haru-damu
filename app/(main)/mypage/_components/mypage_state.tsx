@@ -2,8 +2,9 @@
 
 import { useEffect } from "react";
 
-import { useStore } from "@/hooks/usestore";
 import OrderPage from "@/app/(main)/mypage/_components/order";
+
+import { useStore } from "@/hooks/usestore";
 // import HealthPage from "@/app/(main)/mypage/components/settings";
 // import PersonalPage from "@/app/(main)/mypage/components/profile";
 // import NutritionPage from "@/app/(main)/mypage/components/nutrition";

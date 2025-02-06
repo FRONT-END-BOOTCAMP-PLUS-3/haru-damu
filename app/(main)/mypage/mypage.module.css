@@ -10,6 +10,7 @@
 
 .mypage_content {
   flex-grow: 1; /* 남은 공간 차지 */
-  padding: 20px;
+  padding: 25px 0px 25px 25px;
   box-sizing: border-box; /* padding을 포함한 너비 설정 */
+  display: block;
 }
