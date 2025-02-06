@@ -44,7 +44,7 @@ const PartnerHeader = () => {
     <div className={cx("header__container__partner", "text-sm")}>
       <HeaderLogo />
       <div className={cx("header__auth")}>
-        <button className={cx("header__auth__button")} onClick={() => router.push("/mypage")}>
+        <button className={cx("header__auth__button")} onClick={() => router.push("/profile")}>
           유저네임
         </button>
         <div className={cx("header__divider")}>|</div>
