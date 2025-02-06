@@ -6,8 +6,14 @@ import items from "@/dummys/items";
 import CategoryResult from "@/app/(main)/category/_components/category_result";
 
 export default async function CategoryPage({ searchParams }: { searchParams: { page?: string } }) {
-  const currentPage = Number(searchParams.page) || 1;
   const itemsPerPage = 20;
+  const currentPage = Number(searchParams.page) || 1;
+
+  // 페이지네이션 유효성 검사
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  if (currentPage < 1 || currentPage > totalPages) {
+    return { notFound: true };
+  }
 
   // 현재 페이지에 해당하는 아이템들만 가져오기
   const startIndex = (currentPage - 1) * itemsPerPage;

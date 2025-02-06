@@ -1,3 +1,6 @@
+export const CATEGORY_TITLE = "카테고리";
+export const SEARCH_TITLE = "검색 결과";
+
 export type TCategory = {
   key: string;
   order: number;
