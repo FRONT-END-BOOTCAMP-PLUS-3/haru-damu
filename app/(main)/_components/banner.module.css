@@ -1,0 +1,58 @@
+.banner {
+  position: relative;
+  max-width:1080px;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  display: flex;
+  margin: 0 auto; /* 뷰포트 기준으로 가운데 정렬 */
+}
+
+.banner__arrow {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+
+}
+
+.banner__image {
+  cursor: pointer;
+  position: absolute;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.banner__image--active {
+  opacity: 1;
+}
+/* 🔹 배너에 호버하면 버튼 나타나게 */
+.banner:hover .banner__arrow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.banner__arrow:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.banner__arrow:first-of-type {
+  left: 10px;
+}
+
+.banner__arrow:last-of-type {
+  right: 10px;
+}
