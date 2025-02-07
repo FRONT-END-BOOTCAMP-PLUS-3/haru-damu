@@ -1,0 +1,7 @@
+.payment_button_list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}

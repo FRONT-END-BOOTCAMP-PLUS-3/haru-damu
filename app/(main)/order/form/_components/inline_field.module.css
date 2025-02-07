@@ -1,0 +1,14 @@
+.inline_field_wrapper {
+  display: flex;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.inline_field_label__p {
+  width: 30%;
+}
+
+.inline_field_value__p {
+  width: 70%;
+  color: var(--base-content-dark-text);
+}
