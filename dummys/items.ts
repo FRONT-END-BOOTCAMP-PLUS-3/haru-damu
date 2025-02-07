@@ -629,11 +629,39 @@ const items = [
 
 export default items;
 
+export const dummyItem: TItem = {
+  item_id: 1,
+  store_id: 101,
+  item_name: "유기농 사과",
+  store_name: "상민컴퍼니",
+  item_price: 5000,
+  img: "/default_items.jpg",
+  blurImg: "/images/apple-blur.jpg",
+  description:
+    "상민컴퍼니는 최상의 품질을 자랑하는 신선한 사과를 생산 및 판매하는 업체로, 엄격한 품질 관리와 철저한 재배 과정을 거쳐 소비자들에게 가장 신선하고 맛있는 사과를 제공합니다. 저희가 판매하는 사과는 깨끗한 자연환경에서 자란 우수한 품종만을 엄선하여 수확되며, 재배부터 수확, 선별, 포장, 배송까지 모든 과정에서 철저한 관리가 이루어져 소비자들이 믿고 먹을 수 있는 건강한 사과를 제공합니다. 상민컴퍼니의 사과는 당도가 뛰어나고 과즙이 풍부하며 아삭한 식감을 자랑하여 남녀노소 누구나 즐길 수 있는 과일로, 단순히 맛있는 과일을 넘어 영양 가득한 건강식품으로도 손색이 없습니다. 또한, 소비자들에게 더욱 신선한 제품을 제공하기 위해 수확 후 바로 선별하여 신속하게 배송함으로써, 갓 따낸 듯한 신선함을 그대로 유지한 채 고객의 식탁에 오를 수 있도록 하고 있습니다. 상민컴퍼니는 사과 하나하나에 정성을 담아 제공하는 것을 원칙으로 하며, 고객 만족을 최우선으로 생각하여 품질 좋은 사과를 합리적인 가격에 공급하고자 끊임없이 노력하고 있습니다.",
+  category_code: "FRUITS",
+  item_code: 1001,
+  unit_type: "g", // ✅ TUnit에 포함된 값으로 설정
+  volume: 1,
+  nutrition: {
+    g: 100,
+    calorie: 250,
+    carbohydrates: 30,
+    protein: 10,
+    fat: 5,
+    sodium: 200,
+    sugar: 15,
+  },
+  created_at: "2025-02-05T10:00:00Z",
+  updated_at: "2025-02-05T12:00:00Z",
+};
+
 export const dummyItems: TItem[] = [
   {
     item_id: 1,
     store_id: 101,
     item_name: "유기농 사과",
+    store_name: "상민컴퍼니",
     item_price: 5000,
     img: "/default_items.jpg",
     blurImg: "/images/apple-blur.jpg",
@@ -658,6 +686,7 @@ export const dummyItems: TItem[] = [
     item_id: 2,
     store_id: 102,
     item_name: "무염 아몬드",
+    store_name: "상민컴퍼니",
     item_price: 12000,
     img: "/default_items.jpg",
     blurImg: "/images/almond-blur.jpg",
@@ -682,6 +711,7 @@ export const dummyItems: TItem[] = [
     item_id: 3,
     store_id: 103,
     item_name: "우유",
+    store_name: "상민컴퍼니",
     item_price: 3000,
     img: "/default_items.jpg",
     blurImg: "/images/milk-blur.jpg",
@@ -706,6 +736,7 @@ export const dummyItems: TItem[] = [
     item_id: 4,
     store_id: 107,
     item_name: "우유",
+    store_name: "상민컴퍼니",
     item_price: 3000,
     img: "/default_items.jpg",
     blurImg: "/images/milk-blur.jpg",
