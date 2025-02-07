@@ -3,11 +3,11 @@
 import { useEffect } from "react";
 
 import OrderPage from "@/app/(main)/mypage/_components/order";
+// import HealthPage from "@/app/(main)/mypage/components/health";
+import PersonalPage from "@/app/(main)/mypage/_components/personal";
+import NutritionPage from "@/app/(main)/mypage/_components/nutrition";
 
 import { useStore } from "@/hooks/usestore";
-// import HealthPage from "@/app/(main)/mypage/components/health";
-// import PersonalPage from "@/app/(main)/mypage/components/personal";
-import NutritionPage from "@/app/(main)/mypage/_components/nutrition";
 
 export default function MypageStateWrapper() {
   const { mypagePath, setMypagePath } = useStore();
@@ -22,9 +22,9 @@ export default function MypageStateWrapper() {
     if (mypagePath === "order") {
       return <OrderPage />;
     }
-    // if (mypagePath === "personal") {
-    //   return <PersonalPage />;
-    // }
+    if (mypagePath === "personal") {
+      return <PersonalPage />;
+    }
     // if (mypagePath === "health") {
     //   return <HealthPage />;
     // }
