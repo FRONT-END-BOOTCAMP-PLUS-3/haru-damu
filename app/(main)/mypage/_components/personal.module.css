@@ -1,0 +1,67 @@
+.personal {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.personal__title {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.personal__divider {
+  border-top: 1px solid var(--secondary-color);
+  margin-top: 30px;
+}
+
+.personal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin-top: 50px;
+  margin-bottom: 70px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.personal__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.personal__label {
+  width: 120px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.personal__email {
+  flex: 1;
+  font-size: 16px;
+  text-align: left;
+  height: 30px;
+  line-height: 30px;
+}
+
+.personal__input {
+  flex: 1;
+  height: 30px;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+  text-align: left;
+  outline: none;
+}
+
+.personal__button {
+  width: 60%;
+  height: 40px;
+  background-color: var(--primary-color);
+  color: var(--base-white);
+  border: none;
+  border-radius: 5px;
+  margin: 0 auto 0;
+  display: block;
+}

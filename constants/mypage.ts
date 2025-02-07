@@ -55,7 +55,14 @@ export const ORDER_DETAIL_BUTTON = "주문 상세 내역";
 export const ORDER_SHIPMENT_BUTTON = "배송 조회";
 export const ORDER_REVIEW_BUTTON = "리뷰 작성";
 export const ORDER_SHIPMENT_AGAIN = "다시 담기";
-
 export const ORDER_FILTER_OPTIONS = ["3개월", "6개월", "1년", "3년"];
-
 export const ORDER_ERROR = "해당 기간의 주문이 없습니다.";
+
+export const PERSONAL_TITLE = "개인정보";
+export const PERSONAL_EMAIL = "이메일";
+export const PERSONAL_BUTTON = "저장하기";
+export const PERSONAL_FIELDS = [
+  { key: "name", label: "이름" },
+  { key: "phone", label: "전화번호" },
+  { key: "address", label: "주소" },
+] as const;
