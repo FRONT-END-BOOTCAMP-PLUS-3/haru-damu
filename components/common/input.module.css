@@ -14,10 +14,10 @@
 }
 
 .input_label {
-    min-width: 85px;
+    min-width: 90px;
     padding: auto 5px;
 
-    text-align: center;
+    text-align: left;
 }
 
 .msg_wrapper {
@@ -28,7 +28,7 @@
 }
 
 .input {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     border : 1px solid var(--secondary-color);
     border-radius: 10px;

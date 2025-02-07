@@ -1,5 +1,5 @@
 .nutrition_info {
-    width: 100%;
+    width: 99%;
 
     padding-top: 100px;
 
@@ -19,12 +19,12 @@
     flex-wrap : wrap;
     align-items: center;
     justify-content: center;
+    margin-top: 20px;
 }
 
 .nutrition_info__li {
-    min-width: 35%;
-
-    padding: 10px 20px;
+    min-width: 30%;
+    padding: 10px 20px 10px 10px;
 }
 
 .nutrition_info__approve_button {
@@ -33,12 +33,12 @@
 
 .nutrition_info__toggle__wrapper {
     display: flex;
-    justify-content: end;
+    justify-content: end_flex;
     align-items: center;
 
     position: absolute;
     top: 60px;
-    right: 5px;
+    right: 20px;
 }
 
 .nutrition_info__toggle__span {

@@ -1,0 +1,16 @@
+.mypage__wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.mypage__aside-wrapper {
+  width: 350px; 
+  flex-shrink: 0; 
+}
+
+.mypage_content {
+  flex-grow: 1; 
+  padding: 25px ;
+  box-sizing: border-box;
+  display: block;
+}

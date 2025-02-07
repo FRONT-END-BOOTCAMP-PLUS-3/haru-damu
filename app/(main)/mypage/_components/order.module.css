@@ -1,0 +1,94 @@
+.order {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.order__title {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.order__filter {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.order__filter-button {
+  border: 1px solid var(--secondary-color);
+  background: var(----base-white);
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.order__filter-button--active {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--light-gray-color);
+}
+
+.order__filter-button:hover {
+  background-color: var(--primary-color);
+  color: var(--light-gray-color);
+}
+
+.order__divider {
+  border-top: 1px solid var(--secondary-color);
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.order__item {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.order__item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.order__item-detail-button {
+  border: 1px solid var(--secondary-color);
+  background: var(----base-white);
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.order__item-detail-button:hover {
+  background-color: var(--primary-color);
+  color: var(--light-gray-color);
+}
+
+.order__item-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  justify-content: flex-end;
+}
+
+.order__item-action-button {
+  border: 1px solid var(--secondary-color);
+  background: var(--base-white );
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.order__item-action-button:hover {
+  background-color: var(--primary-color);
+  color: var(--light-gray-color);
+}
+
+.order__empty {
+  text-align: center;
+  color: var(--primary-color);
+  padding: 24px 0;
+}
+
+.order__pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}

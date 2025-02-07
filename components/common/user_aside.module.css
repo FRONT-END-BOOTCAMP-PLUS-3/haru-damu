@@ -1,9 +1,8 @@
 .user_aside__wrapper {
-    width: 352px;
-    height: 100%;
+    width: 340px;
+    height: fit-content;;
 
     border : 1px solid var(--primary-color);
-    border-radius: 10px;
 
     overflow: hidden;
 }
