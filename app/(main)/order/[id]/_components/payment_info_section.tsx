@@ -31,7 +31,7 @@ export default function PaymentInfoSection({ totalPrice }: PaymentInfoSectionPro
         color="primary"
         width="252px"
         height="60px"
-        text={"주문 목록으로 돌아가기"}
+        text={"돌아가기"}
         className={cx("payment_info_section__forward_button")}
         onClick={goForwardHandler}
       />

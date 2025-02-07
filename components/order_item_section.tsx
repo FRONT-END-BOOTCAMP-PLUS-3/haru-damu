@@ -19,7 +19,7 @@ const cx = classNames.bind(styles);
 
 export default function OrderItemSection({ items, totalPrice }: OrderItemSectionProps) {
   const pathname = usePathname();
-  const isBeforePayment = pathname === "/order/form";
+  const isOrderForm = pathname === "/order/form";
   return (
     <section>
       <Subheading title={"주문 상품"} />
@@ -28,7 +28,7 @@ export default function OrderItemSection({ items, totalPrice }: OrderItemSection
           <HorizontalItem key={item.item_id} horizontalItem={item} isEditable={false} />
         ))}
       </ul>
-      {!isBeforePayment && (
+      {isOrderForm && (
         <div className={cx("order_item_section_total_price")}>
           <span>최종 결제 금액</span>
           <div className={cx("order_item_section_total_price__div")}>

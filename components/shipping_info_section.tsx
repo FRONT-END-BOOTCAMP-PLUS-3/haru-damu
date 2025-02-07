@@ -12,12 +12,12 @@ interface ShippingInfoSectionProps {
 
 export default function ShippingInfoSection({ user }: ShippingInfoSectionProps) {
   const pathname = usePathname();
-  const isBeforePayment = pathname === "/order/form";
+  const isOrderForm = pathname === "/order/form";
   const { name, phone, address } = user;
   return (
     <section>
       <Subheading title={"배송 정보"} />
-      {!isBeforePayment && (
+      {!isOrderForm && (
         <>
           <LabelValueText label={"주문자"} value={name} />
           <LabelValueText label={"휴대폰"} value={phone} />
