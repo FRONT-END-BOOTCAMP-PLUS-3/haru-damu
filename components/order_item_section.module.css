@@ -1,0 +1,23 @@
+.order_item_section_item_list{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order_item_section_total_price {
+  display: flex;
+  margin: 50px 0 0 auto;
+  width: 388px;
+  padding: 20px;
+  box-sizing: border-box;
+  background: var(--light-gray-color);
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.order_item_section_total_price__div {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
