@@ -1,8 +1,5 @@
 import UserAside from "@/components/common/user_aside";
 import MypageState from "@/app/(main)/mypage/_components/mypage_state";
-// import HealthPage from "@/app/(main)/mypage/components/settings";
-// import PersonalPage from "@/app/(main)/mypage/components/profile";
-// import NutritionPage from "@/app/(main)/mypage/components/nutrition";
 
 import styles from "./mypage.module.css";
 

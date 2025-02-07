@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 import Pagination from "@/components/common/pagination";
 import HorizontalItem from "@/components/common/horizontal_item";
@@ -13,6 +13,8 @@ import {
   ORDER_SHIPMENT_BUTTON,
   ORDER_REVIEW_BUTTON,
   ORDER_SHIPMENT_AGAIN,
+  ORDER_FILTER_OPTIONS,
+  ORDER_ERROR,
 } from "@/constants/mypage";
 
 import orders from "@/dummys/order";
@@ -20,28 +22,43 @@ import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
-const filterOptions = ["3개월", "6개월", "1년", "3년"];
+const filterOptions = ORDER_FILTER_OPTIONS;
 
 export default function OrderPage() {
-  const [selectedFilter, setSelectedFilter] = useState(filterOptions[0]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const selectedFilter = searchParams.get("filter") || filterOptions[0];
+  const itemsPerPage = Number(searchParams.get("size")) || 3;
+
+  const updateQueryParams = (page: number, filter: string, size: number = itemsPerPage) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    params.set("filter", filter);
+    params.set("size", size.toString());
+    router.push(`?${params.toString()}`);
+  };
+
+  const onClickHandler = (page: number) => {
+    updateQueryParams(page, selectedFilter);
+  };
 
   const filterOrders = () => {
     const now = new Date();
     const pastDate = new Date();
 
     switch (selectedFilter) {
-      case "3개월":
+      case filterOptions[0]:
         pastDate.setMonth(now.getMonth() - 3);
         break;
-      case "6개월":
+      case filterOptions[1]:
         pastDate.setMonth(now.getMonth() - 6);
         break;
-      case "1년":
+      case filterOptions[2]:
         pastDate.setFullYear(now.getFullYear() - 1);
         break;
-      case "3년":
+      case filterOptions[3]:
         pastDate.setFullYear(now.getFullYear() - 3);
         break;
       default:
@@ -56,10 +73,6 @@ export default function OrderPage() {
 
   const filteredOrders = filterOrders();
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
-
-  const onClickHandler = (page: number) => {
-    setCurrentPage(page);
-  };
 
   // 현재 페이지에 해당하는 주문만 표시
   const getCurrentPageOrders = () => {
@@ -81,8 +94,7 @@ export default function OrderPage() {
               "order__filter-button--active": selectedFilter === option,
             })}
             onClick={() => {
-              setSelectedFilter(option);
-              setCurrentPage(1); // 필터 변경 시 1페이지로 리셋
+              updateQueryParams(1, option);
             }}
           >
             {option}
@@ -122,7 +134,7 @@ export default function OrderPage() {
           </div>
         ))
       ) : (
-        <p className={cx("order__empty")}>해당 기간의 주문이 없습니다.</p>
+        <p className={cx("order__empty")}>{ORDER_ERROR}</p>
       )}
       {filteredOrders.length > 0 && (
         <div className={cx("order__pagination")}>
