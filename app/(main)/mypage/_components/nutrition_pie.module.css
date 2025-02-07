@@ -4,6 +4,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 273px;
 }
 
 .nutrition_pie__ul {

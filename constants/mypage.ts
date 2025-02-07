@@ -49,6 +49,7 @@ export const MYPAGE_NUTRITION_CHART_COLOR: Record<string, string> = {
   sugar: "#9966FF", // 보라 - 당류
   sodium: "#4BC0C0", // 청록 - 나트륨
 } as const;
+
 export const ORDER_TITLE = "주문내역";
 export const ORDER_DETAIL_BUTTON = "주문 상세 내역";
 export const ORDER_SHIPMENT_BUTTON = "배송 조회";
@@ -56,4 +57,5 @@ export const ORDER_REVIEW_BUTTON = "리뷰 작성";
 export const ORDER_SHIPMENT_AGAIN = "다시 담기";
 
 export const ORDER_FILTER_OPTIONS = ["3개월", "6개월", "1년", "3년"];
+
 export const ORDER_ERROR = "해당 기간의 주문이 없습니다.";

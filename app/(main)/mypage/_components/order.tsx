@@ -2,6 +2,8 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 
+import { useState, useEffect } from "react";
+
 import Pagination from "@/components/common/pagination";
 import HorizontalItem from "@/components/common/horizontal_item";
 
@@ -17,8 +19,10 @@ import {
   ORDER_ERROR,
 } from "@/constants/mypage";
 
-import orders from "@/dummys/order";
+import type { Order } from "@/app/api/order/order";
+
 import classNames from "classnames/bind";
+import { fetchOrders } from "@/app/api/order/order";
 
 const cx = classNames.bind(styles);
 
@@ -27,10 +31,14 @@ const filterOptions = ORDER_FILTER_OPTIONS;
 export default function OrderPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const [data, setData] = useState<{ orders: Order[]; total: number }>({ orders: [], total: 0 });
   const currentPage = Number(searchParams.get("page")) || 1;
   const selectedFilter = searchParams.get("filter") || filterOptions[0];
   const itemsPerPage = Number(searchParams.get("size")) || 3;
+
+  useEffect(() => {
+    fetchOrders(currentPage, selectedFilter, itemsPerPage).then((result) => setData(result));
+  }, [currentPage, selectedFilter, itemsPerPage]);
 
   const updateQueryParams = (page: number, filter: string, size: number = itemsPerPage) => {
     const params = new URLSearchParams(searchParams);
@@ -40,48 +48,8 @@ export default function OrderPage() {
     router.push(`?${params.toString()}`);
   };
 
-  const onClickHandler = (page: number) => {
-    updateQueryParams(page, selectedFilter);
-  };
-
-  const filterOrders = () => {
-    const now = new Date();
-    const pastDate = new Date();
-
-    switch (selectedFilter) {
-      case filterOptions[0]:
-        pastDate.setMonth(now.getMonth() - 3);
-        break;
-      case filterOptions[1]:
-        pastDate.setMonth(now.getMonth() - 6);
-        break;
-      case filterOptions[2]:
-        pastDate.setFullYear(now.getFullYear() - 1);
-        break;
-      case filterOptions[3]:
-        pastDate.setFullYear(now.getFullYear() - 3);
-        break;
-      default:
-        return orders;
-    }
-
-    return orders.filter((order) => {
-      const orderDate = new Date(order.created_at.replace(/\./g, "-"));
-      return orderDate >= pastDate;
-    });
-  };
-
-  const filteredOrders = filterOrders();
-  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
-
-  // 현재 페이지에 해당하는 주문만 표시
-  const getCurrentPageOrders = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return filteredOrders.slice(startIndex, endIndex);
-  };
-
-  const currentOrders = getCurrentPageOrders();
+  const { orders, total } = data;
+  const totalPages = Math.ceil(total / itemsPerPage);
 
   return (
     <div className={cx("order")}>
@@ -93,38 +61,35 @@ export default function OrderPage() {
             className={cx("order__filter-button", "text-sm", {
               "order__filter-button--active": selectedFilter === option,
             })}
-            onClick={() => {
-              updateQueryParams(1, option);
-            }}
+            onClick={() => updateQueryParams(1, option)}
           >
             {option}
           </button>
         ))}
       </div>
       <hr className={cx("order__divider")} />
-      {currentOrders.length ? (
-        currentOrders.map((order, index) => (
-          <div key={index} className={cx("order__item")}>
+      {orders.length ? (
+        orders.map((order) => (
+          <div key={order.item_id} className={cx("order__item")}>
             <div className={cx("order__item-header")}>
               <div className={cx("text-lg-b")}>{order.created_at}</div>
               <button className={cx("order__item-detail-button", "text-sm")}>{ORDER_DETAIL_BUTTON}</button>
             </div>
             <HorizontalItem
               horizontalItem={{
-                ...order,
+                user_id: order.user_id,
+                item_id: order.item_id,
+                wrapper_id: order.wrapper_id,
+                quantity: order.quantity,
+                is_checked: true,
+                item_name: order.item_name,
+                item_price: order.item_price,
                 img: undefined,
                 blurImg: undefined,
+                created_at: order.created_at,
+                updated_at: order.created_at,
               }}
               isEditable={false}
-              onCheck={(itemId: number, checked: boolean) => {
-                console.log("와 체크:" + checked + itemId);
-              }}
-              onQuantityChange={(itemId: number, quantity: number) => {
-                console.log("와 숫자 변경" + quantity + itemId);
-              }}
-              onDelete={(itemId: number) => {
-                console.log("와 삭제" + itemId);
-              }}
             />
             <div className={cx("order__item-actions")}>
               <button className={cx("order__item-action-button", "text-sm")}>{ORDER_SHIPMENT_BUTTON}</button>
@@ -136,9 +101,13 @@ export default function OrderPage() {
       ) : (
         <p className={cx("order__empty")}>{ORDER_ERROR}</p>
       )}
-      {filteredOrders.length > 0 && (
+      {orders.length > 0 && (
         <div className={cx("order__pagination")}>
-          <Pagination current={currentPage} total={totalPages} onClick={onClickHandler} />
+          <Pagination
+            current={currentPage}
+            total={totalPages}
+            onClick={(page) => updateQueryParams(page, selectedFilter)}
+          />
         </div>
       )}
     </div>
