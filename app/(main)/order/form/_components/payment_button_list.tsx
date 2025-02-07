@@ -1,7 +1,8 @@
+import PaymentButton from "@/app/(main)/order/form/_components/payment_button";
+
 import styles from "@/app/(main)/order/form/_components/payment_button_list.module.css";
 
 import classNames from "classnames/bind";
-import PaymentButton from "@/app/(main)/order/form/_components/payment_button";
 
 interface PaymentButtonListProps {
   payments: { paymentName: string; brandColor: string }[];

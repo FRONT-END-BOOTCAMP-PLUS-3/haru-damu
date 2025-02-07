@@ -1,8 +1,8 @@
 "use client";
-import type { TUser } from "@/types";
+import Subheading from "@/components/common/subheading";
+import LabelValueText from "@/components/common/label_value_text";
 
-import Subheading from "@/app/(main)/order/form/_components/subheading";
-import InlineField from "@/app/(main)/order/form/_components/inline_field";
+import type { TUser } from "@/types";
 
 interface ShippingInfoSectionProps {
   user: TUser;
@@ -12,7 +12,7 @@ export default function ShippingInfoSection({ user }: ShippingInfoSectionProps) 
   return (
     <section>
       <Subheading title={"배송 정보"} />
-      <InlineField label={"배송지"} value={address} />
+      <LabelValueText label={"배송지"} value={address} />
     </section>
   );
 }

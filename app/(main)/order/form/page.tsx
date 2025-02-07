@@ -1,3 +1,8 @@
+import OrderItemSection from "@/app/(main)/order/form/_components/order_item_section";
+import OrdererInfoSection from "@/app/(main)/order/form/_components/orderer_info_section";
+import PaymentInfoSection from "@/app/(main)/order/form/_components/payment_info_section";
+import ShippingInfoSection from "@/app/(main)/order/form/_components/shipping_info_section";
+
 import totalPriceCalculator from "@/utils/total_price_calculator";
 
 import styles from "@/app/(main)/order/form/page.module.css";
@@ -5,10 +10,6 @@ import styles from "@/app/(main)/order/form/page.module.css";
 import users from "@/dummys/users";
 import classNames from "classnames/bind";
 import horizontalItems from "@/dummys/horizontal_items";
-import OrderItemSection from "@/app/(main)/order/form/_components/order_item_section";
-import OrdererInfoSection from "@/app/(main)/order/form/_components/orderer_info_section";
-import PaymentInfoSection from "@/app/(main)/order/form/_components/payment_info_section";
-import ShippingInfoSection from "@/app/(main)/order/form/_components/shipping_info_section";
 
 const cx = classNames.bind(styles);
 

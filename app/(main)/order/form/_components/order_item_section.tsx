@@ -1,4 +1,5 @@
 "use client";
+import Subheading from "@/components/common/subheading";
 import HorizontalItem from "@/components/common/horizontal_item";
 
 import styles from "@/app/(main)/order/form/_components/order_item_section.module.css";
@@ -6,7 +7,6 @@ import styles from "@/app/(main)/order/form/_components/order_item_section.modul
 import type { THorizontalItem } from "@/types";
 
 import classNames from "classnames/bind";
-import Subheading from "@/app/(main)/order/form/_components/subheading";
 
 interface OrderItemSectionProps {
   items: THorizontalItem[];
