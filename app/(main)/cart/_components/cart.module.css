@@ -1,11 +1,24 @@
+.cart_wrapper {
+    height: fit-content;
+
+    background: #fff;
+
+    position: relative;
+}
+
+.cart_wrapper__shrunk {
+    padding-top: 420px;
+}
 
 .cart__fixed {
     width: 1080px;
 
     background: var(--base-white);
 
-    position: fixed;
-    top: 0;
-
     z-index: 500;
+}
+
+.cart__shrunk__top {
+    position: fixed;
+    top: 80px;
 }

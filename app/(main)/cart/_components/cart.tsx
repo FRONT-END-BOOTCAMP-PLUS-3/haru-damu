@@ -4,6 +4,7 @@ import MealCart from "@/app/(main)/cart/_components/meal_cart";
 import CartLists from "@/app/(main)/cart/_components/cart_lists";
 import CartListHeader from "@/app/(main)/cart/_components/cart_list_header";
 
+import { useStore } from "@/hooks/usestore";
 import useDndContext from "@/hooks/use_dnd_context";
 
 import style from "@/app/(main)/cart/_components/cart.module.css";
@@ -22,6 +23,8 @@ interface CartProps {
 }
 
 export default function Cart({ items }: CartProps) {
+  const { isShrunk } = useStore();
+
   const { sensors, onDragEnd, onDragOver, onDragStart, onDragCancel, overlayElement } = useDndContext();
 
   const dropAnimation: DropAnimation = {
@@ -47,19 +50,21 @@ export default function Cart({ items }: CartProps) {
   };
 
   return (
-    <DndContext
-      sensors={sensors}
-      onDragEnd={onDragEnd}
-      onDragOver={onDragOver}
-      onDragStart={onDragStart}
-      onDragCancel={onDragCancel}
-    >
-      <div className={cx("cart__fixed")}>
-        <MealCart />
-        <CartListHeader />
-      </div>
-      <CartLists items={items} />
-      <DragOverlay dropAnimation={dropAnimation}>{overlayElement}</DragOverlay>
-    </DndContext>
+    <div className={cx("cart_wrapper", "container", isShrunk && "cart_wrapper__shrunk")}>
+      <DndContext
+        sensors={sensors}
+        onDragEnd={onDragEnd}
+        onDragOver={onDragOver}
+        onDragStart={onDragStart}
+        onDragCancel={onDragCancel}
+      >
+        <div className={cx("cart__fixed", isShrunk && "cart__shrunk__top")}>
+          <MealCart />
+          <CartListHeader />
+        </div>
+        <CartLists items={items} />
+        <DragOverlay dropAnimation={dropAnimation}>{overlayElement}</DragOverlay>
+      </DndContext>
+    </div>
   );
 }

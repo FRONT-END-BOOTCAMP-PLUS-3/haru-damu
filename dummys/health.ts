@@ -11,7 +11,7 @@ const health: THealth = {
   carbohydrates: 334,
   protein: 167,
   fat: 74,
-  sodium: 2.3,
+  sodium: 2300,
   sugar: 50,
   is_custom: false,
   created_at: "2025-01-24T12:00:00",

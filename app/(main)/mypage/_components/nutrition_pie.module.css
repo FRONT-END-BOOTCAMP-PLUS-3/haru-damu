@@ -1,0 +1,31 @@
+.nutrition_pie__wrapper {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nutrition_pie__ul {
+    padding-top: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* 두 개의 열 */
+    gap: 10px;
+}
+
+.nutrition_pie__list {
+    padding: 5px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.nutrition_pie__list__div {
+    width: 14px;
+    height: 14px;
+
+    margin-right: 5px;
+
+    border-radius: 50%;
+}

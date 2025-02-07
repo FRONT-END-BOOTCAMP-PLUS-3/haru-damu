@@ -1,4 +1,6 @@
 import Category from "@/components/common/category";
+import Banner from "@/app/(main)/_components/banner";
+import MealList from "@/app/(main)/_components/meal_list";
 
 import styles from "@/app/(main)/main_page.module.css";
 
@@ -7,8 +9,6 @@ import { CATEGORIES } from "@/constants/categories";
 
 import classNames from "classnames/bind";
 import { dummyItems } from "@/dummys/items";
-import Banner from "@/app/(main)/_components/banner";
-import MealList from "@/app/(main)/_components/meal_list";
 
 const cx = classNames.bind(styles);
 
