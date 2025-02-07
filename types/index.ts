@@ -18,6 +18,7 @@ export type TItem = {
   item_id: number;
   store_id: number;
   item_name: string;
+  store_name: string;
   item_price: number;
   img: string | undefined;
   blurImg: string | undefined;
