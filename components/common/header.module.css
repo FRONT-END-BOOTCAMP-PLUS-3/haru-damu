@@ -107,7 +107,6 @@ align-items: center;
 }
 
 .header__icon {
-font-size: 24px;
 margin-left: 10px;
 cursor: pointer;
 }
@@ -142,4 +141,25 @@ cursor: pointer;
     background-color: var(--secondary-color); 
     color: var(--base-white); 
   }
-  
+
+.header__mypage_icon__button {
+  all : unset;
+
+  cursor: pointer;
+}
+
+.header__mypage_icon__div {
+  width : 24px;
+  height: 24px;
+
+  border-radius: 50%;
+  margin: 0px 2px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
