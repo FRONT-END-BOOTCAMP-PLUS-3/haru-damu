@@ -1,5 +1,3 @@
-import { useParams } from "next/navigation";
-
 import OrderItemSection from "@/components/order_item_section";
 import ShippingInfoSection from "@/components/shipping_info_section";
 import PaymentInfoSection from "@/app/(main)/order/[id]/_components/payment_info_section";
