@@ -7,7 +7,10 @@ export const getConversionDirection = <U extends FromUnit>(from: U, to: ToUnit<U
 const unitConverter = <U extends FromUnit>(from: U, to: ToUnit<U>, value: number) => {
   const conversionDirection = getConversionDirection(from, to);
 
-  if ((conversionDirection === "g -> kg" || conversionDirection === "ml -> l") && value > 0.1) {
+  if (
+    (conversionDirection === "mg -> g" || conversionDirection === "g -> kg" || conversionDirection === "ml -> l") &&
+    value > 0.1
+  ) {
     return {
       unit: to,
       value: value / 1000,

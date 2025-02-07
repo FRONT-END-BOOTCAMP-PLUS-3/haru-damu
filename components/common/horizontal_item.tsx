@@ -14,9 +14,9 @@ import { ChevronLeft, ChevronRight, ImageOff, Trash2 } from "lucide-react";
 interface HorizontalItemProps {
   horizontalItem: THorizontalItem;
   isEditable?: boolean;
-  onCheck: (itemId: number, checked: boolean) => void;
-  onQuantityChange: (itemId: number, quantity: number) => void;
-  onDelete: (itemId: number) => void;
+  onCheck?: (itemId: number, checked: boolean) => void;
+  onQuantityChange?: (itemId: number, quantity: number) => void;
+  onDelete?: (itemId: number) => void;
 }
 
 const cx = classNames.bind(styles);
@@ -49,18 +49,18 @@ export default function HorizontalItem({
   const handlers = isEditable
     ? {
         onCheckHandler: (e: React.ChangeEvent<HTMLInputElement>) => {
-          onCheck(item_id, e.target.checked);
+          onCheck?.(item_id, e.target.checked);
         },
         onDecreaseQuantityHandler: () => {
           if (quantity > 1) {
-            onQuantityChange(item_id, quantity - 1);
+            onQuantityChange?.(item_id, quantity - 1);
           }
         },
         onIncreaseQuantityHandler: () => {
-          onQuantityChange(item_id, quantity + 1);
+          onQuantityChange?.(item_id, quantity + 1);
         },
         onDeleteHandler: () => {
-          onDelete(item_id);
+          onDelete?.(item_id);
         },
       }
     : null;

@@ -35,7 +35,9 @@ export type TItem = {
 export type TUser = {
   user_id: number;
   name: string;
+  address: string;
   email: string;
+  phone: string;
   created_at: string;
   updated_at: string;
 };
@@ -72,6 +74,7 @@ export type THealth = {
 
 // unit_converter ===================================================================
 export type ValidConversions = {
+  mg:'g';
   g: "kg";
   kg: "g";
   ml: "l";

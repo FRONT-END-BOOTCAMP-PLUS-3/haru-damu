@@ -1,0 +1,43 @@
+.nutrition_bar__wrapper {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+}
+
+.nutrition_bar {
+    width: 300px;
+    height: 400px;
+}
+
+.nutrition_bar__ul {
+    width: 70%;
+
+    padding-top: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* 두 개의 열 */
+    gap: 10px;
+}
+
+.nutrition_bar__list {
+    padding: 5px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.nutrition_bar__list__div {
+    width: 14px;
+    height: 14px;
+
+    margin-right: 5px;
+
+    border-radius: 50%;
+}
