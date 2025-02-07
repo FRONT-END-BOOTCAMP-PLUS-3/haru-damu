@@ -18,6 +18,6 @@
 
 .order_item_section_total_price__div {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   gap: 10px;
 }
