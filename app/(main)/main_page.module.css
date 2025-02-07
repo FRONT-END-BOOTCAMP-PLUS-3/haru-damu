@@ -3,6 +3,7 @@
     flex-direction: column;
     gap:100px;
     align-items: center;
+    padding-bottom: 180px;
 }
 .container__catagorys {
     display: flex;

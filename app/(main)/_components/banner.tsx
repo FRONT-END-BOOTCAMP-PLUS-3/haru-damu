@@ -21,7 +21,7 @@ export default function Banner({ bannerItem }: BannerProps) {
   const router = useRouter();
 
   const handleBannerClick = () => {
-    const currentBanner = bannerItem[currentIndex]; // 현재 배너 가져오기
+    const currentBanner = bannerItem[currentIndex];
     router.push(`/category?id=${encodeURIComponent(currentBanner.categoryName)}`);
   };
   const goToNext = () => {
@@ -33,9 +33,9 @@ export default function Banner({ bannerItem }: BannerProps) {
   };
 
   useEffect(() => {
-    const interval = setInterval(goToNext, 5000); // 5초마다 변경
-    return () => clearInterval(interval); // cleanup
-  }, [currentIndex]); // 🔥 의존성 배열에 currentIndex 추가
+    const interval = setInterval(goToNext, 5000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   return (
     <div className={cx("banner")}>

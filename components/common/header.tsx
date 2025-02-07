@@ -109,11 +109,11 @@ const ExpandedHeader = () => {
 
 // 로그인 & 회원가입 버튼
 const AuthButtons = () => {
-  const { isLogin } = useStore(); // ✅ Zustand 전역 상태 가져오기
+  const { isLogin } = useStore();
   const router = useRouter();
   return (
     <div className={cx("header__auth")}>
-      <button className={cx("header__auth__button")} onClick={() => router.push(isLogin ? "/profile" : "/login")}>
+      <button className={cx("header__auth__button")} onClick={() => router.push(isLogin ? "/mypage" : "/login")}>
         {isLogin ? "유저네임" : "회원가입"}
       </button>
       <div className={cx("header__divider")}>|</div>
@@ -130,7 +130,7 @@ const NavIcons = () => {
   return (
     <div className={cx("header__nav__icons")}>
       <ShoppingBasket className={cx("header__icon")} size={24} onClick={() => router.push("/cart")} />
-      <User className={cx("header__icon")} size={24} onClick={() => router.push("/profile")} />
+      <User className={cx("header__icon")} size={24} onClick={() => router.push("/mypage")} />
     </div>
   );
 };

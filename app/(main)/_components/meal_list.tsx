@@ -17,8 +17,8 @@ export default function MealList({ meal, items }: VerticalItemListProps) {
   return (
     <div className={cx("meallist")}>
       <div className={cx("meallist__title")}>
-        <h2 className={cx("title-lg-b")}>{MAIN_MEAL[meal].title}</h2> {/* ✅ title 사용 */}
-        <span className={cx("text-md")}>{MAIN_MEAL[meal].description}</span> {/* ✅ description 사용 */}
+        <h2 className={cx("title-lg-b")}>{MAIN_MEAL[meal].title}</h2>
+        <span className={cx("text-md")}>{MAIN_MEAL[meal].description}</span>
       </div>
 
       <ul className={cx("meallist__item")}>
