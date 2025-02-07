@@ -32,7 +32,7 @@ export default function Button({
 
   return (
     <button className={classNames} style={{ width, height }} {...rest}>
-      {iconComponent && <div>{iconComponent}</div>}
+      {iconComponent && <div className={cx("button__icon")}>{iconComponent}</div>}
       {text}
     </button>
   );

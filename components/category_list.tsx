@@ -43,7 +43,10 @@ export default function CategoryList({ categoryList, width = "200px", height = "
         <ul className={cx("categorylist__dropdown")}>
           {categoryList.map((category, index) => (
             <li key={category.id ?? index + 1} className={cx("categorylist__item")}>
-              <Link href={category.path ?? "/"} className={cx("categorylist__link")}>
+              <Link
+                href={category.path ? `/category?value=${category.path}` : "/"}
+                className={cx("categorylist__link")}
+              >
                 <div>{category.icon}</div>
                 <span>{category.category}</span>
               </Link>
