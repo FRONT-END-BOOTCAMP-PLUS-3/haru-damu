@@ -1,0 +1,65 @@
+.health {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .health__title {
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .health__divider {
+    border-top: 1px solid var(--secondary-color);
+    margin-top: 25px;
+  }
+  
+  .health__form {
+    display: flex;
+    flex-direction: column;
+    gap: 37px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+  
+  .health__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .health__label {
+    width: 120px;
+    text-align: left;
+  }
+  
+  .health__input {
+    flex: 1;
+    height: 30px;
+    padding: 5px 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    text-align: left;
+    outline: none;
+  }
+  
+  .health__button {
+    width: 60%;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: var(--base-white);
+    border: none;
+    border-radius: 5px;
+    margin: 0 auto 0;
+    display: block;
+  }
+
+  .health__dropdown {
+    flex: 1;
+    height: 35px;
+    padding: 5px 0px;
+    text-align: left;
+    outline: none;
+  }
+

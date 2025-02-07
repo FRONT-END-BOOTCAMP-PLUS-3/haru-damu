@@ -38,7 +38,7 @@ export default function PersonalPage() {
               type="text"
               className={cx("personal__input")}
               // TODO: value와 onChange를 이용하여 input에 데이터를 바인딩
-              value={formData[key]}
+              value={user[key]}
               onChange={(e) => handleChange(key, e.target.value)}
             />
           </div>
