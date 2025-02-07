@@ -1,7 +1,7 @@
-import OrderItemSection from "@/app/(main)/order/form/_components/order_item_section";
-import OrdererInfoSection from "@/app/(main)/order/form/_components/orderer_info_section";
-import PaymentInfoSection from "@/app/(main)/order/form/_components/payment_info_section";
-import ShippingInfoSection from "@/app/(main)/order/form/_components/shipping_info_section";
+import OrderItemSection from "@/components/order_item_section";
+import OrdererInfoSection from "@/components/orderer_info_section";
+import ShippingInfoSection from "@/components/shipping_info_section";
+import PaymentSection from "@/app/(main)/order/form/_components/payment_section";
 
 import totalPriceCalculator from "@/utils/total_price_calculator";
 
@@ -13,7 +13,7 @@ import horizontalItems from "@/dummys/horizontal_items";
 
 const cx = classNames.bind(styles);
 
-export default function OrderForm() {
+export default function OrderFormPage() {
   const totalPrice = totalPriceCalculator(horizontalItems);
   return (
     <div className={cx("container")}>
@@ -21,7 +21,7 @@ export default function OrderForm() {
       <OrderItemSection items={horizontalItems} totalPrice={totalPrice} />
       <OrdererInfoSection user={users[1]} />
       <ShippingInfoSection user={users[1]} />
-      <PaymentInfoSection totalPrice={totalPrice} />
+      <PaymentSection totalPrice={totalPrice} />
     </div>
   );
 }
