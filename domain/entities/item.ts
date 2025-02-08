@@ -5,7 +5,7 @@ export interface Item {
   storeId: number;
   itemName: string;
   itemPrice: number;
-  description: string;
+  description: string | null; // nullable
   categoryCode: string;
   itemCode: number;
   unitType: string;
