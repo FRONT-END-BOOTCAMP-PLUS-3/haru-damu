@@ -1,4 +1,4 @@
-import { Item } from "@/domain/entities/item";
+import type { Item } from "@/domain/entities/item";
 
 export interface Order {
   id: number;
