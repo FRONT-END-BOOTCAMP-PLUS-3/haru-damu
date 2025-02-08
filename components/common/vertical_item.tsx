@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Button from "@/components/common/button";
+
 import style from "@/components/common/vertical_item.module.css";
 
 import type { TItem } from "@/types";
