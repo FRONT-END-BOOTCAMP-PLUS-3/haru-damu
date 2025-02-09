@@ -7,10 +7,13 @@ import type { CartRepository } from "@/domain/repositories/cart_repository";
 
 export class CartRepositoryImpl implements CartRepository {
   // 카트 아이템 생성
-  public async create(cart: Cart): Promise<void> {
+  public async create(cart: Cart): Promise<Cart> {
     const supabase = await createClient();
-    const { error } = await supabase.from("carts").insert(cart);
-    if (error) throw new Error(error.message);
+    const { data } = await supabase.from("carts").insert(cart);
+    if (!data) {
+      throw new Error("Failed to create cart");
+    }
+    return data[0] as Cart;
   }
 
   // 특정 유저의 카트 조회
@@ -67,11 +70,20 @@ export class CartRepositoryImpl implements CartRepository {
   }
 
   // 카트 아이템 업데이트 (수량, 선택 여부 등)
-  public async update(userId: number, itemId: number, updatedCart: Partial<Cart>): Promise<void> {
+  public async update(userId: number, itemId: number, updatedCart: Partial<Cart>): Promise<Cart> {
     const supabase = await createClient();
-    const { error } = await supabase.from("carts").update(updatedCart).eq("user_id", userId).eq("item_id", itemId);
+    const { data, error } = await supabase
+      .from("carts")
+      .update(updatedCart)
+      .eq("user_id", userId)
+      .eq("item_id", itemId)
+      .select()
+      .single();
 
-    if (error) throw new Error(error.message);
+    if (error) {
+      throw new Error(`carts 데이터 업데이트 오류: ${error.message}`);
+    }
+    return data as Cart;
   }
 
   // 카트 아이템 삭제

@@ -6,10 +6,13 @@ import type { HealthRepository } from "@/domain/repositories/health_repository";
 
 export class HealthRepositoryImpl implements HealthRepository {
   // 건강 데이터 생성
-  public async create(health: Health): Promise<void> {
+  public async create(health: Health): Promise<Health> {
     const supabase = await createClient();
-    const { error } = await supabase.from("healths").insert(health);
-    if (error) throw new Error(error.message);
+    const { data } = await supabase.from("healths").insert(health);
+    if (!data) {
+      throw new Error("Failed to create cart");
+    }
+    return data[0] as Health;
   }
 
   // 특정 유저의 건강 데이터 조회
@@ -17,7 +20,10 @@ export class HealthRepositoryImpl implements HealthRepository {
     const supabase = await createClient();
     const { data, error } = await supabase.from("healths").select("*").eq("user_id", userId).single();
     if (error) return null;
-    return data as Health;
+    if (!data) {
+      throw new Error("Failed to update health data");
+    }
+    return data[0] as Health;
   }
 
   // 모든 건강 데이터 조회
@@ -41,10 +47,19 @@ export class HealthRepositoryImpl implements HealthRepository {
   }
 
   // 건강 데이터 업데이트
-  public async update(userId: number, updatedHealth: Partial<Health>): Promise<void> {
+  public async update(userId: number, updatedHealth: Partial<Health>): Promise<Health> {
     const supabase = await createClient();
-    const { error } = await supabase.from("healths").update(updatedHealth).eq("user_id", userId);
-    if (error) throw new Error(error.message);
+    const { data, error } = await supabase
+      .from("healths")
+      .update(updatedHealth)
+      .eq("user_id", userId)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`healths 데이터 업데이트 오류: ${error.message}`);
+    }
+    return data as Health;
   }
 
   // 건강 데이터 삭제

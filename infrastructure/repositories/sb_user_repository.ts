@@ -5,10 +5,13 @@ import type { UserRepository } from "@/domain/repositories/user_repository";
 
 export class UserRepositoryImpl implements UserRepository {
   // 유저 생성
-  public async create(user: User): Promise<void> {
+  public async create(user: User): Promise<User> {
     const supabase = await createClient();
-    const { error } = await supabase.from("users").insert(user);
-    if (error) throw new Error(error.message);
+    const { data } = await supabase.from("users").insert(user);
+    if (!data) {
+      throw new Error("Failed to create cart");
+    }
+    return data[0] as User;
   }
 
   // ID로 유저 찾기
@@ -28,10 +31,13 @@ export class UserRepositoryImpl implements UserRepository {
   }
 
   // 유저 정보 업데이트
-  public async update(userId: number, updatedUser: Partial<User>): Promise<void> {
+  public async update(userId: number, updatedUser: Partial<User>): Promise<User> {
     const supabase = await createClient();
-    const { error } = await supabase.from("users").update(updatedUser).eq("user_id", userId);
-    if (error) throw new Error(error.message);
+    const { data, error } = await supabase.from("users").update(updatedUser).eq("user_id", userId).select().single();
+    if (error) {
+      throw new Error(`healths 데이터 업데이트 오류: ${error.message}`);
+    }
+    return data as User;
   }
 
   // 유저 삭제 (이메일만 삭제)

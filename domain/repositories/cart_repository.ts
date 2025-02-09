@@ -3,7 +3,7 @@ import type { Item } from "@/domain/entities/item";
 import type { Cart } from "@/domain/entities/cart";
 
 export interface CartRepository {
-  create(cart: Cart): Promise<void>;
+  create(cart: Cart): Promise<Cart>;
 
   findByUserId(userId: number): Promise<Cart[]>;
 
@@ -15,7 +15,7 @@ export interface CartRepository {
 
   findByUserIdWithItem(userId: number): Promise<(Cart & { item: Item })[]>;
 
-  update(userId: number, itemId: number, updatedCart: Partial<Cart>): Promise<void>;
+  update(userId: number, itemId: number, updatedCart: Partial<Cart>): Promise<Cart>;
 
   delete(userId: number, itemId: number): Promise<void>;
 }
