@@ -13,16 +13,16 @@ export class CartRepositoryImpl implements CartRepository {
     if (!data) {
       throw new Error("Failed to create cart");
     }
-    return data[0] as Cart;
+    return data as Cart;
   }
 
   // 특정 유저의 카트 조회
-  public async findByUserId(userId: number): Promise<Cart[]> {
+  public async findByUserId(userId: number): Promise<Cart> {
     const supabase = await createClient();
-    const { data, error } = await supabase.from("carts").select("*").eq("user_id", userId);
+    const { data, error } = await supabase.from("carts").select("*").eq("user_id", userId).single();
 
     if (error) throw new Error(error.message);
-    return data as Cart[];
+    return data as Cart;
   }
 
   // 모든 카트 조회
@@ -34,39 +34,42 @@ export class CartRepositoryImpl implements CartRepository {
   }
 
   // 특정 유저의 카트 조회 (유저 정보와 함께)
-  public async findByUserIdWithUser(userId: number): Promise<(Cart & { user: User })[]> {
+  public async findByUserIdWithUser(userId: number): Promise<Cart & { user: User }> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("carts")
       .select("*, user:users(*)") // users 테이블의 모든 컬럼을 user 객체로 가져옴
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .single();
 
     if (error) throw new Error(error.message);
-    return data as (Cart & { user: User })[];
+    return data as Cart & { user: User };
   }
 
   // 특정 유저의 카트 조회 (유저, 아이템 정보와 함께)
-  public async findByUserIdWithAll(userId: number): Promise<(Cart & { user: User; item: Item })[]> {
+  public async findByUserIdWithAll(userId: number): Promise<Cart & { user: User; item: Item }> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("carts")
       .select("*, user:users(*), item:items(*)") // users와 items 테이블의 모든 컬럼 가져오기
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .single();
 
     if (error) throw new Error(error.message);
-    return data as (Cart & { user: User; item: Item })[];
+    return data as Cart & { user: User; item: Item };
   }
 
   // 특정 유저의 카트 조회 (아이템 정보와 함께)
-  public async findByUserIdWithItem(userId: number): Promise<(Cart & { item: Item })[]> {
+  public async findByUserIdWithItem(userId: number): Promise<Cart & { item: Item }> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("carts")
       .select("*, item:items(*)") //  items 테이블의 모든 컬럼을 item 객체로 가져옴
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .single();
 
     if (error) throw new Error(error.message);
-    return data as (Cart & { item: Item })[];
+    return data as Cart & { item: Item };
   }
 
   // 카트 아이템 업데이트 (수량, 선택 여부 등)

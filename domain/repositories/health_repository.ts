@@ -8,7 +8,7 @@ export interface HealthRepository {
 
   findAll(): Promise<Health[]>;
 
-  findByUserIdWithUser(userId: number): Promise<(Health & { user: User })[]>;
+  findByUserIdWithUser(userId: number): Promise<Health & { user: User }>;
 
   update(userId: number, updatedHealth: Partial<Health>): Promise<Health>;
 

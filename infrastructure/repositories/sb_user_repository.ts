@@ -11,7 +11,7 @@ export class UserRepositoryImpl implements UserRepository {
     if (!data) {
       throw new Error("Failed to create cart");
     }
-    return data[0] as User;
+    return data as User;
   }
 
   // ID로 유저 찾기
