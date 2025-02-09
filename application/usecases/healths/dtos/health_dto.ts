@@ -2,18 +2,18 @@
 export type TActivityCode = 0 | 1 | 2 | 3 | 4;
 
 export interface HealthDto {
-  gender_code: "M" | "F";
+  genderCode?: "M" | "F";
   age?: number;
   weight?: number;
   height?: number;
-  activity_code?: TActivityCode;
+  activityCode?: TActivityCode;
   calorie?: number;
   carbohydrates?: number;
   protein?: number;
   fat?: number;
   sodium?: number;
   sugar?: number;
-  is_custom: boolean;
-  created_at: string;
-  updated_at: string;
+  isCustom: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
