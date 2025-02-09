@@ -1,5 +1,5 @@
 export interface Health {
-  userId: number; // FK (users)
+  userId: number; // PK, FK (users)
   genderCode?: string | null; // 성별 코드 (M / F) - nullable
   weight?: number | null; // 몸무게 - nullable
   height?: number | null; // 키 - nullable
