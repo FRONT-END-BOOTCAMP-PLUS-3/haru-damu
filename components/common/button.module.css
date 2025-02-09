@@ -32,3 +32,8 @@
   background-color: var(--base-content-sub-text);
   color: var(--base-white);
 }
+.button__icon{
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+}
