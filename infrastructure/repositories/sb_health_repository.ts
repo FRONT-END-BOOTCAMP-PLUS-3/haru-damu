@@ -4,7 +4,7 @@ import type { User } from "@/domain/entities/user";
 import type { Health } from "@/domain/entities/health";
 import type { HealthRepository } from "@/domain/repositories/health_repository";
 
-export class HealthRepositoryImpl implements HealthRepository {
+export class SbHealthRepository implements HealthRepository {
   // 건강 데이터 생성
   public async create(health: Health): Promise<Health> {
     const supabase = await createClient();
