@@ -1,4 +1,4 @@
-import { TNutrition } from "@/types";
+import type { TNutrition } from "@/types";
 
 export interface Item {
   id: number;
