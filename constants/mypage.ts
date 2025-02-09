@@ -77,12 +77,15 @@ export const HEALTH_FIELDS = [
   { key: "activity_code", label: "활동량" },
 ] as const;
 
-export const GENDER_OPTIONS = Object.freeze(["남성", "여성"]);
+export const GENDER_OPTIONS = Object.freeze([
+  { value: "M", label: "남성" },
+  { value: "F", label: "여성" },
+]);
 
 export const ACTIVITY_OPTIONS = Object.freeze([
-  "매우 적은 활동량",
-  "가벼운 활동",
-  "보통 활동",
-  "활발한 활동",
-  "매우 활발",
+  { value: 1, label: "매우 적은 활동량" },
+  { value: 2, label: "가벼운 활동" },
+  { value: 3, label: "보통 활동" },
+  { value: 4, label: "활발한 활동" },
+  { value: 5, label: "매우 활발" },
 ]);
