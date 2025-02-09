@@ -1,13 +1,16 @@
+import type { User } from "@/domain/entities/user";
 import type { Health } from "@/domain/entities/health";
 
 export interface HealthRepository {
   create(health: Health): Promise<void>;
 
-  findByUserId(user_id: number): Promise<Health | null>;
+  findByUserId(userId: number): Promise<Health | null>;
 
   findAll(): Promise<Health[]>;
 
-  update(user_id: number, updatedHealth: Partial<Health>): Promise<void>;
+  findByUserIdWithUser(userId: number): Promise<(Health & { user: User })[]>;
 
-  delete(user_id: number): Promise<void>;
+  update(userId: number, updatedHealth: Partial<Health>): Promise<void>;
+
+  delete(userId: number): Promise<void>;
 }
