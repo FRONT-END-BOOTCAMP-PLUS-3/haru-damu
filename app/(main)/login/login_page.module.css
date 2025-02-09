@@ -1,8 +1,9 @@
 .container {
+  padding-top: 120px;
+  
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 .container__login{
   display: inline-flex;

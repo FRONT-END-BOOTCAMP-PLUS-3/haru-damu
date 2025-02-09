@@ -47,12 +47,15 @@ export default function Header() {
 // 파트너 헤더
 const PartnerHeader = () => {
   const router = useRouter();
+
+  const { user } = useStore();
+
   return (
     <div className={cx("header__container__partner", "text-sm")}>
       <HeaderLogo />
       <div className={cx("header__auth")}>
         <button className={cx("header__auth__button")} onClick={() => router.push("/mypage")}>
-          유저네임
+          {user && user.name}
         </button>
         <div className={cx("header__divider")}>|</div>
         <button className={cx("header__auth__button")} onClick={() => router.push("/")}>
@@ -109,15 +112,23 @@ const ExpandedHeader = () => {
 
 // 로그인 & 회원가입 버튼
 const AuthButtons = () => {
-  const { isLogin } = useStore();
+  const { isLogin, logout } = useStore(); // ✅ Zustand 전역 상태 가져오기
   const router = useRouter();
+
+  const logoutHandler = () => {
+    if (!isLogin) return router.push("/login");
+
+    logout();
+    router.push("/");
+  };
+
   return (
     <div className={cx("header__auth")}>
       <button className={cx("header__auth__button")} onClick={() => router.push(isLogin ? "/mypage" : "/login")}>
         {isLogin ? "유저네임" : "회원가입"}
       </button>
       <div className={cx("header__divider")}>|</div>
-      <button className={cx("header__auth__button")} onClick={() => router.push(isLogin ? "/" : "/login")}>
+      <button className={cx("header__auth__button")} onClick={logoutHandler}>
         {isLogin ? "로그아웃" : "로그인"}
       </button>
     </div>
@@ -127,10 +138,19 @@ const AuthButtons = () => {
 // 네비게이션 아이콘 (장바구니 & 프로필)
 const NavIcons = () => {
   const router = useRouter();
+  const { userImg } = useStore();
   return (
     <div className={cx("header__nav__icons")}>
       <ShoppingBasket className={cx("header__icon")} size={24} onClick={() => router.push("/cart")} />
-      <User className={cx("header__icon")} size={24} onClick={() => router.push("/mypage")} />
+      <button className={cx("header__mypage_icon__button")} onClick={() => router.push("/profile")}>
+        {userImg === null ? (
+          <User className={cx("header__icon")} size={24} />
+        ) : (
+          <div className={cx("header__mypage_icon__div")}>
+            <Image src={userImg} fill alt="user_img" objectFit="cover" />
+          </div>
+        )}
+      </button>
     </div>
   );
 };

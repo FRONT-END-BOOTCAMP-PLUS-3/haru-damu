@@ -59,12 +59,12 @@ export function calcOneMeals(
 
   // 하루 총 영양소 계산
   const total: MealNutrients = {
-    calories: breakfast.calories + lunch.calories + dinner.calories,
-    protein: breakfast.protein + lunch.protein + dinner.protein,
-    carbohydrates: breakfast.carbohydrates + lunch.carbohydrates + dinner.carbohydrates,
-    fat: breakfast.fat + lunch.fat + dinner.fat,
-    sugar: breakfast.sugar + lunch.sugar + dinner.sugar,
-    sodium: breakfast.sodium + lunch.sodium + dinner.sodium,
+    calories: Math.round(breakfast.calories + lunch.calories + dinner.calories),
+    protein: Math.round(breakfast.protein + lunch.protein + dinner.protein),
+    carbohydrates: Math.round(breakfast.carbohydrates + lunch.carbohydrates + dinner.carbohydrates),
+    fat: Math.round(breakfast.fat + lunch.fat + dinner.fat),
+    sugar: Math.round(breakfast.sugar + lunch.sugar + dinner.sugar),
+    sodium: Math.round(breakfast.sodium + lunch.sodium + dinner.sodium),
   };
 
   return { breakfast, lunch, dinner, total };
