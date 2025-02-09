@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/app/(main)/order/form/_components/subheading.module.css";
+import styles from "@/components/common/subheading.module.css";
 
 import classNames from "classnames/bind";
 

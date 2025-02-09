@@ -1,22 +1,25 @@
 "use client";
+import { usePathname } from "next/navigation";
+
+import Subheading from "@/components/common/subheading";
 import HorizontalItem from "@/components/common/horizontal_item";
 
-import styles from "@/app/(main)/order/form/_components/order_item_section.module.css";
+import styles from "@/components/order_item_section.module.css";
 
 import type { THorizontalItem } from "@/types";
 
 import classNames from "classnames/bind";
-import Subheading from "@/app/(main)/order/form/_components/subheading";
 
 interface OrderItemSectionProps {
   items: THorizontalItem[];
-  totalPrice: number;
+  totalPrice: string;
 }
 
 const cx = classNames.bind(styles);
 
 export default function OrderItemSection({ items, totalPrice }: OrderItemSectionProps) {
-  const formattedTotalPrice = totalPrice.toLocaleString();
+  const pathname = usePathname();
+  const isOrderForm = pathname === "/order/form";
   return (
     <section>
       <Subheading title={"주문 상품"} />
@@ -25,13 +28,15 @@ export default function OrderItemSection({ items, totalPrice }: OrderItemSection
           <HorizontalItem key={item.item_id} horizontalItem={item} isEditable={false} />
         ))}
       </ul>
-      <div className={cx("order_item_section_total_price")}>
-        <span>최종 결제 금액</span>
-        <div className={cx("order_item_section_total_price__div")}>
-          <p className={cx("title-md-b")}>{formattedTotalPrice}</p>
-          <span>원</span>
+      {isOrderForm && (
+        <div className={cx("order_item_section_total_price")}>
+          <span>최종 결제 금액</span>
+          <div className={cx("order_item_section_total_price__div")}>
+            <p className={cx("title-md-b")}>{totalPrice}</p>
+            <span>원</span>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
