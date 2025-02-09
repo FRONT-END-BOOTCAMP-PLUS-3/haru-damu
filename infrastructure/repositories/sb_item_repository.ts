@@ -104,4 +104,28 @@ export class SbItemRepository implements ItemRepository {
       throw new Error(`items 데이터 삭제 오류: ${error.message}`);
     }
   }
+  async findRandomByCategory(categoryCode: string): Promise<(Item & { itemImage: ItemImage | null }) | null> {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+      .from("items")
+      .select("*, item_images(*)")
+      .eq("categoryCode", categoryCode)
+      .order("RANDOM()")
+      .limit(1)
+      .single();
+
+    if (error) {
+      throw new Error(`items 카테고리별 랜덤 데이터 패칭 오류: ${error.message}`);
+    }
+
+    if (!data) {
+      return null;
+    }
+
+    return {
+      ...data,
+      itemImage: data.item_images ?? null,
+    };
+  }
 }
