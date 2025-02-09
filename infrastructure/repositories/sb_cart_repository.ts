@@ -5,7 +5,7 @@ import type { Item } from "@/domain/entities/item";
 import type { User } from "@/domain/entities/user";
 import type { CartRepository } from "@/domain/repositories/cart_repository";
 
-export class CartRepositoryImpl implements CartRepository {
+export class SbCartRepository implements CartRepository {
   // 카트 아이템 생성
   public async create(cart: Cart): Promise<Cart> {
     const supabase = await createClient();

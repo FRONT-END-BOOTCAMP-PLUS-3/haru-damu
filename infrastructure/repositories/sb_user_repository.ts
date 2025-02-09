@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 import type { User } from "@/domain/entities/user";
 import type { UserRepository } from "@/domain/repositories/user_repository";
 
-export class UserRepositoryImpl implements UserRepository {
+export class SbUserRepository implements UserRepository {
   // 유저 생성
   public async create(user: User): Promise<User> {
     const supabase = await createClient();
