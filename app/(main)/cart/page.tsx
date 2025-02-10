@@ -12,7 +12,5 @@ export default async function CartPage() {
     credentials: "include",
   }).then((response) => response.json());
 
-  console.log(fetchedItems);
-
   return <Cart items={fetchedItems?.items ?? []} />;
 }

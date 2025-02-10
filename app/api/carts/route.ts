@@ -52,8 +52,6 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
 
-    console.log(body);
-
     if (!body || !body.itemId || !body.cart)
       return NextResponse.json({ message: "itemId 혹은 cart 데이터 누락" }, { status: 400 });
 
