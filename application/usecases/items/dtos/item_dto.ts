@@ -11,7 +11,7 @@ export interface ItemDto {
   itemId: number;
   storeId: number;
   itemName: string;
-  itemPrice: string;
+  itemPrice: number;
   img?: string;
   blurImg?: string;
   description?: string;
