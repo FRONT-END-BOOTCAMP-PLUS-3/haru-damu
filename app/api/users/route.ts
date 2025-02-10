@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 
-import { supabase } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
+  const supabase = await createClient();
+
   const body = await request.json();
   const { type, email, name, phone } = body;
 
@@ -27,13 +29,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: `신규 ${type} 로그인 성공!`, user: newUser, type }, { status: 201 });
     } else {
       // 3. 기존 사용자가 있으면 업데이트
-      const { data: updatedUser } = await supabase.from(`${type}s`).update({ name, phone }).eq("email", email).select().single();
+      const { data: updatedUser } = await supabase
+        .from(`${type}s`)
+        .update({ name, phone })
+        .eq("email", email)
+        .select()
+        .single();
 
-      console.log(updatedUser)
       return NextResponse.json({ message: `기존 ${type} 로그인 성공!`, user: updatedUser, type }, { status: 201 });
     }
   } catch (error) {
     NextResponse.json({ message: error.message }, { status: 500 });
   }
-
 }
