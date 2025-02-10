@@ -3,6 +3,10 @@
   width: 100%;
 }
 
+.mypage__wrapper__padding_top {
+  padding-top: 200px;
+}
+
 .mypage__aside-wrapper {
   width: 350px; 
   flex-shrink: 0; 

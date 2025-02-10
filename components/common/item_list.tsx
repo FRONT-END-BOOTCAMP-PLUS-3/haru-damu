@@ -4,6 +4,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Pagination from "@/components/common/pagination";
 import VerticalItem from "@/components/common/vertical_item";
+
+import { useStore } from "@/hooks/usestore";
+
 import styles from "@/components/common/item_list.module.css";
 
 import type { TItem } from "@/types";
@@ -20,6 +23,8 @@ interface ItemListProps {
 }
 
 export default function ItemList({ items, totalItems, title, baseUrl }: ItemListProps) {
+  const { isShrunk } = useStore();
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -31,7 +36,7 @@ export default function ItemList({ items, totalItems, title, baseUrl }: ItemList
   };
 
   return (
-    <div className={cx("container", "item_list__page")}>
+    <div className={cx("container", "item_list__page", isShrunk && "item_list__page__padding_top")}>
       <h1 className={cx("item_list__title", "title-lg-b")}>{title}</h1>
       <ul className={cx("item_list__item_list")}>
         {items.map((item) => (

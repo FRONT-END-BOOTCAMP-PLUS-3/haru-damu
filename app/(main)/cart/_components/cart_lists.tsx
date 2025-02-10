@@ -67,6 +67,9 @@ export default function CartLists({ items }: CartListsProps) {
               isWrapperBottom={!cart[idx + 1] || item.wrapperId !== cart[idx + 1].wrapperId}
             />
           ))}
+          {cart.length === 0 && (
+            <div className={cx("cart_list__no_item", "title-md-b")}>장바구니에 아무것도 없어요 🥲</div>
+          )}
         </SortableContext>
       </ul>
     </div>
