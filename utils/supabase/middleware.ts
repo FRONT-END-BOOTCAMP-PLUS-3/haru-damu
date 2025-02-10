@@ -26,37 +26,25 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  // Do not run code between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
-  // IMPORTANT: DO NOT REMOVE auth.getUser()
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
-
   if (!user && (request.nextUrl.pathname === "/cart" || request.nextUrl.pathname === "/mypage")) {
-    // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
-  // IMPORTANT: You *must* return the supabaseResponse object as it is.
-  // If you're creating a new response object with NextResponse.next() make sure to:
-  // 1. Pass the request in it, like so:
-  //    const myNewResponse = NextResponse.next({ request })
-  // 2. Copy over the cookies, like so:
-  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-  // 3. Change the myNewResponse object to fit your needs, but avoid changing
-  //    the cookies!
-  // 4. Finally:
-  //    return myNewResponse
-  // If this is not done, you may be causing the browser and server to go out
-  // of sync and terminate the user's session prematurely!
+  const myNewResponse = NextResponse.next({ request });
+   supabaseResponse.cookies.getAll().forEach(cookie => {
+    myNewResponse.cookies.set(cookie.name, cookie.value, {
+      path: '/',               // 기본 경로 설정
+      httpOnly: true,          // HttpOnly 속성 추가 (선택)
+      secure: process.env.NODE_ENV === 'production', // 프로덕션 환경에서 secure 설정
+      sameSite: 'lax'          // 기본 sameSite 설정
+    });
+  });
 
-  return supabaseResponse;
+  return myNewResponse;
 }
