@@ -23,12 +23,10 @@ export default function PersonalPage() {
     Object.fromEntries(PERSONAL_FIELDS.map(({ key }) => [key, ""])), // 초기값은 빈 값으로 설정
   );
 
-  const userId = 2; // 예시: 사용자 ID를 2로 설정
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`/api/mypage/personal/${userId}`);
+        const response = await fetch(`/api/mypage/personal`);
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
@@ -40,7 +38,7 @@ export default function PersonalPage() {
     };
 
     fetchUserData();
-  }, [userId]);
+  }, []);
 
   const handleChange = (key: string, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
@@ -48,7 +46,7 @@ export default function PersonalPage() {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`/api/mypage/personal/${userId}`, {
+      const response = await fetch(`/api/mypage/personal`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +66,7 @@ export default function PersonalPage() {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/mypage/personal/${userId}`, {
+      const response = await fetch(`/api/mypage/personal`, {
         method: "DELETE",
       });
 
