@@ -1,23 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useStore } from "@/hooks/usestore";
 
 import styles from "./personal.module.css";
 
 import { PERSONAL_BUTTON, PERSONAL_EMAIL, PERSONAL_FIELDS, PERSONAL_TITLE } from "@/constants/mypage";
 
-import user from "@/dummys/user";
 import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
 export default function PersonalPage() {
-  // user 데이터를 기반으로 초기 상태 설정
+  const { addMessage } = useStore();
+
   const [formData, setFormData] = useState(
-    Object.fromEntries(PERSONAL_FIELDS.map(({ key }) => [key, user[key] || ""])), // user 데이터 활용
+    Object.fromEntries(PERSONAL_FIELDS.map(({ key }) => [key, ""])), // 초기값은 빈 값으로 설정
   );
 
-  // TODO: API 연동
+  const userId = 1; // 예시: 사용자 ID를 1로 설정
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`/api/mypage/personal/${userId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+        const data = await response.json();
+        setFormData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserData();
+  }, [userId]);
+
   const handleChange = (key: string, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`/api/mypage/personal/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update user data");
+      }
+      addMessage("저장되었습니다.");
+      // window.location.reload();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -28,7 +68,7 @@ export default function PersonalPage() {
       <div className={cx("personal__form")}>
         <div className={cx("personal__row")}>
           <label className={cx("personal__label")}>{PERSONAL_EMAIL}</label>
-          <span className={cx("personal__email")}>{user.email}</span>
+          <span className={cx("personal__email")}>{formData.email}</span>
         </div>
 
         {PERSONAL_FIELDS.map(({ key, label }) => (
@@ -37,15 +77,16 @@ export default function PersonalPage() {
             <input
               type="text"
               className={cx("personal__input")}
-              // TODO: value와 onChange를 이용하여 input에 데이터를 바인딩
-              value={user[key]}
+              value={formData[key] || ""}
               onChange={(e) => handleChange(key, e.target.value)}
             />
           </div>
         ))}
       </div>
 
-      <button className={cx("personal__button", "text-md")}>{PERSONAL_BUTTON}</button>
+      <button className={cx("personal__button", "text-md")} onClick={handleSave}>
+        {PERSONAL_BUTTON}
+      </button>
     </div>
   );
 }
