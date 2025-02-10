@@ -17,6 +17,7 @@ import {
 import type { HealthDto } from "@/application/usecases/healths/dtos";
 
 import classNames from "classnames/bind";
+import { useStore } from "@/hooks/usestore";
 
 const GENDER_OPTIONS = [...GenderOptions];
 const ACTIVITY_OPTIONS = [...ActivityOptions];
@@ -24,6 +25,7 @@ const cx = classNames.bind(styles);
 
 export default function HealthPage() {
   const router = useRouter();
+  const { addMessage } = useStore();
 
   // 기본값이 있으므로 NaN이 발생하지 않도록 기본 숫자 필드는 0으로 설정
   const [formData, setFormData] = useState<HealthDto>({
@@ -93,8 +95,7 @@ export default function HealthPage() {
         console.error("Error response:", errorText);
         throw new Error("Failed to save health data");
       }
-      // 저장 후 예시로 마이페이지로 이동
-      router.push(`/mypage`);
+      addMessage("저장되었습니다.");
     } catch (error) {
       console.error("Error saving health data:", error);
     }
