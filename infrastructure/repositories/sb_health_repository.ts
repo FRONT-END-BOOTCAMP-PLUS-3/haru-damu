@@ -4,11 +4,15 @@ import type { User } from "@/domain/entities/user";
 import type { Health } from "@/domain/entities/health";
 import type { HealthRepository } from "@/domain/repositories/health_repository";
 
+import snakecaseKeys from "snakecase-keys";
+import camelcaseKeys from "camelcase-keys";
+
 export class SbHealthRepository implements HealthRepository {
   // 건강 데이터 생성
   public async create(health: Health): Promise<Health> {
     const supabase = await createClient();
-    const { data } = await supabase.from("healths").insert(health);
+    const snakeHealth = snakecaseKeys(JSON.parse(JSON.stringify(health)) as Record<string, unknown>, { deep: true });
+    const { data } = await supabase.from("healths").insert(snakeHealth);
     if (!data) {
       throw new Error("Failed to create cart");
     }
@@ -23,7 +27,7 @@ export class SbHealthRepository implements HealthRepository {
     if (!data) {
       throw new Error("Failed to update health data");
     }
-    return data as Health;
+    return camelcaseKeys(data, { deep: true }) as Health;
   }
 
   // 모든 건강 데이터 조회
@@ -31,7 +35,7 @@ export class SbHealthRepository implements HealthRepository {
     const supabase = await createClient();
     const { data, error } = await supabase.from("healths").select("*");
     if (error) throw new Error(error.message);
-    return data as Health[];
+    return camelcaseKeys(data, { deep: true }) as Health[];
   }
 
   // 특정 유저의 건강 데이터 조회 (유저 정보와 함께)
@@ -42,25 +46,21 @@ export class SbHealthRepository implements HealthRepository {
       .select("*, user:users(*)") // users 테이블의 모든 컬럼을 user 객체로 가져옴
       .eq("user_id", userId)
       .single();
-
     if (error) throw new Error(error.message);
-    return data as Health & { user: User };
+    return camelcaseKeys(data, { deep: true }) as Health & { user: User };
   }
 
   // 건강 데이터 업데이트
   public async update(userId: number, updatedHealth: Partial<Health>): Promise<Health> {
     const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("healths")
-      .update(updatedHealth)
-      .eq("user_id", userId)
-      .select()
-      .single();
-
+    const snakeHealth = snakecaseKeys(JSON.parse(JSON.stringify(updatedHealth)) as Record<string, unknown>, {
+      deep: true,
+    });
+    const { data, error } = await supabase.from("healths").update(snakeHealth).eq("user_id", userId).select().single();
     if (error) {
       throw new Error(`healths 데이터 업데이트 오류: ${error.message}`);
     }
-    return data as Health;
+    return camelcaseKeys(data, { deep: true }) as Health;
   }
 
   // 건강 데이터 삭제
