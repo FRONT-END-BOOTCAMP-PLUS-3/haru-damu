@@ -35,19 +35,17 @@ export default function Callback() {
       login(type, { email, name: full_name }, avatar_url);
 
       const {
-        data : {
-          session
-        }
-      } = await supabase.auth.getSession()
+        data: { session },
+      } = await supabase.auth.getSession();
 
-      if(!session) return
+      if (!session) return;
 
-      setCookie(null, 'access_token', session?.access_token, {
+      setCookie(null, "access_token", session?.access_token, {
         maxAge: 30 * 24 * 60 * 60, // 30일 동안 유지
-        path: '/',                 // 모든 경로에서 쿠키 접근 가능
-        secure: true,              // HTTPS 환경에서만 쿠키 전송
-        sameSite: 'strict'         // CSRF 방지
-      })
+        path: "/", // 모든 경로에서 쿠키 접근 가능
+        secure: true, // HTTPS 환경에서만 쿠키 전송
+        sameSite: "strict", // CSRF 방지
+      });
 
       addMessage(`어서오세요, ${full_name}님!`, "var(--secondary-color)");
     };

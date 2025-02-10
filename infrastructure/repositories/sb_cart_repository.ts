@@ -1,8 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-import type { Cart } from "@/domain/entities/cart";
-import type { Item } from "@/domain/entities/item";
-import type { User } from "@/domain/entities/user";
+import type { User, Item, Cart, ItemImage } from "@/domain/entities";
 import type { CartRepository } from "@/domain/repositories/cart_repository";
 
 import snakecaseKeys from "snakecase-keys";
@@ -10,22 +8,33 @@ import camelcaseKeys from "camelcase-keys";
 
 export class SbCartRepository implements CartRepository {
   // 카트 아이템 생성
-  public async create(cart: Cart): Promise<Cart> {
+  public async create(cart: Cart): Promise<Cart & { item: Item & { itemImages: ItemImage[] } }> {
     const supabase = await createClient();
     const snakeCart = snakecaseKeys(JSON.parse(JSON.stringify(cart)) as Record<string, unknown>, { deep: true });
-    const { data } = await supabase.from("carts").insert(snakeCart);
-    if (!data) {
-      throw new Error("Failed to create cart");
+    await supabase.from("carts").insert(snakeCart);
+
+    const { data, error } = await supabase
+      .from("carts")
+      .select("*, item:items(*, {item_images(*)})")
+      .eq("user_id", cart.userId)
+      .eq("item_id", cart.itemId)
+      .single();
+
+    if (!data || error) {
+      throw new Error("Failed to retrieve item");
     }
-    return camelcaseKeys(data, { deep: true }) as Cart;
+
+    return camelcaseKeys(data, { deep: true }) as Cart & { item: Item & { itemImages: ItemImage[] } };
   }
 
   // 특정 유저의 카트 조회
-  public async findByUserId(userId: number): Promise<Cart> {
+  public async findByUserId(userId: number): Promise<Cart[]> {
     const supabase = await createClient();
     const { data, error } = await supabase.from("carts").select("*").eq("user_id", userId).single();
+
     if (error) throw new Error(error.message);
-    return camelcaseKeys(data, { deep: true }) as Cart;
+
+    return camelcaseKeys(data, { deep: true }) as Cart[];
   }
 
   // 모든 카트 조회
@@ -49,27 +58,36 @@ export class SbCartRepository implements CartRepository {
   }
 
   // 특정 유저의 카트 조회 (유저, 아이템 정보와 함께)
-  public async findByUserIdWithAll(userId: number): Promise<Cart & { user: User; item: Item }> {
+  public async findByUserIdWithAll(userId: number): Promise<(Cart & { user: User; item: Item })[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("carts")
       .select("*, user:users(*), item:items(*)") // users와 items 테이블의 모든 컬럼 가져오기
-      .eq("user_id", userId)
-      .single();
+      .eq("user_id", userId);
+
     if (error) throw new Error(error.message);
-    return camelcaseKeys(data, { deep: true }) as Cart & { user: User; item: Item };
+
+    return camelcaseKeys(data, { deep: true }) as (Cart & { user: User; item: Item })[];
   }
 
   // 특정 유저의 카트 조회 (아이템 정보와 함께)
-  public async findByUserIdWithItem(userId: number): Promise<Cart & { item: Item }> {
+  public async findByUserIdWithItem(
+    userId: number,
+  ): Promise<{ count: number; data: (Cart & { item: Item & { itemImages: ItemImage[] } })[] }> {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("carts")
-      .select("*, item:items(*)") //  items 테이블의 모든 컬럼을 item 객체로 가져옴
-      .eq("user_id", userId)
-      .single();
+      .select("*, item:items(*, item_images(*))") //  items 테이블의 모든 컬럼을 item 객체로 가져옴
+      .eq("user_id", userId);
+
     if (error) throw new Error(error.message);
-    return camelcaseKeys(data, { deep: true }) as Cart & { item: Item };
+
+    const { count } = await supabase.from("carts").select("*", { count: "exact", head: true }).eq("user_id", userId);
+
+    return {
+      count,
+      data: camelcaseKeys(data, { deep: true }),
+    } as { count: number; data: (Cart & { item: Item & { itemImages: ItemImage[] } })[] };
   }
 
   // 카트 아이템 업데이트 (수량, 선택 여부 등)
@@ -83,6 +101,7 @@ export class SbCartRepository implements CartRepository {
       .eq("item_id", itemId)
       .select()
       .single();
+
     if (error) {
       throw new Error(`carts 데이터 업데이트 오류: ${error.message}`);
     }

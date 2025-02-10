@@ -1,5 +1,4 @@
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
 
 import { createClient } from "@/utils/supabase/server";
 
@@ -22,12 +21,12 @@ const getUser = async (
     data: { user },
   } = token ? await supabase.auth.getUser(accessToken) : await supabase.auth.getUser();
 
-  if (!user) return NextResponse.json({ message: "header에 authorization이 없습니다." }, { status: 401 });
+  if (!user) throw Error("header에 authorization이 없습니다.");
 
   const email = user.user_metadata.email;
   const { data: existingUser } = await supabase.from(`${type}s`).select("*").eq("email", email).single();
 
-  if (!existingUser) return NextResponse.json({ message: "회원을 찾지 못하였습니다." }, { status: 401 });
+  if (!existingUser) throw Error("회원을 찾지 못하였습니다.");
 
   return {
     userId: existingUser.id,
