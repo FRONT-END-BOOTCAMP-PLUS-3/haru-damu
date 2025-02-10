@@ -4,8 +4,11 @@ import { useRouter } from "next/navigation";
 
 import { useEffect, useCallback } from "react";
 
+import { createPortal } from "react-dom";
+
 import SearchBar from "@/components/searchbar";
 import CategoryList from "@/components/category_list";
+import MealInfoModal from "@/components/meal_info_modal";
 
 import { useStore } from "@/hooks/usestore";
 
@@ -91,7 +94,8 @@ const ShrunkNav = () => {
 
 // 확장된 헤더
 const ExpandedHeader = () => {
-  const router = useRouter();
+  const { openModal } = useStore();
+
   return (
     <>
       <div className={cx("header__top")}>
@@ -106,9 +110,10 @@ const ExpandedHeader = () => {
           <CategoryList categoryList={categoryList} />
         </div>
         <SearchBar />
-        <button className={cx("header__diet_button", "text-xsm")} onClick={() => router.push("/")}>
+        <button className={cx("header__diet_button", "text-xsm")} onClick={openModal}>
           1일 식단 장바구니 안내
         </button>
+        {createPortal(<MealInfoModal />, document.body)}
       </div>
     </>
   );
