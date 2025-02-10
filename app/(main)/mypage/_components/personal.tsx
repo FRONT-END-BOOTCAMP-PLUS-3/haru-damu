@@ -23,7 +23,7 @@ export default function PersonalPage() {
     Object.fromEntries(PERSONAL_FIELDS.map(({ key }) => [key, ""])), // 초기값은 빈 값으로 설정
   );
 
-  const userId = 2; // 예시: 사용자 ID를 1로 설정
+  const userId = 2; // 예시: 사용자 ID를 2로 설정
 
   useEffect(() => {
     const fetchUserData = async () => {

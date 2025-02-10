@@ -38,7 +38,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 
   try {
-    const updatedUser = await req.json(); // 요청 본문에서 수정된 사용자 데이터 가져오기
+    const updatedUser = await req.json();
     const user = await userUsecase.updateUser(userId, updatedUser);
     return NextResponse.json(user);
   } catch (error) {
@@ -58,7 +58,7 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
 
   try {
     await userUsecase.deleteUser(userId);
-    return NextResponse.json({}, { status: 204 });
+    return new NextResponse(null, { status: 204 }); 
   } catch (error) {
     console.error("Error handling DELETE request:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
