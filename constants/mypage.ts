@@ -71,10 +71,10 @@ export const HEALTH_TITLE = "건강정보";
 export const HEALTH_BUTTON = "저장하기";
 export const HEALTH_FIELDS = [
   { key: "age", label: "연령" },
-  { key: "gender_code", label: "성별" },
+  { key: "genderCode", label: "성별" },
   { key: "height", label: "키(cm)" },
   { key: "weight", label: "몸무게(kg)" },
-  { key: "activity_code", label: "활동량" },
+  { key: "activityCode", label: "활동량" },
 ] as const;
 
 export const GENDER_OPTIONS = Object.freeze([
@@ -83,9 +83,9 @@ export const GENDER_OPTIONS = Object.freeze([
 ]);
 
 export const ACTIVITY_OPTIONS = Object.freeze([
-  { value: 1, label: "매우 적은 활동량" },
-  { value: 2, label: "가벼운 활동" },
-  { value: 3, label: "보통 활동" },
-  { value: 4, label: "활발한 활동" },
-  { value: 5, label: "매우 활발" },
+  { value: 0, label: "매우 적은 활동량" },
+  { value: 1, label: "가벼운 활동" },
+  { value: 2, label: "보통 활동" },
+  { value: 3, label: "활발한 활동" },
+  { value: 4, label: "매우 활발" },
 ]);
