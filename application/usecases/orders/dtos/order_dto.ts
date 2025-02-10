@@ -4,11 +4,11 @@ import type { CartDto } from "@/application/usecases/carts/dtos";
 export type TOrderStatus = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface OrderDto {
-  order_id: number;
-  order_address: string;
-  total_price: number;
-  order_list: CartDto[];
+  orderId: number;
+  orderAddress: string;
+  totalPrice: number;
+  orderList: CartDto[];
   status: TOrderStatus;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }

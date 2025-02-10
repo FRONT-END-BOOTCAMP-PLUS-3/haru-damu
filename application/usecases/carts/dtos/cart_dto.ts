@@ -1,13 +1,12 @@
 import type { UUID } from "crypto";
-
-import type { ItemDto } from "../../items/dtos";
+import type { ItemDto } from "@/application/usecases/items/dtos";
 
 export interface CartDto {
-  item_id: number;
+  itemId: number;
   item: ItemDto;
   quantity: number;
-  wrapper_id: UUID;
-  is_checked: boolean;
-  created_at: string;
-  updated_at: string;
+  wrapperId: UUID;
+  isChecked: boolean;
+  createdAt: string;
+  updatedAt: string;
 }

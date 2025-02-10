@@ -19,24 +19,24 @@ const cx = classNames.bind(styles);
 export default function Auth() {
   const { addMessage } = useStore();
 
-  const loginHandler = async (type: TUserType) => {
-    console.log("=== loginHandler ===");
+  // const loginHandler = async (type: TUserType) => {
+  //   console.log("=== loginHandler ===");
 
-    try {
-      await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          queryParams: {
-            access_type: "offline",
-            prompt: "consent",
-          },
-          redirectTo: `http://localhost:3000/login/callback?type=${type}`,
-        },
-      });
-    } catch (error) {
-      addMessage("로그인에 실패 하였습니다.", "var(--important-color)");
-    }
-  };
+  //   try {
+  //     await supabase.auth.signInWithOAuth({
+  //       provider: "google",
+  //       options: {
+  //         queryParams: {
+  //           access_type: "offline",
+  //           prompt: "consent",
+  //         },
+  //         redirectTo: `http://localhost:3000/login/callback?type=${type}`,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     addMessage("로그인에 실패 하였습니다.", "var(--important-color)");
+  //   }
+  // };
 
   return (
     <div className={cx("container")}>
@@ -52,7 +52,7 @@ export default function Auth() {
             height="52px"
             className={cx("text-md")}
             text="회원 Login with Google"
-            onClick={() => loginHandler("user")}
+            // onClick={() => loginHandler("user")}
             iconComponent={
               <Image
                 width={20}
@@ -68,7 +68,7 @@ export default function Auth() {
             height="52px"
             className={cx("text-md")}
             text="판매자 Login with Google"
-            onClick={() => loginHandler("partner")}
+            // onClick={() => loginHandler("partner")}
             iconComponent={
               <Image
                 width={20}

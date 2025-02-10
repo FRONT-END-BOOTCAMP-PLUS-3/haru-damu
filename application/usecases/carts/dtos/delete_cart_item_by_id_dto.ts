@@ -2,9 +2,9 @@
 
 // DELETE
 export interface DeleteCartItemByIdRequestDto {
-  item_id: number;
+  itemId: number;
 }
 
 export interface DeleteCartItemByIdResponseDto {
-  item_id: number;
+  itemId: number;
 }

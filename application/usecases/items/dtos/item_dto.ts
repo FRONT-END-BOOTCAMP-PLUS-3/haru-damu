@@ -8,18 +8,18 @@ export type TItemCode = 0 | 1 | 2;
 export type TUnit = "mg" | "g" | "kg" | "ml" | "l" | "입";
 
 export interface ItemDto {
-  item_id: number;
-  store_id: number;
-  item_name: string;
-  item_price: string;
-  img: string | undefined;
-  blurImg: string | undefined;
+  itemId: number;
+  storeId: number;
+  itemName: string;
+  itemPrice: string;
+  img?: string;
+  blurImg?: string;
   description?: string;
-  category_code: TCategoryCode;
-  item_code: TItemCode;
-  unit_type: TUnit;
+  categoryCode: TCategoryCode;
+  itemCode: TItemCode;
+  unitType: TUnit;
   volume: number;
   nutrition: NutritionDto;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }

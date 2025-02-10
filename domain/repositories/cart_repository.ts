@@ -3,19 +3,19 @@ import type { Item } from "@/domain/entities/item";
 import type { Cart } from "@/domain/entities/cart";
 
 export interface CartRepository {
-  create(cart: Cart): Promise<void>;
+  create(cart: Cart): Promise<Cart>;
 
-  findByUserId(userId: number): Promise<Cart[]>;
+  findByUserId(userId: number): Promise<Cart>;
 
   findAll(): Promise<Cart[]>;
 
-  findByUserIdWithUser(userId: number): Promise<(Cart & { user: User })[]>;
+  findByUserIdWithUser(userId: number): Promise<Cart & { user: User }>;
 
-  findByUserIdWithAll(userId: number): Promise<(Cart & { user: User; item: Item })[]>;
+  findByUserIdWithAll(userId: number): Promise<Cart & { user: User; item: Item }>;
 
-  findByUserIdWithItem(userId: number): Promise<(Cart & { item: Item })[]>;
+  findByUserIdWithItem(userId: number): Promise<Cart & { item: Item }>;
 
-  update(userId: number, itemId: number, updatedCart: Partial<Cart>): Promise<void>;
+  update(userId: number, itemId: number, updatedCart: Partial<Cart>): Promise<Cart>;
 
   delete(userId: number, itemId: number): Promise<void>;
 }
