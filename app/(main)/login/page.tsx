@@ -30,7 +30,7 @@ export default function Auth() {
     <div className={cx("container")}>
       <div className={cx("container__login")}>
         <div className={cx("container__title")}>
-          <h1 className={cx("title-lg-b")}>회원가입 / 로그인 하기/</h1>
+          <h1 className={cx("title-lg-b")}>회원가입 / 로그인 하기</h1>
           <span className={cx("title-sm")}>소셜 로그인으로 간편하게 가입할수 있습니다.</span>
         </div>
 
