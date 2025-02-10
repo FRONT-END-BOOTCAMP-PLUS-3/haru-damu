@@ -25,12 +25,12 @@ interface ItemListProps {
 export default function MealCartItem({ item, isDragging = false }: ItemListProps) {
   const { removeMealCartItem } = useStore();
 
-  const { item_id, item_name, item_price, img, blurImg } = item;
+  const { itemId, itemName, itemPrice, img, blurImg } = item;
 
   const { listeners, setNodeRef } = useSortable({
-    id: item_id,
+    id: itemId,
     data: {
-      id: item_id,
+      id: itemId,
       type: "meal-cart-item",
       overlayItem: <MealCartItem item={item} isDragging={true} />,
     },
@@ -43,22 +43,22 @@ export default function MealCartItem({ item, isDragging = false }: ItemListProps
     removeMealCartItem(item);
   };
 
-  if (!item.item_id) return null;
+  if (!item.itemId) return null;
 
   return (
     <li
       ref={setNodeRef}
       {...listeners}
-      id={`meal-cart-item__${item.item_id}`}
+      id={`meal-cart-item__${item.itemId}`}
       className={cx(isDragging && "meal_cart_item__dragging")}
     >
-      <Link href={`/item/${item_id}`} className={cx("meal_cart_item__link")}>
+      <Link href={`/item/${itemId}`} className={cx("meal_cart_item__link")}>
         <div className={cx("meal_cart_item__image__wrapper")}>
           {img ? (
             <Image
               className={cx("meal_cart_item__image")}
               src={img}
-              alt={item_name}
+              alt={itemName}
               fill
               placeholder="blur"
               blurDataURL={blurImg}
@@ -78,8 +78,8 @@ export default function MealCartItem({ item, isDragging = false }: ItemListProps
           />
         </div>
         <div className={cx("meal_cart_item__name__wrapper")}>
-          <span className={cx("meal_cart_item__name", "text-sm")}>{item_name}</span>
-          <span className={cx("meal_cart_item__name", "text-sm")}>{item_price}</span>
+          <span className={cx("meal_cart_item__name", "text-sm")}>{itemName}</span>
+          <span className={cx("meal_cart_item__name", "text-sm")}>{itemPrice.toLocaleString() + "원"}</span>
         </div>
       </Link>
     </li>

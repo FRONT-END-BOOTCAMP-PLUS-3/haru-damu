@@ -4,17 +4,17 @@ import type { StateCreator } from "zustand";
 import type { State } from "@/hooks/usestore";
 
 export type TCartItem = {
-  item_id: number;
-  user_id: number;
-  item_name: string;
-  item_price: number;
+  itemId: number;
+  userId: number;
+  itemName: string;
+  itemPrice: number;
   img: string | undefined;
   blurImg: string | undefined;
   quantity: number;
-  is_checked: boolean;
-  wrapper_id: string | null;
-  created_at: string;
-  updated_at: string;
+  isChecked: boolean;
+  wrapperId: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type TCartSlice = {
@@ -25,8 +25,8 @@ export type TCartSlice = {
   getCartItem: (id: number) => TCartItem;
   getIsCheckedAllCartItems: () => boolean;
   getCheckedCartItems: () => TCartItem[];
-  changeIsCheckedCartItems: (id: number, is_checked: boolean) => void;
-  changeIsCheckedAllCartItems: (is_checked: boolean) => void;
+  changeIsCheckedCartItems: (id: number, isChecked: boolean) => void;
+  changeIsCheckedAllCartItems: (isChecked: boolean) => void;
   changeQuantityCartItem: (itemId: number, quantity: number) => void;
   removeCartItem: (id: number) => void;
 
@@ -42,6 +42,8 @@ export type TCartSlice = {
   stopDragging: () => void;
 };
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
+
 export const createCartSlice: StateCreator<Partial<State>, [], [], TCartSlice> = (set, get) => ({
   cart: [],
   mealCart: [],
@@ -52,102 +54,220 @@ export const createCartSlice: StateCreator<Partial<State>, [], [], TCartSlice> =
     }),
 
   getCartItem: (id) => {
-    return get().cart?.find((item) => item.item_id === id) as TCartItem;
+    return get().cart?.find((item) => item.itemId === id) as TCartItem;
   },
 
   getIsCheckedAllCartItems: () => {
-    return !get().cart?.find((item) => !item.is_checked);
+    return !get().cart?.find((item) => !item.isChecked);
   },
 
   getCheckedCartItems: () => {
-    return get().cart?.filter((item) => item.is_checked) || [];
+    return get().cart?.filter((item) => item.isChecked) || [];
   },
 
-  changeIsCheckedCartItems: (id, is_checked) =>
-    set({
-      cart: get().cart?.map((item) => {
-        if (item.item_id === id) return { ...item, is_checked };
+  changeIsCheckedCartItems: async (id, isChecked) => {
+    try {
+      const cart = get().cart?.find((item) => item.itemId === id);
 
-        return item;
-      }),
-    }),
+      await fetch(`${BASE_URL}/api/carts`, {
+        method: "PUT",
+        body: JSON.stringify({
+          itemId: id,
+          cart: {
+            ...cart,
+            isChecked,
+          },
+        }),
+      }).then((response) => response.json);
 
-  changeIsCheckedAllCartItems: (is_checked) =>
-    set({
-      cart: get().cart?.map((item) => {
-        return { ...item, is_checked };
-      }),
-    }),
+      set({
+        cart: get().cart?.map((item) => {
+          if (item.itemId === id) return { ...item, isChecked };
 
-  changeQuantityCartItem: (id, quantity) =>
-    set({
-      cart: get().cart?.map((item) => {
-        if (item.item_id === id) return { ...item, quantity };
+          return item;
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
-        return item;
-      }),
-    }),
+  changeIsCheckedAllCartItems: async (isChecked) => {
+    try {
+      const cart = get().cart;
 
-  removeCartItem: (id) =>
-    set({
-      cart: get().cart?.filter((item) => id !== item.item_id),
-    }),
+      const fetchPromises = cart?.map(
+        async (item) =>
+          await fetch(`${BASE_URL}/api/carts`, {
+            method: "PUT",
+            body: JSON.stringify({
+              itemId: item.itemId,
+              cart: {
+                ...cart,
+                isChecked,
+              },
+            }),
+          }),
+      );
+
+      if (fetchPromises) {
+        await Promise.all(fetchPromises);
+      }
+
+      set({
+        cart: get().cart?.map((item) => {
+          return { ...item, isChecked };
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  changeQuantityCartItem: async (id, quantity) => {
+    try {
+      const cart = get().cart?.find((item) => item.itemId === id);
+
+      await fetch(`${BASE_URL}/api/carts`, {
+        method: "PUT",
+        body: JSON.stringify({
+          itemId: id,
+          cart: {
+            ...cart,
+            quantity,
+          },
+        }),
+      }).then((response) => response.json);
+
+      set({
+        cart: get().cart?.map((item) => {
+          if (item.itemId === id) return { ...item, quantity };
+
+          return item;
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  removeCartItem: async (id) => {
+    try {
+      await fetch(`${BASE_URL}/api/carts`, {
+        method: "DELETE",
+        body: JSON.stringify({
+          itemId: id,
+        }),
+      }).then((response) => response.json);
+
+      set({
+        cart: get().cart?.filter((item) => id !== item.itemId),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
   getMealCartItem: (id) => {
-    return get().mealCart?.find((item) => item.item_id === id) as TCartItem;
+    return get().mealCart?.find((item) => item.itemId === id) as TCartItem;
   },
 
   addMealCartItem: (item) =>
     set((state) => {
-      if (item.wrapper_id !== null) {
-        const newItems = state.cart?.filter((cartItem) => item.wrapper_id === cartItem.wrapper_id) || [];
+      if (item.wrapperId !== null) {
+        const newItems = state.cart?.filter((cartItem) => item.wrapperId === cartItem.wrapperId) || [];
 
         return {
           mealCart: [...(get().mealCart || []), ...newItems],
-          cart: [...(get().cart?.filter((cartItem) => item.wrapper_id !== cartItem.wrapper_id) || [])],
+          cart: [...(get().cart?.filter((cartItem) => item.wrapperId !== cartItem.wrapperId) || [])],
         };
       }
       return {
         mealCart: [...(get().mealCart || []), item],
-        cart: [...(get().cart?.filter((cartItem) => item.item_id !== cartItem.item_id) || [])],
+        cart: [...(get().cart?.filter((cartItem) => item.itemId !== cartItem.itemId) || [])],
       };
     }),
 
   bulkAddMealCartItems: (items) =>
     set({
       mealCart: [...(get().mealCart || []), ...items],
-      cart: [...(get().cart?.filter((cartItem) => !cartItem.is_checked) || [])],
+      cart: [...(get().cart?.filter((cartItem) => !cartItem.isChecked) || [])],
     }),
 
-  wrappingMealItems: () =>
-    set((state) => {
-      const wrapper_id = uuidGenerator();
-      const wrappedItems = state.mealCart?.map((item) => {
-        return { ...item, wrapper_id, is_checked: true } as TCartItem;
+  wrappingMealItems: async () => {
+    try {
+      const wrapperId = uuidGenerator();
+      const wrappedItems = get().mealCart?.map((item) => {
+        return { ...item, wrapperId, isChecked: true } as TCartItem;
       });
 
-      return { cart: [...(get().cart || []), ...(wrappedItems || [])], mealCart: [] };
-    }),
+      const fetchPromises = wrappedItems?.map(
+        async (item) =>
+          await fetch(`${BASE_URL}/api/carts`, {
+            method: "PUT",
+            body: JSON.stringify({
+              itemId: item.itemId,
+              cart: item,
+            }),
+          }),
+      );
+
+      if (fetchPromises) {
+        await Promise.all(fetchPromises);
+      }
+
+      set({
+        cart: [...(get().cart || []), ...(wrappedItems || [])],
+        mealCart: [],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
   removeMealCartItem: (item) =>
     set({
-      mealCart: [...(get().mealCart?.filter((cartItem) => item.item_id !== cartItem.item_id) || [])],
-      cart: [...(get().cart || []), { ...item, wrapper_id: null }],
+      mealCart: [...(get().mealCart?.filter((cartItem) => item.itemId !== cartItem.itemId) || [])],
+      cart: [...(get().cart || []), { ...item, wrapperId: null }],
     }),
 
-  removeAllMealCartItems: () =>
-    set({
-      cart: [
-        ...(get().cart || []),
-        ...(get().mealCart?.map((item) => {
-          return {
-            ...item,
-            wrapper_id: null,
-          };
-        }) || []),
-      ],
-      mealCart: [],
-    }),
+  removeAllMealCartItems: async () => {
+    try {
+      const wrappedItems = get().mealCart?.map((item) => {
+        return { ...item, wrapperId: null } as TCartItem;
+      });
+
+      const fetchPromises = wrappedItems?.map(
+        async (item) =>
+          await fetch(`${BASE_URL}/api/carts`, {
+            method: "PUT",
+            body: JSON.stringify({
+              itemId: item.itemId,
+              cart: item,
+            }),
+          }),
+      );
+
+      if (fetchPromises) {
+        await Promise.all(fetchPromises);
+      }
+
+      set({
+        cart: [
+          ...(get().cart || []),
+          ...(get().mealCart?.map((item) => {
+            return {
+              ...item,
+              wrapperId: null,
+            };
+          }) || []),
+        ],
+        mealCart: [],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
   // dnd 관련
   isDragging: false,

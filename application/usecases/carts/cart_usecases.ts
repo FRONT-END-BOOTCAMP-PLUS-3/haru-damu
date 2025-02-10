@@ -19,6 +19,7 @@ export class CartUsecase {
 
     return {
       ...newCart,
+      itemPrice: items.itemPrice,
       item: {
         ...newCart.item,
         itemId: newCart.itemId,
@@ -38,6 +39,10 @@ export class CartUsecase {
 
         return {
           ...cart,
+          itemName: cart.item.itemName,
+          itemPrice: cart.item.itemPrice,
+          img: img[0].src,
+          blurImg,
           item: {
             ...cart.item,
             img: img[0].src,

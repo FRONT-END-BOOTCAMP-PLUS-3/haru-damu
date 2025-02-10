@@ -37,15 +37,15 @@ export default function CartLists({ items }: CartListsProps) {
   };
 
   useEffect(() => {
-    const wrapperIds = [...new Set(cart.map((item) => item.wrapper_id))].filter((value) => value !== null) as string[];
+    const wrapperIds = [...new Set(cart.map((item) => item.wrapperId))].filter((value) => value !== null) as string[];
 
     setWrapperIdList(wrapperIds);
   }, [cart]);
 
   useEffect(() => {
     const sortedCartItems = items.sort((a, b) => {
-      const referenceA = a.wrapper_id ?? "";
-      const referenceB = b.wrapper_id ?? "";
+      const referenceA = a.wrapperId ?? "";
+      const referenceB = b.wrapperId ?? "";
       return referenceA.localeCompare(referenceB, undefined, { numeric: true });
     });
 
@@ -55,16 +55,16 @@ export default function CartLists({ items }: CartListsProps) {
   return (
     <div id="cart-list-box" ref={setNodeRef} className={cx("cart_list_box")}>
       <ul>
-        <SortableContext strategy={verticalListSortingStrategy} items={cart.map((item) => item.item_id)}>
+        <SortableContext strategy={verticalListSortingStrategy} items={cart.map((item) => item.itemId)}>
           {cart.map((item, idx) => (
             <SortableCartItem
               key={idx}
-              id={item.item_id}
+              id={item.itemId}
               item={item}
-              isWrapped={item.wrapper_id !== null}
-              isOddIndex={item.wrapper_id !== null && getIsOddWrapperIdIndex(item.wrapper_id)}
-              isWrapperTop={!cart[idx - 1] || item.wrapper_id !== cart[idx - 1].wrapper_id}
-              isWrapperBottom={!cart[idx + 1] || item.wrapper_id !== cart[idx + 1].wrapper_id}
+              isWrapped={item.wrapperId !== null}
+              isOddIndex={item.wrapperId !== null && getIsOddWrapperIdIndex(item.wrapperId)}
+              isWrapperTop={!cart[idx - 1] || item.wrapperId !== cart[idx - 1].wrapperId}
+              isWrapperBottom={!cart[idx + 1] || item.wrapperId !== cart[idx + 1].wrapperId}
             />
           ))}
         </SortableContext>
