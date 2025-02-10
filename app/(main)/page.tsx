@@ -9,10 +9,13 @@ import { CATEGORIES } from "@/constants/categories";
 
 import classNames from "classnames/bind";
 import { dummyItems } from "@/dummys/items";
+import { SbItemRepository } from "@/infrastructure/repositories";
+import { MainItemsUseCase } from "@/application/usecases/items/main_items_usecase";
 
 const cx = classNames.bind(styles);
 
-export default function Main() {
+export default async function Main() {
+  // const res = await fetch("/api/items/main", { method: "GET" });
   return (
     <div className={cx("container")}>
       <Banner bannerItem={banners} />

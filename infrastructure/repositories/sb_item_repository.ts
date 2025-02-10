@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 
-import type { Item } from "@/domain/entities/item";
 import type { ItemImage } from "@/domain/entities/item_image";
+import type { Item, TestItem, TestItemImage } from "@/domain/entities/item"; // 수정필요요
 import type { ItemRepository } from "@/domain/repositories/item_repository";
 
 export class SbItemRepository implements ItemRepository {
@@ -104,28 +104,20 @@ export class SbItemRepository implements ItemRepository {
       throw new Error(`items 데이터 삭제 오류: ${error.message}`);
     }
   }
-  async findRandomByCategory(categoryCode: string): Promise<(Item & { itemImage: ItemImage | null }) | null> {
+  async findRandomByCategory(categoryCode: string): Promise<(TestItem & { itemImage: TestItemImage | null }) | null> {
     const supabase = await createClient();
 
-    const { data, error } = await supabase
-      .from("items")
-      .select("*, item_images(*)")
-      .eq("categoryCode", categoryCode)
-      .order("RANDOM()")
-      .limit(1)
-      .single();
+    const { data, error } = await supabase.from("items").select("*, item_images(*)").eq("category_code", categoryCode);
 
-    if (error) {
-      throw new Error(`items 카테고리별 랜덤 데이터 패칭 오류: ${error.message}`);
-    }
-
-    if (!data) {
+    if (error || !data || data.length === 0) {
+      console.error("Error fetching items:", error);
       return null;
     }
 
-    return {
-      ...data,
-      itemImage: data.item_images ?? null,
-    };
+    // ✅ 데이터 개수에 따라 최적화된 랜덤 선택
+    const randomItem = data[Math.floor(Math.random() * data.length)];
+
+    console.log("랜덤으로 선택된 아이템:", randomItem);
+    return randomItem;
   }
 }

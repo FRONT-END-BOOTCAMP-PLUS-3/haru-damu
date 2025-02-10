@@ -1,5 +1,5 @@
-import type { Item } from "@/domain/entities/item";
 import type { ItemImage } from "@/domain/entities/item_image";
+import type { Item, TestItem, TestItemImage } from "@/domain/entities/item";
 
 // 상품 리포지토리
 export interface ItemRepository {
@@ -12,5 +12,6 @@ export interface ItemRepository {
   updateById(id: number, item: Partial<Item>): Promise<Item>;
   deleteById(id: number): Promise<void>;
 
-  findRandomByCategory(category: string): Promise<(Item & { itemImage: ItemImage | null }) | null>;
+  //findRandomByCategory(category: string): Promise<(Item & { itemImage: ItemImage | null }) | null>;
+  findRandomByCategory(category: string): Promise<(TestItem & { itemImage: TestItemImage | null }) | null>;
 }
