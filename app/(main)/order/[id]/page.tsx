@@ -12,8 +12,26 @@ import horizontalItems from "@/dummys/horizontal_items";
 
 const cx = classNames.bind(styles);
 
-export default function OrderPage({ params }: { params: { id: number } }) {
+async function getOrderData(orderId: number) {
+  const res = await fetch(`http://localhost:3000/api/order/${orderId}`, {
+    cache: "no-store", // 최신 데이터를 가져오기 위해 캐싱 비활성화
+  });
+  if (!res.ok) {
+    if (res.status === 404) {
+      return null; // 주문이 없으면 null 반환
+    }
+    throw new Error(`Failed to fetch order data for ID ${orderId}`);
+  }
+  return res.json();
+}
+
+export default async function OrderPage({ params }: { params: { id: number } }) {
+  const orderData = await getOrderData(Number(params.id));
+
+  console.log(orderData);
+
   const totalPrice = totalPriceCalculator(horizontalItems);
+
   return (
     <div className={cx("container")}>
       <h2 className={cx("order_title__h2", "title-lg-b")}>주문상세</h2>
