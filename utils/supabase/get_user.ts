@@ -3,7 +3,15 @@ import { NextResponse } from "next/server";
 
 import { createClient } from "@/utils/supabase/server";
 
-const getUser = async (type: "user" | "partner") => {
+const getUser = async (
+  type: "user" | "partner",
+): Promise<{
+  userId: number;
+  userName: string;
+  userEmail: string;
+  userAddress: string;
+  userPhone: string;
+}> => {
   const supabase = await createClient();
 
   const header = await headers();
