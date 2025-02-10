@@ -12,4 +12,5 @@ export interface Health {
   isCustom: boolean; // 개인 수치 여부
   createdAt: Date; // 생성일
   updatedAt: Date; // 수정일
+  [key: string]: unknown;
 }

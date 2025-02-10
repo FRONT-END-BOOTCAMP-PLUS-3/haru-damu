@@ -7,19 +7,19 @@ import Dropdown from "@/components/common/dropdown";
 import styles from "@/app/(main)/mypage/_components/health.module.css";
 
 import {
-  GENDER_OPTIONS as readonlyGenderOptions,
+  GENDER_OPTIONS as GenderOptions,
   HEALTH_BUTTON,
   HEALTH_TITLE,
   HEALTH_FIELDS,
-  ACTIVITY_OPTIONS as readonlyActivityOptions,
+  ACTIVITY_OPTIONS as ActivityOptions,
 } from "@/constants/mypage";
 
 import type { HealthDto } from "@/application/usecases/healths/dtos";
 
 import classNames from "classnames/bind";
 
-const GENDER_OPTIONS = [...readonlyGenderOptions];
-const ACTIVITY_OPTIONS = [...readonlyActivityOptions];
+const GENDER_OPTIONS = [...GenderOptions];
+const ACTIVITY_OPTIONS = [...ActivityOptions];
 const cx = classNames.bind(styles);
 
 export default function HealthPage() {
@@ -47,7 +47,6 @@ export default function HealthPage() {
         const res = await fetch(`/api/mypage/healths/${fixedUserId}`);
         if (res.ok) {
           const data = await res.json();
-          // 만약 받아온 데이터에 숫자 필드가 undefined 혹은 NaN일 경우, 기본값(0)으로 처리합니다.
           setHealth(data);
           setFormData({
             age: data.age ?? 0,
@@ -110,15 +109,20 @@ export default function HealthPage() {
   const handleGenderSelect = (selectedLabel: string) => {
     const selectedOption = GENDER_OPTIONS.find((option) => option.label === selectedLabel);
     if (selectedOption) {
-      // 상태에 올바른 value("M" 또는 "F")를 저장
+      console.log(`선택된 성별 레이블: ${selectedLabel}, 값: ${selectedOption.value}`);
       handleChange("genderCode", selectedOption.value);
+    } else {
+      console.log(`선택된 성별 레이블이 GENDER_OPTIONS에 없습니다: ${selectedLabel}`);
     }
   };
 
   const handleActivitySelect = (selectedLabel: string) => {
     const selectedOption = ACTIVITY_OPTIONS.find((option) => option.label === selectedLabel);
     if (selectedOption) {
+      console.log(`선택된 활동량 레이블: ${selectedLabel}, 값: ${selectedOption.value}`);
       handleChange("activityCode", selectedOption.value);
+    } else {
+      console.log(`선택된 활동량 레이블이 ACTIVITY_OPTIONS에 없습니다: ${selectedLabel}`);
     }
   };
 
