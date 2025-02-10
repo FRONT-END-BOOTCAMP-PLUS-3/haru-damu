@@ -1,10 +1,11 @@
+import { createClient } from "@/utils/supabase/client";
+
 import type { StateCreator } from "zustand";
 import type { State } from "@/hooks/usestore";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 export type TUser = {
-  id: number;
   name: string;
   email: string;
   phone?: string;
@@ -21,6 +22,7 @@ export type TUserSlice = {
   userType: TUserType;
   isShrunk: boolean;
 
+  getUser: () => void;
   login: (type: TUserType, user?: Omit<TUser, "id">, img?: string) => void;
   logout: () => void;
   setIsShrunk: (isShrunk: boolean) => void;
@@ -33,6 +35,41 @@ export const createUserSlice: StateCreator<Partial<State>, [], [], TUserSlice> =
   isLogin: false,
   userType: null,
   isShrunk: false,
+
+  getUser: async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/users`);
+
+      const { user } = await response.json();
+
+      const supabase = createClient();
+
+      const {
+        data: { user: googleData },
+      } = await supabase.auth.getUser();
+
+      const isLogin = user !== null;
+      const type = "user";
+
+      const newUser = user
+        ? {
+            name: user.userName,
+            email: user.userEmail,
+            phone: user.userPhone,
+            address: user.userAddress,
+          }
+        : null;
+
+      set({
+        user: newUser,
+        isLogin,
+        userType: type,
+        userImg: googleData ? googleData.user_metadata.avatar_url : null,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
 
   login: async (type, user, img) => {
     console.log(type);

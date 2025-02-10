@@ -1,8 +1,17 @@
 import { NextResponse } from "next/server";
 
+import getUser from "@/utils/supabase/get_user";
 import { createClient } from "@/utils/supabase/server";
 
 import type { NextRequest } from "next/server";
+
+export async function GET() {
+  const user = await getUser("user");
+
+  if (!user) return NextResponse.json({ user: null });
+
+  return NextResponse.json({ user }, { status: 201 });
+}
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
