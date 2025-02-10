@@ -16,7 +16,7 @@ export class SbHealthRepository implements HealthRepository {
     if (!data) {
       throw new Error("Failed to create cart");
     }
-    return data as Health;
+    return camelcaseKeys(data, { deep: true }) as Health;
   }
 
   // 특정 유저의 건강 데이터 조회
