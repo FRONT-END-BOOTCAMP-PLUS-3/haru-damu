@@ -1,18 +1,24 @@
-import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
 
 import { createClient } from "./server";
 
 const getUser = async (type: "user" | "partner") => {
   const supabase = await createClient();
 
+  const header = await headers();
+  const token = header.get("authorization");
+  const accessToken = token?.split("Bearer ")[1];
+
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = token ? await supabase.auth.getUser(accessToken) : await supabase.auth.getUser();
+
+  if (!user) return NextResponse.json({ message: "header에 authorization이 없습니다." }, { status: 401 });
+
   const email = user?.user_metadata.email;
 
   const { data: existingUser } = await supabase.from(`${type}s`).select("*").eq("email", email).single();
-
-  if (!existingUser) redirect("/login");
 
   return {
     userId: existingUser.id,

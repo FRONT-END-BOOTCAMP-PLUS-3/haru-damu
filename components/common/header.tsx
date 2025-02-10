@@ -20,7 +20,11 @@ import { ShoppingBasket, User } from "lucide-react";
 const cx = classNames.bind(styles);
 
 export default function Header() {
-  const { isLogin, userType, isShrunk, setIsShrunk } = useStore();
+  const { isLogin, userType, isShrunk, setIsShrunk, getUser } = useStore();
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const handleScroll = useCallback(() => {
     const y = window.scrollY;
@@ -112,7 +116,7 @@ const ExpandedHeader = () => {
 
 // 로그인 & 회원가입 버튼
 const AuthButtons = () => {
-  const { isLogin, logout } = useStore(); // ✅ Zustand 전역 상태 가져오기
+  const { isLogin, logout, user } = useStore(); // ✅ Zustand 전역 상태 가져오기
   const router = useRouter();
 
   const logoutHandler = () => {
@@ -125,7 +129,7 @@ const AuthButtons = () => {
   return (
     <div className={cx("header__auth")}>
       <button className={cx("header__auth__button")} onClick={() => router.push(isLogin ? "/mypage" : "/login")}>
-        {isLogin ? "유저네임" : "회원가입"}
+        {isLogin ? `${user?.name}님` : "회원가입"}
       </button>
       <div className={cx("header__divider")}>|</div>
       <button className={cx("header__auth__button")} onClick={logoutHandler}>
@@ -142,7 +146,7 @@ const NavIcons = () => {
   return (
     <div className={cx("header__nav__icons")}>
       <ShoppingBasket className={cx("header__icon")} size={24} onClick={() => router.push("/cart")} />
-      <button className={cx("header__mypage_icon__button")} onClick={() => router.push("/profile")}>
+      <button className={cx("header__mypage_icon__button")} onClick={() => router.push("/mypage")}>
         {userImg === null ? (
           <User className={cx("header__icon")} size={24} />
         ) : (

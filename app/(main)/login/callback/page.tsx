@@ -28,10 +28,12 @@ export default function Callback() {
         data: { user },
       } = await supabase.auth.getUser();
 
+      console.log("callback user =====>");
+      console.log(user);
+
       if (!user?.user_metadata || user?.user_metadata === null) return redirect("/");
 
       const { avatar_url, email, full_name } = user.user_metadata;
-      console.table({ type, avatar_url, email, full_name });
 
       login(type, { email, name: full_name }, avatar_url);
 
@@ -45,8 +47,9 @@ export default function Callback() {
       setCookie(null, "access_token", session.access_token, {
         maxAge: 60 * 60 * 24 * 7, // 7일 동안 유지
         path: "/", // 모든 경로에서 쿠키 접근 가능
+        httpOnly: false,
         secure: process.env.NODE_ENV === "production", // 프로덕션 환경에서는 HTTPS에서만 전송
-        sameSite: "lax", // CSRF 보호를 위한 설정
+        sameSite: "none", // CSRF 보호를 위한 설정
       });
 
       addMessage(`어서오세요, ${full_name}님!`, "var(--secondary-color)");
@@ -54,7 +57,7 @@ export default function Callback() {
 
     updateUser();
 
-    return type === "user" ? redirect("/") : redirect("/partner");
+    // return type === "user" ? redirect("/") : redirect("/partner");
   }, []);
 
   return <Spinner />;
