@@ -1,5 +1,5 @@
-// 0 : 매우 적음 | 1 : 가벼운 | 2 : 보통 | 3 : 활발한 | 4 : 매우 활발
-export type TActivityCode = 0 | 1 | 2 | 3 | 4;
+// 0 : 초기값 | 1 : 매우 적음 | 2 : 가벼운 | 3 : 보통 | 4 : 활발한 | 5 : 매우 활발 
+export type TActivityCode = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface HealthDto {
   genderCode?: "M" | "F";

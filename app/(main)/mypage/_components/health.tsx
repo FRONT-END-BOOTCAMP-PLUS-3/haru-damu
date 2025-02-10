@@ -23,8 +23,6 @@ const ACTIVITY_OPTIONS = [...ActivityOptions];
 const cx = classNames.bind(styles);
 
 export default function HealthPage() {
-  // userId를 고정 값 1로 사용
-  const fixedUserId = 1;
   const router = useRouter();
 
   // 기본값이 있으므로 NaN이 발생하지 않도록 기본 숫자 필드는 0으로 설정
@@ -44,7 +42,7 @@ export default function HealthPage() {
   useEffect(() => {
     async function fetchHealth() {
       try {
-        const res = await fetch(`/api/mypage/healths/${fixedUserId}`);
+        const res = await fetch(`/api/mypage/healths`);
         if (res.ok) {
           const data = await res.json();
           setHealth(data);
@@ -67,7 +65,7 @@ export default function HealthPage() {
     }
 
     fetchHealth();
-  }, [fixedUserId]);
+  }, []);
 
   const handleChange = (key: keyof HealthDto, value: string | number) => {
     // 숫자 값일 때 처리: 입력값을 number로 변환한 후 NaN이면 0을 사용
@@ -84,19 +82,15 @@ export default function HealthPage() {
   const handleSave = async () => {
     try {
       const payload = { healthData: formData };
-
-      const response = await fetch(`/api/mypage/healths/${fixedUserId}`, {
+      const response = await fetch(`/api/mypage/healths`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      // 응답 상태 코드와 본문을 로그로 출력
-      console.log("Response Status:", response.status);
-      const responseBody = await response.json(); // 응답 본문을 JSON으로 읽기
-      console.log("Response Body:", responseBody);
-
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Error response:", errorText);
         throw new Error("Failed to save health data");
       }
       // 저장 후 예시로 마이페이지로 이동
@@ -123,8 +117,10 @@ export default function HealthPage() {
       handleChange("activityCode", selectedOption.value);
     } else {
       console.log(`선택된 활동량 레이블이 ACTIVITY_OPTIONS에 없습니다: ${selectedLabel}`);
+      handleChange("activityCode", 0);  // "선택되지 않음"인 경우 0으로 설정
     }
   };
+  
 
   const getLabel = (key: keyof HealthDto) => HEALTH_FIELDS.find((field) => field.key === key)?.label || key.toString();
 
@@ -190,14 +186,16 @@ export default function HealthPage() {
         <div className={cx("health__row")}>
           <label className={cx("health__label", "text-md-b")}>{getLabel("activityCode")}</label>
           <div className={cx("health__dropdown")}>
-            <Dropdown
-              placeHolder="활동량을 선택하세요"
+          <Dropdown
               itemList={ACTIVITY_OPTIONS.map((option) => option.label)}
-              width="480px"
               currentItem={
-                ACTIVITY_OPTIONS.find((option) => option.value === formData.activityCode)?.label || "선택되지 않음"
+                formData.activityCode === 0
+                  ? "선택되지 않음"  // 기본값인 0은 "선택되지 않음"으로 표시
+                  : ACTIVITY_OPTIONS.find((option) => option.value === formData.activityCode)?.label || "선택되지 않음"
               }
               onClick={handleActivitySelect}
+              placeHolder="활동량을 선택하세요"
+              width="480px"
               style={{ fontSize: "16px" }}
             />
           </div>
