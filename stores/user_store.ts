@@ -3,6 +3,8 @@ import { createClient } from "@/utils/supabase/client";
 import type { StateCreator } from "zustand";
 import type { State } from "@/hooks/usestore";
 
+import nookies from "nookies";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 export type TUser = {
@@ -48,7 +50,7 @@ export const createUserSlice: StateCreator<Partial<State>, [], [], TUserSlice> =
         data: { user: googleData },
       } = await supabase.auth.getUser();
 
-      const isLogin = user !== null;
+      const isLogin = !!user.userName;
       const type = "user";
 
       const newUser = user
@@ -101,12 +103,20 @@ export const createUserSlice: StateCreator<Partial<State>, [], [], TUserSlice> =
   },
 
   logout: () =>
-    set(() => ({
-      user: null,
-      userImg: null,
-      isLogin: false,
-      userType: null,
-    })),
+    set(() => {
+      const allCookies = nookies.get();
+
+      Object.keys(allCookies).forEach((cookieName) => {
+        nookies.destroy(null, cookieName, { path: "/" });
+      });
+
+      return {
+        user: null,
+        userImg: null,
+        isLogin: false,
+        userType: null,
+      };
+    }),
 
   setIsShrunk: (isShrunk) => set({ isShrunk }),
 });
