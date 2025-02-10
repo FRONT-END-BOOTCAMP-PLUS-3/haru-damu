@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/client";
 import type { StateCreator } from "zustand";
 import type { State } from "@/hooks/usestore";
 
-import nookies from "nookies";
+import nookies, { setCookie } from "nookies";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
@@ -61,6 +61,19 @@ export const createUserSlice: StateCreator<Partial<State>, [], [], TUserSlice> =
             address: user.userAddress,
           }
         : null;
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) return;
+
+      setCookie(null, "access_token", session?.access_token, {
+        maxAge: 30 * 24 * 60 * 60, // 30일 동안 유지
+        path: "/", // 모든 경로에서 쿠키 접근 가능
+        secure: true, // HTTPS 환경에서만 쿠키 전송
+        sameSite: "strict", // CSRF 방지
+      });
 
       set({
         user: newUser,
