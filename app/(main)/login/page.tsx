@@ -6,7 +6,7 @@ import Button from "@/components/common/button";
 
 import { useStore } from "@/hooks/usestore";
 
-import { supabase } from "@/utils/supabase/server";
+import { googleLogin } from "@/utils/supabase/google_login";
 
 import styles from "@/app/(main)/login/login_page.module.css";
 
@@ -19,25 +19,13 @@ const cx = classNames.bind(styles);
 export default function Auth() {
   const { addMessage } = useStore();
 
-  // const loginHandler = async (type: TUserType) => {
-  //   console.log("=== loginHandler ===");
-
-  //   try {
-  //     await supabase.auth.signInWithOAuth({
-  //       provider: "google",
-  //       options: {
-  //         queryParams: {
-  //           access_type: "offline",
-  //           prompt: "consent",
-  //         },
-  //         redirectTo: `http://localhost:3000/login/callback?type=${type}`,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     addMessage("로그인에 실패 하였습니다.", "var(--important-color)");
-  //   }
-  // };
-
+  const loginHandler = async (type: TUserType) => {
+    try {
+      await googleLogin(type);
+    } catch (error) {
+      addMessage("로그인에 실패하였습니다. 잠시 후 다시 시도해주세요!", "ver(--important-color)");
+    }
+  };
   return (
     <div className={cx("container")}>
       <div className={cx("container__login")}>
@@ -52,7 +40,7 @@ export default function Auth() {
             height="52px"
             className={cx("text-md")}
             text="회원 Login with Google"
-            // onClick={() => loginHandler("user")}
+            onClick={() => loginHandler("user")}
             iconComponent={
               <Image
                 width={20}
@@ -68,7 +56,7 @@ export default function Auth() {
             height="52px"
             className={cx("text-md")}
             text="판매자 Login with Google"
-            // onClick={() => loginHandler("partner")}
+            onClick={() => loginHandler("partner")}
             iconComponent={
               <Image
                 width={20}
