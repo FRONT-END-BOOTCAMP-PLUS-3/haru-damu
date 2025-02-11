@@ -5,7 +5,6 @@ import type { NextRequest } from "next/server";
 import { SbItemRepository } from "@/infrastructure/repositories";
 import { ItemUsecases } from "@/application/usecases/items/item_usecases";
 
-// repository, usecase 인스턴스 생성
 const itemRepository = new SbItemRepository();
 const itemUsecases = new ItemUsecases(itemRepository);
 
@@ -17,6 +16,10 @@ export async function GET(req: NextRequest) {
 
   if (!query) {
     return NextResponse.json({ error: "검색어가 필요합니다." }, { status: 400 });
+  }
+
+  if (!page) {
+    return NextResponse.json({ error: "초기 페이지값이 필요합니다." }, { status: 400 });
   }
 
   try {
