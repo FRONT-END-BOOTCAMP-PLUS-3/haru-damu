@@ -1,4 +1,4 @@
-import VerticalItem from "@/components/common/vertical_item";
+import VerticalItem from "@/components/common/vertical_itemss";
 
 import styles from "@/app/(main)/_components/meal_list.module.css";
 
