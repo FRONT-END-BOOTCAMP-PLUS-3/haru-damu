@@ -14,6 +14,7 @@ export type Message = {
 // ✅ 토스트 상태 타입
 export type TToastSlice = {
   messages: Message[];
+  devMessage: () => void;
   addMessage: (message: string, backgroundColor?: string, onClickEvent?: () => void) => void;
   removeMessage: (id: string) => void;
 };
@@ -27,6 +28,21 @@ export const createToastSlice: StateCreator<Partial<State>, [], [], TToastSlice>
 
     set((state) => ({
       messages: [...(state.messages || []), { id, message, backgroundColor, onClickEvent }],
+    }));
+  },
+
+  devMessage: () => {
+    const id = uuidGenerator();
+
+    set((state) => ({
+      messages: [
+        ...(state.messages || []),
+        {
+          id,
+          message: "현재 개발중인 기능입니다! 금방 찾아올께요!",
+          backgroundColor: "var(--warning-color)",
+        },
+      ],
     }));
   },
 

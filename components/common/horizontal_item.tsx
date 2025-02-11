@@ -45,7 +45,7 @@ export default function HorizontalItem({
     horizontal_item_quantity__value,
   } = styles;
   const { itemId, itemName, itemPrice, img, quantity, isChecked, blurImg } = horizontalItem;
-  const formattedPrice = itemPrice.toLocaleString();
+  const formattedPrice = itemPrice?.toLocaleString();
   const handlers = isEditable
     ? {
         onCheckHandler: (e: React.ChangeEvent<HTMLInputElement>) => {

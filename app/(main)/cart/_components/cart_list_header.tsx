@@ -1,23 +1,34 @@
 "use client";
 
+import { redirect } from "next/navigation";
+
 import { useEffect, useState } from "react";
 
 import Button from "@/components/common/button";
 
+import { useStore } from "@/hooks/usestore";
+
 import style from "@/app/(main)/cart/_components/cart_list_header.module.css";
 
 import classNames from "classnames/bind";
-import { useStore } from "@/hooks/usestore";
 
 const cx = classNames.bind(style);
 
 export default function CartListHeader() {
   const [isChecked, setIsChecked] = useState(false);
-  const { cart, getIsCheckedAllCartItems, changeIsCheckedAllCartItems, bulkAddMealCartItems, getCheckedCartItems } =
-    useStore();
+  const {
+    user,
+    setMypagePath,
+    addMessage,
+    cart,
+    getIsCheckedAllCartItems,
+    changeIsCheckedAllCartItems,
+    bulkAddMealCartItems,
+    getCheckedCartItems,
+  } = useStore();
 
   const totalPrice = cart.reduce((arr, cur) => {
-    if (cur.is_checked) return arr + cur.item_price * cur.quantity;
+    if (cur.isChecked) return arr + cur.itemPrice * cur.quantity;
     return arr;
   }, 0);
 
@@ -57,6 +68,22 @@ export default function CartListHeader() {
     bulkAddMealCartItems(checkedItems);
   };
 
+  const orderHandler = () => {
+    if (cart.length === 0) {
+      addMessage("장바구니에 물건을 담아주세요!", "var(--important-color)");
+      return;
+    }
+
+    if (!user?.address || !user?.phone) {
+      addMessage("주소지 정보를 먼저 입력해주세요!", "var(--important-color)");
+
+      setMypagePath("personal");
+      return redirect("/mypage");
+    }
+
+    redirect("/order/form");
+  };
+
   useEffect(() => {
     setIsChecked(getIsCheckedAllCartItems());
   }, [cart]);
@@ -69,7 +96,7 @@ export default function CartListHeader() {
           <span className={cx("cart_list_header__top__span", "text-lg")}>{TOTAL_PRICE_TEXT}</span>
           <span className={cx("cart_list_header__top__span", "text-lg")}>{formattedTotalPrice}</span>
         </div>
-        <Button width="95px" height="30px" text={CART_ORDER_TEXT} />
+        <Button width="95px" height="30px" text={CART_ORDER_TEXT} onClick={orderHandler} />
       </div>
       <ul className={cx("cart_list_header__bottom__div")}>
         <input

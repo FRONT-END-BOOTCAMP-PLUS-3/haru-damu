@@ -36,7 +36,6 @@ export class OrderUsecase {
     size?: string | null,
     year?: string | null,
   ): Promise<GetOrderListResponseDto | null> {
-    console.log("usercase ==========");
     const currentPage = page ? Number(page) : 1;
     const itemsPerPage = size ? Number(size) : 3;
 
@@ -57,13 +56,20 @@ export class OrderUsecase {
 
     const totalPage = Math.ceil(count / itemsPerPage);
 
+    const formattedOrder = order.map((item) => {
+      return {
+        ...item,
+        orderId: item.id,
+      };
+    });
+
     return {
       count,
       totalPage,
       page: currentPage,
       size: itemsPerPage,
       year: filterYear,
-      items: order ?? [],
+      items: formattedOrder ?? [],
     };
   }
 
