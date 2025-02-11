@@ -4,17 +4,18 @@ import type { ItemImage } from "@/domain/entities/item_image";
 import type { Item, TestItem, TestItemImage } from "@/domain/entities/item"; // 수정필요요
 import type { ItemRepository } from "@/domain/repositories/item_repository";
 
+import camelcaseKeys from "camelcase-keys";
+import snakecaseKeys from "snakecase-keys";
+
 export class SbItemRepository implements ItemRepository {
   async findOneById(id: number): Promise<Item & { itemImage: ItemImage | null }> {
     const supabase = await createClient();
     const { data, error } = await supabase.from("items").select("*, item_images(*)").eq("id", id).single();
-
     if (error) {
       throw new Error(`items 데이터 패칭 오류: ${error.message}`);
     }
-
     return {
-      ...data,
+      ...camelcaseKeys(data, { deep: true }),
       itemImage: data.item_images ?? null,
     };
   }
@@ -24,13 +25,11 @@ export class SbItemRepository implements ItemRepository {
     const start = (page - 1) * limit;
     const end = start + limit - 1;
     const { data, error } = await supabase.from("items").select("*, item_images(*)").range(start, end);
-
     if (error) {
       throw new Error(`items 데이터 패칭 오류: ${error.message}`);
     }
-
     return data.map((item) => ({
-      ...item,
+      ...camelcaseKeys(item, { deep: true }),
       itemImage: item.item_images ?? null,
     }));
   }
@@ -46,15 +45,13 @@ export class SbItemRepository implements ItemRepository {
     const { data, error } = await supabase
       .from("items")
       .select("*, item_images(*)")
-      .eq("categoryCode", categoryCode)
+      .eq("category_code", categoryCode)
       .range(start, end);
-
     if (error) {
       throw new Error(`items 카테고리별 데이터 패칭 오류: ${error.message}`);
     }
-
     return data.map((item) => ({
-      ...item,
+      ...camelcaseKeys(item, { deep: true }),
       itemImage: item.item_images ?? null,
     }));
   }
@@ -66,35 +63,35 @@ export class SbItemRepository implements ItemRepository {
     const { data, error } = await supabase
       .from("items")
       .select("*, item_images(*)")
-      .ilike("itemName", `%${query}%`)
+      .ilike("item_name", `%${query}%`)
       .range(start, end);
-
     if (error) {
       throw new Error(`items 검색 오류: ${error.message}`);
     }
-
     return data.map((item) => ({
-      ...item,
+      ...camelcaseKeys(item, { deep: true }),
       itemImage: item.item_images ?? null,
     }));
   }
 
   async create(item: Item): Promise<Item> {
     const supabase = await createClient();
-    const { data, error } = await supabase.from("items").insert(item).select().single();
+    const snakeItem = snakecaseKeys(JSON.parse(JSON.stringify(item)) as Record<string, unknown>, { deep: true });
+    const { data, error } = await supabase.from("items").insert(snakeItem).select().single();
     if (error) {
       throw new Error(`items 데이터 추가 오류: ${error.message}`);
     }
-    return data as Item;
+    return camelcaseKeys(data, { deep: true }) as Item;
   }
 
   async updateById(id: number, item: Partial<Item>): Promise<Item> {
     const supabase = await createClient();
-    const { data, error } = await supabase.from("items").update(item).eq("id", id).select().single();
+    const snakeItem = snakecaseKeys(JSON.parse(JSON.stringify(item)) as Record<string, unknown>, { deep: true });
+    const { data, error } = await supabase.from("items").update(snakeItem).eq("id", id).select().single();
     if (error) {
       throw new Error(`items 데이터 업데이트 오류: ${error.message}`);
     }
-    return data as Item;
+    return camelcaseKeys(data, { deep: true }) as Item;
   }
 
   async deleteById(id: number): Promise<void> {

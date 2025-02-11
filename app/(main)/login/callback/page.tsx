@@ -31,23 +31,23 @@ export default function Callback() {
       if (!user?.user_metadata || user?.user_metadata === null) return redirect("/");
 
       const { avatar_url, email, full_name } = user.user_metadata;
-      console.table({ type, avatar_url, email, full_name });
 
       login(type, { email, name: full_name }, avatar_url);
 
       const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession();
+        data : {
+          session
+        }
+      } = await supabase.auth.getSession()
 
-      if (!session || error) redirect("/login");
+      if(!session) return
 
-      setCookie(null, "access_token", session.access_token, {
-        maxAge: 60 * 60 * 24 * 7, // 7일 동안 유지
-        path: "/", // 모든 경로에서 쿠키 접근 가능
-        secure: process.env.NODE_ENV === "production", // 프로덕션 환경에서는 HTTPS에서만 전송
-        sameSite: "lax", // CSRF 보호를 위한 설정
-      });
+      setCookie(null, 'access_token', session?.access_token, {
+        maxAge: 30 * 24 * 60 * 60, // 30일 동안 유지
+        path: '/',                 // 모든 경로에서 쿠키 접근 가능
+        secure: true,              // HTTPS 환경에서만 쿠키 전송
+        sameSite: 'strict'         // CSRF 방지
+      })
 
       addMessage(`어서오세요, ${full_name}님!`, "var(--secondary-color)");
     };
