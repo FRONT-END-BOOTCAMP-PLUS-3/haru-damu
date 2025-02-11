@@ -20,9 +20,10 @@ interface ItemListProps {
   baseUrl: string;
   items: TItem[];
   currentPage: number;
+  totalPage: number;
 }
 
-export default function ItemList({ title, baseUrl, items, currentPage }: ItemListProps) {
+export default function ItemList({ title, baseUrl, items, currentPage, totalPage }: ItemListProps) {
   const { isShrunk } = useStore();
   const router = useRouter();
 
@@ -40,7 +41,7 @@ export default function ItemList({ title, baseUrl, items, currentPage }: ItemLis
       </ul>
 
       <div className={cx("item_list__pagination")}>
-        <Pagination current={currentPage} total={10} onClick={onClickHandler} />
+        <Pagination current={currentPage} total={totalPage} onClick={onClickHandler} />
       </div>
     </div>
   );
