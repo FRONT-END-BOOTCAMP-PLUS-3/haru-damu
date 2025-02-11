@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
+
 import { SbHealthRepository } from "@/infrastructure/repositories/sb_health_repository";
-import { HealthUsecase } from "@/application/usecases/healths/mypage_health_usecase";
+
 import getUser from "@/utils/supabase/get_user";
+
+import { HealthUsecase } from "@/application/usecases/healths/mypage_health_usecase";
 
 const healthRepository = new SbHealthRepository();
 const healthUsecase = new HealthUsecase(healthRepository);
@@ -10,7 +13,7 @@ export async function GET(req: Request) {
   try {
     const user = await getUser("user");
 
-    if (!user || !('userId' in user)) {
+    if (!user || !("userId" in user)) {
       return NextResponse.json({ error: "User not found or user ID missing" }, { status: 404 });
     }
 
@@ -29,7 +32,7 @@ export async function POST(req: Request) {
     const user = await getUser("user");
 
     // user 객체가 제대로 있는지 확인하고 userId가 존재하는지 체크
-    if (!user || !('userId' in user)) {
+    if (!user || !("userId" in user)) {
       return NextResponse.json({ error: "User not found or user ID missing" }, { status: 404 });
     }
 
@@ -53,5 +56,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to save health data" }, { status: 500 });
   }
 }
-
-

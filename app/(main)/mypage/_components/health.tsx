@@ -1,8 +1,18 @@
-import { useRouter } from "next/navigation";
-
 import { useState, useEffect } from "react";
 
 import Dropdown from "@/components/common/dropdown";
+
+import { useStore } from "@/hooks/usestore";
+
+import {
+  calcBmr,
+  calcRecommendedKcal,
+  calcProtein,
+  calcCarbohydrates,
+  calcFat,
+  calcSugar,
+  calcSalt,
+} from "@/utils/oneday_kcal";
 
 import styles from "@/app/(main)/mypage/_components/health.module.css";
 
@@ -17,21 +27,19 @@ import {
 import type { HealthDto } from "@/application/usecases/healths/dtos";
 
 import classNames from "classnames/bind";
-import { useStore } from "@/hooks/usestore";
 
 const GENDER_OPTIONS = [...GenderOptions];
 const ACTIVITY_OPTIONS = [...ActivityOptions];
 const cx = classNames.bind(styles);
 
 export default function HealthPage() {
-  const router = useRouter();
   const { addMessage } = useStore();
 
   // 기본값이 있으므로 NaN이 발생하지 않도록 기본 숫자 필드는 0으로 설정
   const [formData, setFormData] = useState<HealthDto>({
     activityCode: 0,
     genderCode: "" as "M" | "F",
-    isCustom: false,
+    isCustom: true,
     createdAt: "",
     updatedAt: "",
     age: 0,
@@ -39,22 +47,19 @@ export default function HealthPage() {
     weight: 0,
   });
 
-  const [, setHealth] = useState<HealthDto | null>(null);
-
   useEffect(() => {
     async function fetchHealth() {
       try {
-        const res = await fetch(`/api/mypage/healths`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/mypage/healths`);
         if (res.ok) {
           const data = await res.json();
-          setHealth(data);
           setFormData({
             age: data.age ?? 0,
             height: data.height ?? 0,
             weight: data.weight ?? 0,
             genderCode: data.genderCode ?? "",
             activityCode: data.activityCode ?? 0,
-            isCustom: data.isCustom ?? false,
+            isCustom: data.isCustom ?? true,
             createdAt: data.createdAt ?? "",
             updatedAt: data.updatedAt ?? "",
           });
@@ -82,9 +87,23 @@ export default function HealthPage() {
   };
 
   const handleSave = async () => {
+    if (
+      formData.age == null ||
+      formData.genderCode == null ||
+      formData.weight == null ||
+      formData.height == null ||
+      formData.activityCode == null
+    ) {
+      addMessage("필수 정보를 모두 입력해 주세요.");
+      return;
+    }
+
     try {
-      const payload = { healthData: formData };
-      const response = await fetch(`/api/mypage/healths`, {
+      const nutrients = formData.isCustom ? calculateDailyNutrients(formData) : {};
+
+      const payload = { healthData: { ...formData, ...nutrients } };
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/mypage/healths`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -99,6 +118,32 @@ export default function HealthPage() {
     } catch (error) {
       console.error("Error saving health data:", error);
     }
+  };
+
+  const calculateDailyNutrients = (healthData: HealthDto) => {
+    const { age, genderCode, weight, height, activityCode } = healthData;
+
+    // 필수 값이 없는 경우 예외를 던져서 처리를 중단
+    if (age == null || genderCode == null || weight == null || height == null || activityCode == null) {
+      throw new Error("필수 건강 정보가 누락되었습니다.");
+    }
+
+    const bmr = calcBmr(weight, height, age, genderCode);
+    const recommendedKcal = calcRecommendedKcal(bmr, activityCode);
+    const protein = calcProtein(weight, activityCode);
+    const carbs = calcCarbohydrates(recommendedKcal);
+    const fat = calcFat(recommendedKcal);
+    const sugar = calcSugar(recommendedKcal);
+    const sodium = calcSalt();
+
+    return {
+      calorie: Math.round(recommendedKcal),
+      carbohydrates: Math.round(carbs),
+      protein: Math.round(protein),
+      fat: Math.round(fat),
+      sodium: Math.round(sodium),
+      sugar: Math.round(sugar),
+    };
   };
 
   const handleGenderSelect = (selectedLabel: string) => {
@@ -118,15 +163,13 @@ export default function HealthPage() {
       handleChange("activityCode", selectedOption.value);
     } else {
       console.log(`선택된 활동량 레이블이 ACTIVITY_OPTIONS에 없습니다: ${selectedLabel}`);
-      handleChange("activityCode", 0);  // "선택되지 않음"인 경우 0으로 설정
+      handleChange("activityCode", 0); // "선택되지 않음"인 경우 0으로 설정
     }
   };
-  
 
   const getLabel = (key: keyof HealthDto) => HEALTH_FIELDS.find((field) => field.key === key)?.label || key.toString();
 
-  // 숫자 필드의 value가 NaN이면 빈 문자열을 전달하도록 처리합니다.
-  const safeValue = (num: number | undefined) => (num === undefined || isNaN(num) ? "" : String(num));
+  const safeValue = (num: number | null | undefined) => (num == null || isNaN(num) ? "" : String(num));
 
   return (
     <div className={cx("health")}>
@@ -187,11 +230,11 @@ export default function HealthPage() {
         <div className={cx("health__row")}>
           <label className={cx("health__label", "text-md-b")}>{getLabel("activityCode")}</label>
           <div className={cx("health__dropdown")}>
-          <Dropdown
+            <Dropdown
               itemList={ACTIVITY_OPTIONS.map((option) => option.label)}
               currentItem={
                 formData.activityCode === 0
-                  ? "선택되지 않음"  // 기본값인 0은 "선택되지 않음"으로 표시
+                  ? "선택되지 않음" // 기본값인 0은 "선택되지 않음"으로 표시
                   : ACTIVITY_OPTIONS.find((option) => option.value === formData.activityCode)?.label || "선택되지 않음"
               }
               onClick={handleActivitySelect}
