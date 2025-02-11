@@ -2,9 +2,9 @@
 
 import ReactDOM from "react-dom";
 
-import styles from "@/components/common/modal.module.css";
-
 import { useStore } from "@/hooks/usestore";
+
+import styles from "@/components/common/modal.module.css";
 
 export function Modal({ children }: { children: React.ReactNode }) {
   const { isOpenModal, closeModal } = useStore();
