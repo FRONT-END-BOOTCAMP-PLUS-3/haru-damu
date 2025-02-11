@@ -25,7 +25,7 @@ export default function OrderItemSection({ items, totalPrice }: OrderItemSection
       <Subheading title={"주문 상품"} />
       <ul className={cx("order_item_section_item_list")}>
         {items.map((item) => (
-          <HorizontalItem key={item.item_id} horizontalItem={item} isEditable={false} />
+          <HorizontalItem key={item.itemId} horizontalItem={item} isEditable={false} />
         ))}
       </ul>
       {isOrderForm && (
