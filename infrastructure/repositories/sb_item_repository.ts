@@ -20,58 +20,71 @@ export class SbItemRepository implements ItemRepository {
     };
   }
 
-  async findByPage(page: number, limit: number): Promise<(Item & { itemImage: ItemImage | null })[]> {
+  async findByPage(
+    startIndex: number,
+    endIndex: number,
+  ): Promise<{ items: (Item & { itemImage: ItemImage | null })[]; totalCount: number }> {
     const supabase = await createClient();
-    const start = (page - 1) * limit;
-    const end = start + limit - 1;
-    const { data, error } = await supabase.from("items").select("*, item_images(*)").range(start, end);
+    const { data, error, count } = await supabase
+      .from("items")
+      .select("*, item_images(*)", { count: "exact" })
+      .range(startIndex, endIndex);
     if (error) {
       throw new Error(`items 데이터 패칭 오류: ${error.message}`);
     }
-    return data.map((item) => ({
-      ...camelcaseKeys(item, { deep: true }),
-      itemImage: item.item_images ?? null,
-    }));
+    return {
+      items: data.map((item) => ({
+        ...camelcaseKeys(item, { deep: true }),
+        itemImage: item.item_images ?? null,
+      })),
+      totalCount: count || 0,
+    };
   }
 
   async findByCategory(
     categoryCode: string,
-    page: number,
-    limit: number,
-  ): Promise<(Item & { itemImage: ItemImage | null })[]> {
+    startIndex: number,
+    endIndex: number,
+  ): Promise<{ items: (Item & { itemImage: ItemImage | null })[]; totalCount: number }> {
     const supabase = await createClient();
-    const start = (page - 1) * limit;
-    const end = start + limit - 1;
-    const { data, error } = await supabase
+    const { data, error, count } = await supabase
       .from("items")
-      .select("*, item_images(*)")
+      .select("*, item_images(*)", { count: "exact" })
       .eq("category_code", categoryCode)
-      .range(start, end);
+      .range(startIndex, endIndex);
     if (error) {
       throw new Error(`items 카테고리별 데이터 패칭 오류: ${error.message}`);
     }
-    return data.map((item) => ({
-      ...camelcaseKeys(item, { deep: true }),
-      itemImage: item.item_images ?? null,
-    }));
+    return {
+      items: data.map((item) => ({
+        ...camelcaseKeys(item, { deep: true }),
+        itemImage: item.item_images ?? null,
+      })),
+      totalCount: count || 0,
+    };
   }
 
-  async findByQuery(query: string, page: number, limit: number): Promise<(Item & { itemImage: ItemImage | null })[]> {
+  async findByQuery(
+    query: string,
+    startIndex: number,
+    endIndex: number,
+  ): Promise<{ items: (Item & { itemImage: ItemImage | null })[]; totalCount: number }> {
     const supabase = await createClient();
-    const start = (page - 1) * limit;
-    const end = start + limit - 1;
-    const { data, error } = await supabase
+    const { data, error, count } = await supabase
       .from("items")
-      .select("*, item_images(*)")
+      .select("*, item_images(*)", { count: "exact" })
       .ilike("item_name", `%${query}%`)
-      .range(start, end);
+      .range(startIndex, endIndex);
     if (error) {
       throw new Error(`items 검색 오류: ${error.message}`);
     }
-    return data.map((item) => ({
-      ...camelcaseKeys(item, { deep: true }),
-      itemImage: item.item_images ?? null,
-    }));
+    return {
+      items: data.map((item) => ({
+        ...camelcaseKeys(item, { deep: true }),
+        itemImage: item.item_images ?? null,
+      })),
+      totalCount: count || 0,
+    };
   }
 
   async create(item: Item): Promise<Item> {
