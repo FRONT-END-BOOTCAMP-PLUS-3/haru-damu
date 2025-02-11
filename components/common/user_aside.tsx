@@ -6,9 +6,10 @@ import { useStore } from "@/hooks/usestore";
 
 import style from "@/components/common/user_aside.module.css";
 
-import { ASIDE_PATH, HEALTH_CHART_DATA, HONORIFIC_TEXT, NUTRITION_TITLE, WELCOME_TEXT } from "@/constants/aside";
+import { MYPAGE_NUTRITION_CHART_COLOR } from "@/constants/mypage";
+import { ASIDE_PATH, HONORIFIC_TEXT, NUTRITION_TITLE, WELCOME_TEXT } from "@/constants/aside";
 
-import type { THealth, TUser } from "@/types";
+import type { TUser } from "@/stores/user_store";
 import type { TMypagePath } from "@/stores/mypage_store";
 
 import classNames from "classnames/bind";
@@ -17,15 +18,11 @@ import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 const cx = classNames.bind(style);
 ChartJS.register(Tooltip, ArcElement);
 
-interface UserAsideProps {
-  user: TUser;
-  health: THealth;
-}
-
-export default function UserAside({ user, health }: UserAsideProps) {
+export default function UserAside() {
   const { mypagePath: path } = useStore();
+  const { user } = useStore();
 
-  const { name } = user;
+  const name = user?.name;
 
   const isNutritionPage = path === "nutrition";
 
@@ -39,7 +36,7 @@ export default function UserAside({ user, health }: UserAsideProps) {
         </div>
       </div>
       <ul>
-        {!isNutritionPage && <AsideChart health={health} />}
+        {!isNutritionPage && <AsideChart />}
         {ASIDE_PATH.map((value, idx) => (
           <AsideButton key={idx} path={value.path} title={value.title} isCurrent={path === value.path} />
         ))}
@@ -58,28 +55,29 @@ function AsideButton({ path, title, isCurrent = false }: { path: TMypagePath; ti
   );
 }
 
-function AsideChart({ health }: { health: THealth }) {
-  const { calorie } = health;
+function AsideChart() {
+  const { userNutrition } = useStore();
 
-  const legends = HEALTH_CHART_DATA.map((data) => {
-    return {
-      ...data,
-      value: health[data.eng as keyof THealth],
-    };
-  });
+  const chartKeys = ["carbohydrates", "protein", "fat"];
+  const chartData = userNutrition
+    .filter((data) => chartKeys.includes(data.key))
+    .map((data) => ({
+      key: data.key,
+      kor: data.label,
+      value: data.value,
+      color: MYPAGE_NUTRITION_CHART_COLOR[data.key] || "#999999",
+    }));
 
-  const chartData = legends.slice(0, -2);
+  const additionalData = userNutrition.filter((data) => ["sodium", "sugar"].includes(data.key));
 
-  const labels = chartData.map((data) => data.kor);
-  const backgroundColor = chartData.map((data) => data.color);
-  const values = chartData.map((data) => data.value);
+  const totalCalorie = userNutrition.find((item) => item.key === "calorie")?.value || 0;
 
   const pieData = {
-    labels,
+    labels: chartData.map((data) => data.kor),
     datasets: [
       {
-        data: values,
-        backgroundColor: backgroundColor,
+        data: chartData.map((data) => data.value),
+        backgroundColor: chartData.map((data) => data.color),
         borderWidth: 4,
       },
     ],
@@ -88,13 +86,34 @@ function AsideChart({ health }: { health: THealth }) {
   return (
     <div className={cx("aside_chart__wrapper")}>
       <span className={cx("aside_chart__title", "title-lg-b")}>{NUTRITION_TITLE}</span>
-      <Pie data={pieData} />
-      <span className={cx("aside_chart__sub", "text-lg")}>{`총 칼로리 ${calorie}kcal`}</span>
+      <Pie
+        data={pieData}
+        options={{
+          plugins: {
+            legend: {
+              display: false,
+            },
+            datalabels: {
+              display: false,
+            },
+          },
+          responsive: true,
+          maintainAspectRatio: true,
+        }}
+      />
+      <span className={cx("aside_chart__sub", "text-lg")}>{`총 칼로리 ${totalCalorie}kcal`}</span>
       <ul>
-        {legends.map((legend, idx) => (
+        {chartData.map((legend, idx) => (
           <li key={idx} className={cx("aside_chart__list")}>
             <div className={cx("aside_chart__list__div")} style={{ background: legend.color }} />
             <span>{`${legend.kor} : ${legend.value}g`}</span>
+          </li>
+        ))}
+        {/* 나트륨과 당은 텍스트로만 추가 */}
+        {additionalData.map((legend, idx) => (
+          <li key={idx} className={cx("aside_chart__list")}>
+            <div className={cx("aside_chart__list__div")} style={{ background: "#999999" }} />
+            <span>{`${legend.label} : ${legend.value}g`}</span>
           </li>
         ))}
       </ul>
