@@ -19,25 +19,42 @@ import {
   ORDER_ERROR,
 } from "@/constants/mypage";
 
-import type { Order } from "@/app/api/order/order";
+import type { Order } from "@/app/api/orders/route";
 
 import classNames from "classnames/bind";
-import { fetchOrders } from "@/app/api/order/order";
 
 const cx = classNames.bind(styles);
 
 const filterOptions = ORDER_FILTER_OPTIONS;
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
+
 export default function OrderPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [data, setData] = useState<{ orders: Order[]; total: number }>({ orders: [], total: 0 });
+
   const currentPage = Number(searchParams.get("page")) || 1;
   const selectedFilter = searchParams.get("filter") || filterOptions[0];
   const itemsPerPage = Number(searchParams.get("size")) || 3;
 
   useEffect(() => {
-    fetchOrders(currentPage, selectedFilter, itemsPerPage).then((result) => setData(result));
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}/api/orders?page=${currentPage}&size=${itemsPerPage}&filter=${selectedFilter}`,
+        ).then((response) => response.json());
+
+        setData({
+          orders: response.items,
+          total: response.count,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchOrders();
   }, [currentPage, selectedFilter, itemsPerPage]);
 
   const updateQueryParams = (page: number, filter: string, size: number = itemsPerPage) => {
@@ -70,24 +87,24 @@ export default function OrderPage() {
       <hr className={cx("order__divider")} />
       {orders.length ? (
         orders.map((order) => (
-          <div key={order.item_id} className={cx("order__item")}>
+          <div key={order.itemId} className={cx("order__item")}>
             <div className={cx("order__item-header")}>
-              <div className={cx("text-lg-b")}>{order.created_at}</div>
+              <div className={cx("text-lg-b")}>{order.createdAt}</div>
               <button className={cx("order__item-detail-button", "text-sm")}>{ORDER_DETAIL_BUTTON}</button>
             </div>
             <HorizontalItem
               horizontalItem={{
-                user_id: order.user_id,
-                item_id: order.item_id,
-                wrapper_id: order.wrapper_id,
+                userId: order.userId,
+                itemId: order.itemId,
+                wrapperId: order.wrapperId,
                 quantity: order.quantity,
-                is_checked: true,
-                item_name: order.item_name,
-                item_price: order.item_price,
+                isChecked: true,
+                itemName: order.itemName,
+                itemPrice: order.itemPrice,
                 img: undefined,
                 blurImg: undefined,
-                created_at: order.created_at,
-                updated_at: order.created_at,
+                createdAt: order.createdAt,
+                updatedAt: order.createdAt,
               }}
               isEditable={false}
             />
