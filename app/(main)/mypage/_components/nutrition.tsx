@@ -1,3 +1,4 @@
+// app/(main)/mypage/_components/nutrition.tsx
 "use client";
 
 import { useEffect } from "react";
@@ -18,23 +19,32 @@ export default function Nutrition() {
   const { setUserNutrition, setIsCustom } = useStore();
 
   const fetchNutrition = async () => {
-    const fetchedNutrition = await fetch(`${BASE_URL}/api/nutrition`);
+    try {
+      const fetchedNutrition = await fetch(`${BASE_URL}/api/mypage/nutrition`);
 
-    const {
-      recommendedNutrition: { total: recommendedNutrition },
-      customNutrition,
-    } = await fetchedNutrition.json();
+      if (!fetchedNutrition.ok) {
+        throw new Error("데이터를 불러오는 데 실패했습니다.");
+      }
 
-    const newNutrition: TMypageNutrition[] = MYPAGE_NUTRITION_LIST.map((nutrition) => {
-      return {
-        ...nutrition,
-        value: customNutrition[nutrition.key as keyof THealth] as number,
-        recommendValue: Math.ceil(recommendedNutrition[nutrition.key as keyof THealth] as number),
-      };
-    });
+      const {
+        recommendedNutrition: { total: recommendedNutrition },
+        customNutrition,
+      } = await fetchedNutrition.json();
 
-    setIsCustom(customNutrition.is_custom);
-    setUserNutrition(newNutrition);
+      const newNutrition: TMypageNutrition[] = MYPAGE_NUTRITION_LIST.map((nutrition) => {
+        return {
+          ...nutrition,
+          value: customNutrition[nutrition.key as keyof THealth] as number,
+          recommendValue: Math.ceil(recommendedNutrition[nutrition.key as keyof THealth] as number),
+          isCustom: false,
+        };
+      });
+
+      setIsCustom(customNutrition.isCustom);
+      setUserNutrition(newNutrition);
+    } catch (error) {
+      console.error("영양 정보를 가져오는 중 오류 발생:", error);
+    }
   };
 
   useEffect(() => {

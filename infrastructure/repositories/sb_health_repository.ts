@@ -63,6 +63,34 @@ export class SbHealthRepository implements HealthRepository {
     return camelcaseKeys(data, { deep: true }) as Health;
   }
 
+  // 영양 데이터 업데이트
+  public async updateNutrition(userId: number, isCustom: boolean, nutritionData: any[]): Promise<Health> {
+    const supabase = await createClient();
+
+    const nutritionObject = nutritionData.reduce((acc, curr) => {
+      acc[curr.key] = curr.value;
+      return acc;
+    }, {});
+
+    const NutritionData = snakecaseKeys(nutritionObject, { deep: true });
+
+    const { data, error } = await supabase
+      .from("healths")
+      .update({
+        ...NutritionData,
+        is_custom: isCustom, // isCustom 상태 추가
+      })
+      .eq("user_id", userId)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`healths 데이터 업데이트 오류: ${error.message}`);
+    }
+
+    return camelcaseKeys(data, { deep: true }) as Health;
+  }
+
   // 건강 데이터 삭제
   public async delete(userId: number): Promise<void> {
     const supabase = await createClient();

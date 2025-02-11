@@ -20,7 +20,34 @@ export default function NutritionInfo() {
   const { addMessage, isCustom, setIsCustom, userNutrition, updateUserNutrition } = useStore();
 
   const toggleHandler = () => {
-    setIsCustom(!isCustom);
+    const updatedIsCustom = !isCustom;
+    setIsCustom(updatedIsCustom);
+
+    const handleUpdate = async () => {
+      try {
+        const response = await fetch("/api/mypage/nutrition", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            isCustom: updatedIsCustom,
+            newData: userNutrition,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("업데이트 실패");
+        }
+
+        addMessage(UPDATE_SUCCESS_MESSAGE);
+      } catch (error) {
+        console.error("업데이트 중 오류 발생:", error);
+        addMessage(ERROR_MESSAGE);
+      }
+    };
+
+    handleUpdate();
   };
 
   const onChangeHandler = (key: keyof TMypageNutrition, value: string) => {
@@ -34,18 +61,25 @@ export default function NutritionInfo() {
   const onClickHandler = () => {
     const handleUpdate = async () => {
       try {
-        await fetch("/api/nutrition", {
+        const response = await fetch("/api/mypage/nutrition", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(userNutrition),
+          body: JSON.stringify({
+            isCustom,
+            newData: userNutrition,
+          }),
         });
+
+        if (!response.ok) {
+          throw new Error("업데이트 실패");
+        }
 
         addMessage(UPDATE_SUCCESS_MESSAGE);
       } catch (error) {
+        console.error("업데이트 중 오류 발생:", error);
         addMessage(ERROR_MESSAGE);
-        console.error(error);
       }
     };
 
