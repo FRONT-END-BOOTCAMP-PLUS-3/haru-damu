@@ -1,14 +1,67 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import ItemList from "@/components/common/item_list";
 
-import { CATEGORY_TITLE } from "@/constants/categories";
+import { CATEGORIES, CATEGORY_TITLE } from "@/constants/categories";
 
 import type { TItem } from "@/types";
 
 interface CategoryResultProps {
-  items: TItem[];
-  totalItems: number;
+  category: string;
+  page: number;
 }
 
-export default function CategoryResult({ items, totalItems }: CategoryResultProps) {
-  return <ItemList items={items} totalItems={totalItems} title={CATEGORY_TITLE} baseUrl="/category" />;
+interface PaginationInfo {
+  count: number;
+  totalPage: number;
+  page: number;
+  size: number;
+}
+
+export default function CategoryResult({ category, page }: CategoryResultProps) {
+  const [items, setItems] = useState<TItem[]>([]);
+  const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>({
+    count: 0,
+    totalPage: 1,
+    page: 1,
+    size: 20,
+  });
+
+  const categoryTitle = CATEGORIES.find((cat) => cat.key === category)?.kor || CATEGORY_TITLE;
+
+  useEffect(() => {
+    if (!category) return;
+    const fetchItems = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/category?value=${encodeURIComponent(category)}&page=${page}`,
+          {
+            method: "GET",
+          },
+        ).then((response) => response.json());
+        setItems(res.items);
+        setPaginationInfo({
+          count: res.count,
+          totalPage: res.totalPage,
+          page: res.page,
+          size: res.size,
+        });
+      } catch (error) {
+        console.error("카테고리 아이템 리스트 fetch 실패", error);
+      }
+    };
+    fetchItems();
+  }, [category, page]);
+
+  return (
+    <ItemList
+      items={items}
+      currentPage={paginationInfo.page}
+      totalPage={paginationInfo.totalPage}
+      title={categoryTitle}
+      baseUrl="/category"
+    />
+  );
 }
