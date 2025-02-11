@@ -39,7 +39,7 @@ export default function HealthPage() {
   const [formData, setFormData] = useState<HealthDto>({
     activityCode: 0,
     genderCode: "" as "M" | "F",
-    isCustom: true,
+    isCustom: false,
     createdAt: "",
     updatedAt: "",
     age: 0,
@@ -59,7 +59,7 @@ export default function HealthPage() {
             weight: data.weight ?? 0,
             genderCode: data.genderCode ?? "",
             activityCode: data.activityCode ?? 0,
-            isCustom: data.isCustom ?? true,
+            isCustom: data.isCustom ?? false,
             createdAt: data.createdAt ?? "",
             updatedAt: data.updatedAt ?? "",
           });
@@ -99,7 +99,7 @@ export default function HealthPage() {
     }
 
     try {
-      const nutrients = formData.isCustom ? calculateDailyNutrients(formData) : {};
+      const nutrients = !formData.isCustom ? calculateDailyNutrients(formData) : {};
 
       const payload = { healthData: { ...formData, ...nutrients } };
 
@@ -123,7 +123,6 @@ export default function HealthPage() {
   const calculateDailyNutrients = (healthData: HealthDto) => {
     const { age, genderCode, weight, height, activityCode } = healthData;
 
-    // 필수 값이 없는 경우 예외를 던져서 처리를 중단
     if (age == null || genderCode == null || weight == null || height == null || activityCode == null) {
       throw new Error("필수 건강 정보가 누락되었습니다.");
     }
@@ -163,7 +162,7 @@ export default function HealthPage() {
       handleChange("activityCode", selectedOption.value);
     } else {
       console.log(`선택된 활동량 레이블이 ACTIVITY_OPTIONS에 없습니다: ${selectedLabel}`);
-      handleChange("activityCode", 0); // "선택되지 않음"인 경우 0으로 설정
+      handleChange("activityCode", 0);
     }
   };
 
@@ -234,7 +233,7 @@ export default function HealthPage() {
               itemList={ACTIVITY_OPTIONS.map((option) => option.label)}
               currentItem={
                 formData.activityCode === 0
-                  ? "선택되지 않음" // 기본값인 0은 "선택되지 않음"으로 표시
+                  ? "선택되지 않음"
                   : ACTIVITY_OPTIONS.find((option) => option.value === formData.activityCode)?.label || "선택되지 않음"
               }
               onClick={handleActivitySelect}

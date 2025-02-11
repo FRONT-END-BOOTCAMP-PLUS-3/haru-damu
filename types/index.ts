@@ -55,21 +55,21 @@ export type TNutrition = {
 };
 
 export type THealth = {
-  user_id: number;
-  gender_code: "M" | "F";
+  userId: number;
+  genderCode: "M" | "F";
   age: number;
   weight: number;
   height: number;
-  activity_code: number;
+  activityCode: number;
   calorie: number;
   carbohydrates: number;
   protein: number;
   fat: number;
   sodium: number;
   sugar: number;
-  is_custom: boolean;
-  created_at: string; // ISO 날짜 형식
-  updated_at: string; // ISO 날짜 형식
+  isCustom: boolean;
+  createdAt: string; // ISO 날짜 형식
+  updatedAt: string; // ISO 날짜 형식
 };
 
 // unit_converter ===================================================================
