@@ -26,7 +26,6 @@ interface VerticalItemListProps {
   items: MainItems[] | null;
 }
 export default function MealList({ meal, items }: VerticalItemListProps) {
-  console.log("🍽 MealList:", meal, "아이템", items);
   return (
     <div className={cx("meallist")}>
       <div className={cx("meallist__title")}>

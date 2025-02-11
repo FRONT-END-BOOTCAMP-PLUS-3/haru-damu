@@ -7,7 +7,7 @@ export async function GET() {
     const repository = new SbItemRepository();
     const useCase = new MainItemsUseCase(repository);
     const response = await useCase.execute();
-    console.log(response);
+
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
     console.error("Error fetching main items:", error);

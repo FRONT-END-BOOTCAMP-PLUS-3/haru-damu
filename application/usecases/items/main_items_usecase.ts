@@ -13,8 +13,6 @@ export class MainItemsUseCase {
     const randomItems = await Promise.all(promises); // 모든 Promise 완료
     const filteredItems = randomItems.filter((item) => item !== null); // `null` 제거
 
-    console.log("🔍 Randomly Selected Items:", filteredItems);
-
     return filteredItems
       .filter((item) => item !== null) // null 제거
       .map(({ id: itemId, storeId, itemName, itemPrice, categoryCode, itemImage }) => ({
