@@ -1,6 +1,6 @@
 import type { NutritionDto } from "@/application/usecases/healths/dtos";
 
-//export type TCategoryCode = "bread" | "fish" | "meat" | "milk" | "sideDish" | "vegetable" | "snack" | "fruit";
+export type TCategoryCode = "bread" | "fish" | "meat" | "milk" | "sideDish" | "vegetable" | "snack" | "fruit";
 
 // 0 : 판매 | 1 : 품절 | 2 : 삭제
 export type TItemCode = 0 | 1 | 2;

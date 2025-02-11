@@ -2,18 +2,31 @@ import VerticalItem from "@/components/common/vertical_item";
 
 import styles from "@/app/(main)/_components/meal_list.module.css";
 
-import type { TItem } from "@/types";
-
 import { MAIN_MEAL } from "@/constants";
 import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
+type ItemImage = {
+  id: number;
+  itemId: number | null; // nullable
+  src: string | null;
+  createdAt: Date;
+};
 
+export type MainItems = {
+  itemId: number;
+  storeId: number;
+  itemName: string;
+  itemPrice: number;
+  categoryCode: string;
+  itemImage?: ItemImage[] | null; // optional 및 nullable
+};
 interface VerticalItemListProps {
   meal: "breakfast" | "lunch" | "dinner";
-  items: TItem[];
+  items: MainItems[] | null;
 }
 export default function MealList({ meal, items }: VerticalItemListProps) {
+  console.log("🍽 MealList:", meal, "아이템", items);
   return (
     <div className={cx("meallist")}>
       <div className={cx("meallist__title")}>
@@ -22,9 +35,7 @@ export default function MealList({ meal, items }: VerticalItemListProps) {
       </div>
 
       <ul className={cx("meallist__item")}>
-        {items.map((item) => (
-          <VerticalItem key={item.item_id} item={item} />
-        ))}
+        {items && items.map((item) => <VerticalItem key={item.itemId} item={item} />)}
       </ul>
     </div>
   );

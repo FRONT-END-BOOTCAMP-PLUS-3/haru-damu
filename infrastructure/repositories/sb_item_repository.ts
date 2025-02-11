@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 
-import type { ItemImage } from "@/domain/entities/item_image";
-import type { Item, TestItem, TestItemImage } from "@/domain/entities/item"; // 수정필요요
+import type { Item } from "@/domain/entities/item";
+import type { ItemImage } from "@/domain/entities/item_image"; // 수정필요요
 import type { ItemRepository } from "@/domain/repositories/item_repository";
 
 import camelcaseKeys from "camelcase-keys";
@@ -101,20 +101,23 @@ export class SbItemRepository implements ItemRepository {
       throw new Error(`items 데이터 삭제 오류: ${error.message}`);
     }
   }
-  async findRandomByCategory(categoryCode: string): Promise<(TestItem & { itemImage: TestItemImage | null }) | null> {
+  async LatestCategory(categoryCode: string): Promise<(Item & { itemImage: ItemImage | null })[]> {
     const supabase = await createClient();
 
-    const { data, error } = await supabase.from("items").select("*, item_images(*)").eq("category_code", categoryCode);
+    const { data, error } = await supabase
+      .from("items")
+      .select("*, item_images(*)")
+      .eq("category_code", categoryCode)
+      .order("id", { ascending: false }) // 최신 데이터 기준 정렬
+      .limit(10);
 
-    if (error || !data || data.length === 0) {
-      console.error("Error fetching items:", error);
-      return null;
+    if (error) {
+      throw new Error(`items 데이터 삭제 오류: ${error.message}`);
     }
 
-    // ✅ 데이터 개수에 따라 최적화된 랜덤 선택
-    const randomItem = data[Math.floor(Math.random() * data.length)];
-
-    console.log("랜덤으로 선택된 아이템:", randomItem);
-    return randomItem;
+    return data.map((item) => ({
+      ...camelcaseKeys(item, { deep: true }),
+      itemImage: item.item_images ?? null,
+    }));
   }
 }

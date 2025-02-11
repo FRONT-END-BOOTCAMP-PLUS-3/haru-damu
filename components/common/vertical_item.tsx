@@ -7,7 +7,7 @@ import Button from "@/components/common/button";
 
 import style from "@/components/common/vertical_item.module.css";
 
-import type { TItem } from "@/types";
+import type { MainItems } from "@/app/(main)/_components/meal_list";
 
 import classNames from "classnames/bind";
 import { ImageOff, ShoppingBasket } from "lucide-react";
@@ -15,7 +15,7 @@ import { ImageOff, ShoppingBasket } from "lucide-react";
 const cx = classNames.bind(style);
 
 interface VerticalItemProps {
-  item: TItem;
+  item: MainItems;
 }
 
 export default function VerticalItem({ item }: VerticalItemProps) {
@@ -27,29 +27,32 @@ export default function VerticalItem({ item }: VerticalItemProps) {
     vertical_item__name,
   } = style;
 
-  const { item_id, item_name, item_price, img, blurImg } = item;
-
+  const { itemId, itemName, itemPrice, itemImage } = item;
+  console.log(item);
+  const hadleCartClick = () => {
+    console.log("🛒 아이템 담기 클릭");
+  };
   return (
     <li>
-      <Link href={`/item/${item_id}`} className={vertical_item__link}>
-        <div className={cx(vertical_item__image__wrapper, !img && vertical_item__no__image)}>
-          {img ? (
-            <Image
-              src={img}
-              alt={item_name}
-              fill
-              className={vertical_item__image}
-              placeholder="blur"
-              blurDataURL={blurImg}
-            />
-          ) : (
-            <ImageOff size={80} />
-          )}
-        </div>
-        <Button text="담기" iconComponent={<ShoppingBasket />} />
-        <span className={cx(vertical_item__name, "text-lg")}>{item_name}</span>
-        <span className="text-lg-b">{item_price}원</span>
-      </Link>
+      <div className={vertical_item__link}>
+        <Link href={`/item/${itemId}`}>
+          <div className={cx(vertical_item__image__wrapper, !itemImage && vertical_item__no__image)}>
+            {itemImage ? (
+              <Image
+                src={itemImage[0].src ? itemImage[0].src : "/default_items.jpg"}
+                alt={itemName}
+                fill
+                className={vertical_item__image}
+              />
+            ) : (
+              <ImageOff size={80} />
+            )}
+          </div>
+        </Link>
+        <Button onClick={hadleCartClick} text="담기" iconComponent={<ShoppingBasket />} />
+        <span className={cx(vertical_item__name, "text-lg")}>{itemName}</span>
+        <span className="text-lg-b">{itemPrice}원</span>
+      </div>
     </li>
   );
 }
