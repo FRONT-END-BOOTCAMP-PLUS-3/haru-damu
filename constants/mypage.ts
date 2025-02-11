@@ -61,6 +61,7 @@ export const ORDER_ERROR = "해당 기간의 주문이 없습니다.";
 export const PERSONAL_TITLE = "개인정보";
 export const PERSONAL_EMAIL = "이메일";
 export const PERSONAL_BUTTON = "저장하기";
+export const PERSONAL_DELETE_BUTTON = "회원 탈퇴";
 export const PERSONAL_FIELDS = [
   { key: "name", label: "이름" },
   { key: "phone", label: "전화번호" },
