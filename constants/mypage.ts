@@ -61,6 +61,7 @@ export const ORDER_ERROR = "해당 기간의 주문이 없습니다.";
 export const PERSONAL_TITLE = "개인정보";
 export const PERSONAL_EMAIL = "이메일";
 export const PERSONAL_BUTTON = "저장하기";
+export const PERSONAL_DELETE_BUTTON = "회원 탈퇴";
 export const PERSONAL_FIELDS = [
   { key: "name", label: "이름" },
   { key: "phone", label: "전화번호" },
@@ -71,18 +72,21 @@ export const HEALTH_TITLE = "건강정보";
 export const HEALTH_BUTTON = "저장하기";
 export const HEALTH_FIELDS = [
   { key: "age", label: "연령" },
-  { key: "gender_code", label: "성별" },
+  { key: "genderCode", label: "성별" },
   { key: "height", label: "키(cm)" },
   { key: "weight", label: "몸무게(kg)" },
-  { key: "activity_code", label: "활동량" },
+  { key: "activityCode", label: "활동량" },
 ] as const;
 
-export const GENDER_OPTIONS = Object.freeze(["남성", "여성"]);
+export const GENDER_OPTIONS = Object.freeze([
+  { value: "M", label: "남성" },
+  { value: "F", label: "여성" },
+]);
 
 export const ACTIVITY_OPTIONS = Object.freeze([
-  "매우 적은 활동량",
-  "가벼운 활동",
-  "보통 활동",
-  "활발한 활동",
-  "매우 활발",
+  { value: 1, label: "매우 적은 활동량" },
+  { value: 2, label: "가벼운 활동" },
+  { value: 3, label: "보통 활동" },
+  { value: 4, label: "활발한 활동" },
+  { value: 5, label: "매우 활발" },
 ]);

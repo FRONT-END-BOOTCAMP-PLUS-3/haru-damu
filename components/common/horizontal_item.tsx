@@ -44,23 +44,23 @@ export default function HorizontalItem({
     horizontal_item_quantity__button,
     horizontal_item_quantity__value,
   } = styles;
-  const { item_id, item_name, item_price, img, quantity, is_checked, blurImg } = horizontalItem;
-  const formattedPrice = item_price.toLocaleString();
+  const { itemId, itemName, itemPrice, img, quantity, isChecked, blurImg } = horizontalItem;
+  const formattedPrice = itemPrice.toLocaleString();
   const handlers = isEditable
     ? {
         onCheckHandler: (e: React.ChangeEvent<HTMLInputElement>) => {
-          onCheck?.(item_id, e.target.checked);
+          onCheck?.(itemId, e.target.checked);
         },
         onDecreaseQuantityHandler: () => {
           if (quantity > 1) {
-            onQuantityChange?.(item_id, quantity - 1);
+            onQuantityChange?.(itemId, quantity - 1);
           }
         },
         onIncreaseQuantityHandler: () => {
-          onQuantityChange?.(item_id, quantity + 1);
+          onQuantityChange?.(itemId, quantity + 1);
         },
         onDeleteHandler: () => {
-          onDelete?.(item_id);
+          onDelete?.(itemId);
         },
       }
     : null;
@@ -73,15 +73,15 @@ export default function HorizontalItem({
               type="checkbox"
               className={horizontal_item_left__checkbox}
               onChange={handlers?.onCheckHandler}
-              checked={is_checked}
+              checked={isChecked}
             />
           )}
-          <Link href={`/item/${item_id}`} className={horizontal_item__link_img}>
+          <Link href={`/item/${itemId}`} className={horizontal_item__link_img}>
             {img ? (
               <Image
                 fill
                 src={img}
-                alt={item_name}
+                alt={itemName}
                 placeholder="blur"
                 blurDataURL={blurImg}
                 className={horizontal_item_left__img}
@@ -91,8 +91,8 @@ export default function HorizontalItem({
             )}
           </Link>
         </div>
-        <Link href={`/item/${item_id}`} className={horizontal_item__link_name}>
-          <p className={cx(horizontal_item_right__name, "text-md-b")}>{item_name}</p>
+        <Link href={`/item/${itemId}`} className={horizontal_item__link_name}>
+          <p className={cx(horizontal_item_right__name, "text-md-b")}>{itemName}</p>
         </Link>
         <div className={horizontal_item_right}>
           <p className={cx(horizontal_item_right__price, "text-md-b")}>

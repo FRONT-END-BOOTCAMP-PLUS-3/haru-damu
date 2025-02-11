@@ -65,3 +65,13 @@
   margin: 0 auto 0;
   display: block;
 }
+
+.personal__delete_button {
+  width: 80px;
+  height: 40px;
+  background-color: var(--base-white);
+  color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  margin-left: 580px;
+}
