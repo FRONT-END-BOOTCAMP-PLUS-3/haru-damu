@@ -1,0 +1,88 @@
+import getBlurImg from "@/utils/get_blur_img";
+
+import type { Item, ItemImage } from "@/domain/entities";
+import type { SbItemRepository } from "@/infrastructure/repositories";
+import type {
+  GetItemListResponseDto,
+  ItemDto,
+  TCategoryCode,
+  TItemCode,
+  TUnit,
+} from "@/application/usecases/items/dtos";
+
+export class ItemUsecases {
+  private sbItemRepository: SbItemRepository;
+
+  constructor(itemRepository: SbItemRepository) {
+    this.sbItemRepository = itemRepository;
+  }
+
+  async getItemById(id: number): Promise<ItemDto | null> {
+    const item = await this.sbItemRepository.findOneById(id);
+    if (!item) return null;
+
+    const img = item.itemImage;
+    const blurImg: string | undefined = img?.src ? await getBlurImg(img.src) : undefined;
+
+    return {
+      ...item,
+      itemId: item.id,
+      img: img?.src ?? undefined,
+      blurImg,
+      description: item.description ?? undefined,
+      categoryCode: item.categoryCode as TCategoryCode,
+      itemCode: item.itemCode as TItemCode,
+      unitType: item.unitType as TUnit,
+      updatedAt: item.updatedAt.toISOString(),
+      createdAt: item.createdAt.toISOString(),
+    };
+  }
+  async getItemsByCategory(categoryCode: string, page: number, limit: number): Promise<GetItemListResponseDto> {
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit - 1;
+    const items = await this.sbItemRepository.findByCategory(categoryCode, startIndex, endIndex);
+    return this.mapItemsToDto(items.items, items.totalCount, page, limit);
+  }
+
+  async getItemsByQuery(query: string, page: number, limit: number): Promise<GetItemListResponseDto> {
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit - 1;
+    const items = await this.sbItemRepository.findByQuery(query, startIndex, endIndex);
+    return this.mapItemsToDto(items.items, items.totalCount, page, limit);
+  }
+
+  private async mapItemsToDto(
+    items: (Item & { itemImage: ItemImage | null })[],
+    totalItems: number,
+    page: number,
+    limit: number,
+  ): Promise<GetItemListResponseDto> {
+    const itemsWithBlurImg = await Promise.all(
+      items.map(async (item) => {
+        const img = item.itemImage;
+        const blurImg: string | undefined = img?.src ? await getBlurImg(img.src) : undefined;
+
+        return {
+          ...item,
+          itemId: item.id,
+          img: img?.src ?? undefined,
+          blurImg,
+          description: item.description ?? undefined,
+          categoryCode: item.categoryCode as TCategoryCode,
+          itemCode: item.itemCode as TItemCode,
+          unitType: item.unitType as TUnit,
+          updatedAt: item.updatedAt.toISOString(),
+          createdAt: item.createdAt.toISOString(),
+        };
+      }),
+    );
+
+    return {
+      count: totalItems,
+      totalPage: Math.ceil(totalItems / 20),
+      page: page,
+      size: limit,
+      items: itemsWithBlurImg,
+    };
+  }
+}
