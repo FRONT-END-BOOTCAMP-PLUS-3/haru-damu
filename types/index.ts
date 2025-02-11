@@ -10,8 +10,8 @@ export type THorizontalItem = {
   itemPrice: number;
   img: string | undefined;
   blurImg: string | undefined;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type TItem = {
