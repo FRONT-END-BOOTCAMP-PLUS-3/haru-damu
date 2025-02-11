@@ -55,7 +55,7 @@ export const ORDER_DETAIL_BUTTON = "주문 상세 내역";
 export const ORDER_SHIPMENT_BUTTON = "배송 조회";
 export const ORDER_REVIEW_BUTTON = "리뷰 작성";
 export const ORDER_SHIPMENT_AGAIN = "다시 담기";
-export const ORDER_FILTER_OPTIONS = ["3개월", "6개월", "1년", "3년"];
+export const ORDER_FILTER_OPTIONS = ["2025", "2024", "2023", "2022"];
 export const ORDER_ERROR = "해당 기간의 주문이 없습니다.";
 
 export const PERSONAL_TITLE = "개인정보";
