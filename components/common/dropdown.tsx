@@ -30,6 +30,16 @@ export default function Dropdown<T = string>({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (currentItem) {
+      setInputValue(String(currentItem));
+      setSelectedValue(currentItem);
+    } else {
+      setInputValue("");
+      setSelectedValue(null);
+    }
+  }, [currentItem]);
+
   const handleSelect = (value: T) => {
     setInputValue(String(value));
     setSelectedValue(value);
@@ -37,15 +47,17 @@ export default function Dropdown<T = string>({
     if (onClick) onClick(value);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
 
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   return (
@@ -54,7 +66,6 @@ export default function Dropdown<T = string>({
         <input
           type="text"
           value={inputValue}
-          readOnly
           placeholder={placeHolder}
           onChange={(e) => setInputValue(e.target.value)}
           onFocus={() => setInputValue(String(selectedValue) || "")}

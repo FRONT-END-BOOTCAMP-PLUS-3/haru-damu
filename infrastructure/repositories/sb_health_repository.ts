@@ -14,7 +14,7 @@ export class SbHealthRepository implements HealthRepository {
     const snakeHealth = snakecaseKeys(JSON.parse(JSON.stringify(health)) as Record<string, unknown>, { deep: true });
     const { data } = await supabase.from("healths").insert(snakeHealth);
     if (!data) {
-      throw new Error("Failed to create cart");
+      throw new Error("Failed to create health");
     }
     return camelcaseKeys(data, { deep: true }) as Health;
   }
