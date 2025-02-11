@@ -67,12 +67,12 @@ export class ItemUsecases {
           itemId: item.id,
           img: img?.src ?? undefined,
           blurImg,
-          description: item.description ?? undefined,
-          categoryCode: item.categoryCode as TCategoryCode,
-          itemCode: item.itemCode as TItemCode,
-          unitType: item.unitType as TUnit,
-          updatedAt: item.updatedAt.toISOString(),
-          createdAt: item.createdAt.toISOString(),
+          // description: item.description ?? undefined,
+          // categoryCode: item.categoryCode as TCategoryCode,
+          // itemCode: item.itemCode as TItemCode,
+          // unitType: item.unitType as TUnit,
+          // updatedAt: item.updatedAt.toISOString(),
+          // createdAt: item.createdAt.toISOString(),
         };
       }),
     );
