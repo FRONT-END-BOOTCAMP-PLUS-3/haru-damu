@@ -40,9 +40,9 @@ export const createUserSlice: StateCreator<Partial<State>, [], [], TUserSlice> =
 
   getUser: async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/users`);
+      const response = await fetch(`${BASE_URL}/api/users`).then((response) => response.json());
 
-      const { user } = await response.json();
+      const { user } = response;
 
       const supabase = createClient();
 

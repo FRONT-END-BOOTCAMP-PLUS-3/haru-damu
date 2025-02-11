@@ -51,9 +51,7 @@ export default function MealCart() {
   };
 
   const itemsNutrition = mealCart.map((cartItem) => {
-    const { g, calorie, carbohydrates, protein, fat, sodium, sugar } = items.find(
-      (item) => item.item_id === cartItem.item_id,
-    ) as TItem & TNutrition;
+    const { g, calorie, carbohydrates, protein, fat, sodium, sugar } = cartItem.item.nutrition;
 
     return {
       g,
@@ -126,7 +124,7 @@ export default function MealCart() {
             <ul className={cx("meal_cart__ul")}>
               <SortableContext
                 strategy={horizontalListSortingStrategy}
-                items={carouselItems.map((item) => item.item_id)}
+                items={carouselItems.map((item) => item.itemId)}
               >
                 {carouselItems.map((item, idx) => (
                   <MealCartItem key={idx} item={item} />

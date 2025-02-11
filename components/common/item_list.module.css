@@ -8,6 +8,10 @@
     margin: 0 auto;
 }
 
+.item_list__page__padding_top{
+    padding-top: 200px;
+}
+
 .item_list__title {
     text-align: left;
     margin: 30px 0 50px 0;

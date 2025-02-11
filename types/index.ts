@@ -1,13 +1,13 @@
 export type TDateForm = `${number}. ${string}. ${string}.`;
 
 export type THorizontalItem = {
-  user_id: number;
-  item_id: number;
-  wrapper_id: string | null;
+  userId: number;
+  itemId: number;
+  wrapperId: string | null;
   quantity: number;
-  is_checked: boolean;
-  item_name: string;
-  item_price: number;
+  isChecked: boolean;
+  itemName: string;
+  itemPrice: number;
   img: string | undefined;
   blurImg: string | undefined;
   created_at: string;
@@ -15,21 +15,21 @@ export type THorizontalItem = {
 };
 
 export type TItem = {
-  item_id: number;
-  store_id: number;
-  item_name: string;
-  store_name: string;
-  item_price: number;
+  itemId: number;
+  storeId: number;
+  itemName: string;
+  storeName: string;
+  itemPrice: number;
   img: string | undefined;
   blurImg: string | undefined;
   description: string;
   category_code: string;
-  item_code: number;
-  unit_type: TUnit;
+  itemCode: number;
+  unitType: TUnit;
   volume: number;
   nutrition: TNutrition;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type TUser = {
