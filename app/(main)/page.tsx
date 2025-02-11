@@ -12,8 +12,9 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 export default async function Main() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items/main`, { method: "GET" });
-  const data = await res.json();
+  const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items/main`, { method: "GET" }).then((response) =>
+    response.json(),
+  );
   const { breakfast, lunch, dinner } = data;
 
   return (

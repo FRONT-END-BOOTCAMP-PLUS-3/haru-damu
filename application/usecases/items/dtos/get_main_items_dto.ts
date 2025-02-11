@@ -1,4 +1,4 @@
-import type { ItemImageDto } from "../../image/dtos/item_img_dto";
+import type { ItemImageDto } from "@/application/usecases/image/dtos/item_img_dto";
 
 export interface MainItemsDto {
   itemId: number;

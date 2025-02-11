@@ -53,9 +53,7 @@ export default function VerticalItem({ item }: VerticalItemProps) {
           },
         }),
       });
-      /*if (!response.ok) {
-        throw new Error("장바구니 추가 실패");
-      }*/
+      // if (!response.ok)
 
       const result = await response.json();
       console.log("✅ 장바구니 추가 성공:", result);

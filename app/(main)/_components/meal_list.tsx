@@ -8,7 +8,7 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 type ItemImage = {
   id: number;
-  itemId: number | null; // nullable
+  itemId: number;
   src: string | null;
   createdAt: Date;
 };
@@ -19,7 +19,7 @@ export type MainItems = {
   itemName: string;
   itemPrice: number;
   categoryCode: string;
-  itemImage?: ItemImage[] | null; // optional 및 nullable
+  itemImage?: ItemImage[] | null;
 };
 interface VerticalItemListProps {
   meal: "breakfast" | "lunch" | "dinner";
