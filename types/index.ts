@@ -1,7 +1,7 @@
 export type TDateForm = `${number}. ${string}. ${string}.`;
 
 export type THorizontalItem = {
-  userId: number;
+  userId?: number;
   itemId: number;
   wrapperId: string | null;
   quantity: number;

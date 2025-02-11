@@ -3,23 +3,19 @@ import { NextResponse } from "next/server";
 import getUser from "@/utils/supabase/get_user";
 
 import type { NextRequest } from "next/server";
+import type { TCartItem } from "@/stores/cart_store";
 
 import { SbOrderRepository } from "@/infrastructure/repositories";
 import { OrderUsecase } from "@/application/usecases/orders/order_usecases";
 
 export interface Order {
-  userId: number;
-  itemId: number;
-  wrapperId: string | null;
-  quantity: number;
-  isChecked: boolean;
-  itemName: string;
-  itemPrice: number;
-  img?: string;
-  blurImg?: string;
+  orderId: number;
+  totalPrice: number;
+  orderAddress: string;
+  status?: string;
+  orderList: TCartItem[];
   createdAt: string;
   updatedAt: string;
-  status?: string;
 }
 
 export interface OrdersResponse {
