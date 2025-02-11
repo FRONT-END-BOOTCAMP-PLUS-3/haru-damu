@@ -27,9 +27,9 @@ export class MainItemsUseCase {
 
   async execute(): Promise<GetMainItemsResponseDto> {
     return {
-      breakfast: await this.getRandomItems(["bread", "fruit", "bread", "milk"]),
-      lunch: await this.getRandomItems(["fish", "bread", "bread", "milk"]),
-      dinner: await this.getRandomItems(["meet", "bread", "bread", "fruit"]),
+      breakfast: await this.getRandomItems(["bread", "fruit", "vegetable", "milk"]),
+      lunch: await this.getRandomItems(["fish", "vegetable", "snack", "milk"]),
+      dinner: await this.getRandomItems(["meet", "sideDish", "snack", "fruit"]),
     };
   }
 }
