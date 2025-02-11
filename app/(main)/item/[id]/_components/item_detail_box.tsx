@@ -3,19 +3,52 @@
 import Image from "next/image";
 
 import { useState } from "react";
-import type { ReactNode } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 import Button from "@/components/common/button";
 
-import styles from "@/app/(main)/item/[id]/_components/item_detail_box.module.css";
+import { useStore } from "@/hooks/usestore";
 
-import type { TItem } from "@/types";
+import styles from "@/app/(main)/item/[id]/_components/item_detail_box.module.css";
 
 import classNames from "classnames/bind";
 import { ChevronRight, ChevronLeft, ShoppingCart } from "lucide-react";
 
+type ItemImage = {
+  id: number;
+  src: string;
+  itemId: number;
+  createdAt: string;
+};
+type Nutrition = {
+  g: number;
+  fat: number;
+  sugar: number;
+  sodium: number;
+  calorie: number;
+  protein: number;
+  carbohydrates: number;
+};
+
+export type Item = {
+  id: number;
+  storeId: number;
+  itemName: string;
+  itemPrice: number;
+  description: string;
+
+  categoryCode: string;
+  itemCode: number;
+  unitType: string;
+  volume: number;
+  nutrition: Nutrition;
+  createdAt: string;
+  updatedAt: string;
+  itemImages?: ItemImage[];
+  storeName?: string;
+};
 interface ItemDetailBoxProps {
-  item: TItem;
+  item: Item;
 }
 
 const cx = classNames.bind(styles);
@@ -23,32 +56,75 @@ const cx = classNames.bind(styles);
 export default function ItemDetailBox({ item }: ItemDetailBoxProps) {
   return (
     <div className={cx("item")}>
-      <Image width={390} height={520} alt="제품이미지" src={item.img ?? "/default_items.jpg"} />
+      <Image
+        width={390}
+        height={520}
+        alt="제품이미지"
+        src={item.itemImages ? item.itemImages[0].src : "/default_items.jpg"}
+      />
       <ItemInfo
         itemInfo={{
-          item_name: item.item_name,
-          category_code: item.category_code,
-          store_name: item.store_name,
+          itemId: item.id,
+          itemName: item.itemName,
+          categoryCode: item.categoryCode,
+          storeName: "상민컴퍼니",
           description: item.description,
         }}
       />
     </div>
   );
 }
-
+type ItemInfo = {
+  itemId: number;
+  itemName: string;
+  description: string;
+  storeName?: string;
+  categoryCode: string;
+};
 interface ItemInfoProps {
-  itemInfo: Pick<TItem, "item_name" | "category_code" | "store_name" | "description">;
+  itemInfo: ItemInfo;
 }
-
 const ItemInfo = ({ itemInfo }: ItemInfoProps) => {
+  const [quantity, setQuantity] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const { addMessage } = useStore();
+  const handleCartClick = async () => {
+    setIsLoading(true);
+
+    if (isLoading) return;
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/carts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cart: {
+            itemId: itemInfo.itemId,
+            quantity: quantity,
+            wrapperId: null,
+            isChecked: true,
+          },
+        }),
+      });
+      addMessage("장바구니 추가!");
+      const result = await response.json();
+      console.log("✅ 장바구니 추가 성공:", result);
+    } catch (error) {
+      console.error("🚨 장바구니 추가 오류:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <div className={cx()}>
-      <ItemInfoLine title="상품명" description={itemInfo.item_name} />
-      <ItemInfoLine title="카테고리" description={itemInfo.category_code} />
-      <ItemInfoLine title="업체명" description={itemInfo.store_name} />
+      <ItemInfoLine title="상품명" description={itemInfo.itemName} />
+      <ItemInfoLine title="카테고리" description={itemInfo.categoryCode} />
+      <ItemInfoLine title="업체명" description={itemInfo.storeName} />
       <ItemInfoLine title="설명" description={itemInfo.description} />
-      <ItemInfoLine title="설명" description={<ButtonSelector />} />
+      <ItemInfoLine title="수량" description={<ButtonSelector quantity={quantity} setQuantity={setQuantity} />} />
       <Button
+        onClick={handleCartClick}
         width="666px"
         height="55px"
         className={cx("item__cartbtn")}
@@ -68,9 +144,11 @@ const ItemInfoLine = ({ title, description }: { title: string; description: stri
   );
 };
 
-const ButtonSelector = () => {
-  const [quantity, setQuantity] = useState(1);
-
+type ButtonSelectorProps = {
+  quantity: number;
+  setQuantity: Dispatch<SetStateAction<number>>;
+};
+const ButtonSelector = ({ quantity, setQuantity }: ButtonSelectorProps) => {
   const decrease = () => setQuantity((prev) => Math.max(prev - 1, 1));
   const increase = () => setQuantity((prev) => prev + 1);
 

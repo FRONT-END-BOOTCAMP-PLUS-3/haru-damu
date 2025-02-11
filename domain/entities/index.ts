@@ -4,3 +4,4 @@ export * from "@/domain/entities/item";
 export * from "@/domain/entities/item_image";
 export * from "@/domain/entities/order";
 export * from "@/domain/entities/user";
+export * from "@/domain/entities/store";

@@ -78,4 +78,31 @@ export class CartUsecase {
 
     return itemId;
   }
+  async upsertCart(userId: number, itemId: number, cart: Cart, quantity?: number): Promise<Cart | CartDto | null> {
+    // 1️⃣ 현재 사용자의 장바구니 조회
+    const existingCart = await this.getCartByUserId(userId);
+    const existingItem = existingCart?.items.find((cartItem) => cartItem.itemId === itemId);
+
+    if (existingItem) {
+      // 2️⃣ 기존 수량 가져와서 quantity가 있으면 추가, 없으면 +1 증가
+      const updatedQuantity = existingItem.quantity + (quantity ?? 1);
+
+      // 3️⃣ 업데이트할 새로운 cart 객체 생성
+      const updatedCartProps: Cart = {
+        ...cart, // 기존 cart 객체 복사
+        quantity: updatedQuantity, // 수량 증가
+      };
+
+      // 4️⃣ 업데이트 실행
+      return await this.updateCart(userId, itemId, updatedCartProps);
+    } else {
+      // 새로운 아이템을 추가하는 경우
+      const newCartProps: Cart = {
+        ...cart,
+        quantity: quantity ?? 1, // quantity가 없으면 기본값 1
+      };
+
+      return await this.createCart(newCartProps);
+    }
+  }
 }
