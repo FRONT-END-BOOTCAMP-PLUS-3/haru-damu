@@ -9,7 +9,6 @@ import style from "@/components/common/user_aside.module.css";
 import { MYPAGE_NUTRITION_CHART_COLOR } from "@/constants/mypage";
 import { ASIDE_PATH, HONORIFIC_TEXT, NUTRITION_TITLE, WELCOME_TEXT } from "@/constants/aside";
 
-import type { TUser } from "@/stores/user_store";
 import type { TMypagePath } from "@/stores/mypage_store";
 
 import classNames from "classnames/bind";
@@ -109,7 +108,6 @@ function AsideChart() {
             <span>{`${legend.kor} : ${legend.value}g`}</span>
           </li>
         ))}
-        {/* 나트륨과 당은 텍스트로만 추가 */}
         {additionalData.map((legend, idx) => (
           <li key={idx} className={cx("aside_chart__list")}>
             <div className={cx("aside_chart__list__div")} style={{ background: "#999999" }} />
