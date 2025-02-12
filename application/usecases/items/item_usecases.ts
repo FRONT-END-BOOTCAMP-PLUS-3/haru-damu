@@ -78,8 +78,8 @@ export class ItemUsecases {
           unitType: item.unitType as TUnit,
           volume: item.volume,
           nutrition: item.nutrition,
-          // updatedAt: item.updatedAt.toISOString(),
-          // createdAt: item.createdAt.toISOString(),
+          updatedAt: item.updatedAt.toISOString(), // 주석 제거함
+          createdAt: item.createdAt.toISOString(), // 주석 제거함
         };
       }),
     );
