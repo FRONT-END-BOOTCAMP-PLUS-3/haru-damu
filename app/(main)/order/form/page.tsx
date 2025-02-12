@@ -26,15 +26,17 @@ export default async function OrderFormPage() {
   const fetchedData = response.items;
   const totalPrice = response.totalPrice;
 
+  const formattedPrice = totalPrice?.toLocaleString() ?? 0;
+
   if (response.count === 0) redirect("/");
 
   return (
     <div className={cx("container")}>
       <h2 className={cx("order_form_title__h2", "title-lg-b")}>주문서</h2>
-      <OrderItemSection items={fetchedData} totalPrice={totalPrice} />
+      <OrderItemSection items={fetchedData} totalPrice={formattedPrice} />
       <OrdererInfoSection />
       <ShippingInfoSection />
-      <PaymentSection totalPrice={totalPrice} fetchedData={fetchedData} />
+      <PaymentSection totalPrice={formattedPrice} fetchedData={fetchedData} />
     </div>
   );
 }

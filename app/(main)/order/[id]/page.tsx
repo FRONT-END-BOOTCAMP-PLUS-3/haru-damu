@@ -28,12 +28,14 @@ export default async function OrderPage({ params }: { params: { id: string } }) 
   const totalPrice = order.totalPrice;
   const fetchedAddress = order.orderAddress;
 
+  const formattedPrice = totalPrice?.toLocaleString() ?? 0;
+
   return (
     <div className={cx("container")}>
       <h2 className={cx("order_title__h2", "title-lg-b")}>주문상세</h2>
-      {fetchedData.length > 0 && <OrderItemSection items={fetchedData} totalPrice={totalPrice} />}
+      {fetchedData.length > 0 && <OrderItemSection items={fetchedData} totalPrice={formattedPrice} />}
       <ShippingInfoSection fetchedAddress={fetchedAddress} />
-      <PaymentInfoSection totalPrice={totalPrice} />
+      <PaymentInfoSection totalPrice={formattedPrice} />
     </div>
   );
 }

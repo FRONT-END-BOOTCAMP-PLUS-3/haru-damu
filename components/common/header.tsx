@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 
 import { useEffect, useCallback } from "react";
 
-import { createPortal } from "react-dom";
-
 import SearchBar from "@/components/searchbar";
 import CategoryList from "@/components/category_list";
 import MealInfoModal from "@/components/meal_info_modal";
