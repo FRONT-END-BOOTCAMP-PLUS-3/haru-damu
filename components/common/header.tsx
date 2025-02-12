@@ -14,6 +14,7 @@ import styles from "@/components/common/header.module.css";
 
 import categoryList from "@/constants/categories_list";
 
+import { parseCookies } from "nookies";
 import classNames from "classnames/bind";
 import { BRAND_NAMES } from "@/constants";
 import { ShoppingBasket, User } from "lucide-react";
@@ -21,11 +22,19 @@ import { ShoppingBasket, User } from "lucide-react";
 const cx = classNames.bind(styles);
 
 export default function Header() {
-  const { isLogin, userType, isShrunk, setIsShrunk, getUser } = useStore();
+  const cookies = parseCookies();
+  const accessToken = cookies.access_token;
+
+  const { isLogin, user, userType, isShrunk, setIsShrunk, getUser, logout } = useStore();
+
+  if (!accessToken) logout;
+  if (isLogin && !user?.name) {
+    getUser();
+  }
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [accessToken, getUser]);
 
   const handleScroll = useCallback(() => {
     const y = window.scrollY;
