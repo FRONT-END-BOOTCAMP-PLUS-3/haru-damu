@@ -16,13 +16,12 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 export default async function ItemDetail({ params }: { params: { id: string } }) {
-  const id = params?.id;
-
-  if (!id) {
+  if (!params || !params.id) {
     return <div>잘못된 요청입니다.</div>;
   }
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items/${id}`, {
+  const id = params.id;
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items/${Number(id)}`, {
     cache: "no-store",
   });
 

@@ -10,9 +10,13 @@ import { PartnerUsecase } from "@/application/usecases/partner/partner_usecase";
 const partnerRepository = new SbPartnerRepository();
 const partnerUsecase = new PartnerUsecase(partnerRepository);
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, context: { params: { id?: string } }) {
   try {
-    const storeId = Number(params?.id); // ✅ URL 파라미터에서 ID 가져오기
+    if (!context.params?.id) {
+      return NextResponse.json({ message: "Invalid store ID" }, { status: 400 });
+    }
+
+    const storeId = Number(context.params.id);
 
     if (isNaN(storeId)) {
       return NextResponse.json({ message: "Invalid store ID" }, { status: 400 });
