@@ -3,26 +3,22 @@ import { NextResponse } from "next/server";
 import { SbPartnerRepository } from "@/infrastructure/repositories/sb_partner_repository";
 
 import type { NextRequest } from "next/server";
+import type { Partner } from "@/domain/entities";
 
 import { PartnerUsecase } from "@/application/usecases/partner/partner_usecase";
-import { Partner } from "@/domain/entities";
-
-// 필요한 타입 정의
 
 const partnerRepository = new SbPartnerRepository();
 const partnerUsecase = new PartnerUsecase(partnerRepository);
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    // URL에서 storeId 가져오기 (ex: /api/partner?storeId=1)
-    const { searchParams } = new URL(req.url);
-    const storeId = searchParams.get("storeId");
+    const storeId = Number(params?.id); // ✅ URL 파라미터에서 ID 가져오기
 
-    if (!storeId) {
-      return NextResponse.json({ message: "storeId is required" }, { status: 400 });
+    if (isNaN(storeId)) {
+      return NextResponse.json({ message: "Invalid store ID" }, { status: 400 });
     }
 
-    const partner: Partner | null = await partnerUsecase.findOneById(Number(storeId));
+    const partner: Partner | null = await partnerUsecase.findOneById(storeId);
 
     if (!partner) {
       return NextResponse.json({ message: "Partner not found" }, { status: 404 });

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 import Button from "@/components/common/button";
@@ -12,6 +12,8 @@ import { useStore } from "@/hooks/usestore";
 import styles from "@/app/(main)/item/[id]/_components/item_detail_box.module.css";
 
 import { CATEGORIES } from "@/constants/categories";
+
+import type { Partner } from "@/domain/entities";
 
 import classNames from "classnames/bind";
 import { ChevronRight, ChevronLeft, ShoppingCart } from "lucide-react";
@@ -56,10 +58,30 @@ interface ItemDetailBoxProps {
 const cx = classNames.bind(styles);
 
 export default function ItemDetailBox({ item }: ItemDetailBoxProps) {
+  const [partner, setPartner] = useState<Partner | null>(null);
   const getCategoryKor = (engKey: string) => {
-    const category = CATEGORIES.find((cat) => cat.eng === engKey);
+    const category = CATEGORIES.find((cat) => cat.key === engKey);
     return category ? category.kor : engKey; // 매칭 안 되면 원래 값 반환
   };
+
+  useEffect(() => {
+    const fetchPartner = async () => {
+      try {
+        const response = await fetch(`/api/partner/${item.storeId}`); // ✅ RESTful 방식 적용
+        if (!response.ok) throw new Error("파트너 정보를 불러올 수 없습니다.");
+
+        const data = await response.json();
+        setPartner(data.partner);
+      } catch (error) {
+        console.error("파트너 정보 가져오기 실패:", error);
+      }
+    };
+
+    if (item.storeId) {
+      fetchPartner();
+    }
+  }, [item.storeId]);
+
   return (
     <div className={cx("item")}>
       <Image
@@ -73,7 +95,7 @@ export default function ItemDetailBox({ item }: ItemDetailBoxProps) {
           itemId: item.id,
           itemName: item.itemName,
           categoryCode: getCategoryKor(item.categoryCode),
-          storeName: "상민컴퍼니",
+          storeName: partner?.name ?? "상민컴퍼니",
           description: item.description,
         }}
       />
@@ -123,7 +145,7 @@ const ItemInfo = ({ itemInfo }: ItemInfoProps) => {
     }
   };
   return (
-    <div className={cx()}>
+    <div className={cx("item__info__container")}>
       <ItemInfoLine title="상품명" description={itemInfo.itemName} />
       <ItemInfoLine title="카테고리" description={itemInfo.categoryCode} />
       <ItemInfoLine title="업체명" description={itemInfo.storeName} />
@@ -131,7 +153,7 @@ const ItemInfo = ({ itemInfo }: ItemInfoProps) => {
       <ItemInfoLine title="수량" description={<ButtonSelector quantity={quantity} setQuantity={setQuantity} />} />
       <Button
         onClick={handleCartClick}
-        width="666px"
+        width="615px"
         height="55px"
         className={cx("item__cartbtn")}
         text="장바구니 담기"
