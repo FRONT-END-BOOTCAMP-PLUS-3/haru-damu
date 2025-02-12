@@ -10,11 +10,6 @@ import { SEARCH_TITLE } from "@/constants/categories";
 
 import type { TItem } from "@/types";
 
-interface SearchResultProps {
-  query: string;
-  page: number;
-}
-
 interface PaginationInfo {
   count: number;
   totalPage: number;
@@ -22,9 +17,11 @@ interface PaginationInfo {
   size: number;
 }
 
-export default function SearchResult({ query, page }: SearchResultProps) {
+export default function SearchResult() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const query = searchParams.get("query") || "";
+  const page = Number(searchParams.get("page")) || 1;
   const [items, setItems] = useState<TItem[]>([]);
   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>({
     count: 0,
