@@ -20,6 +20,10 @@ export const googleLogin = async (type: TUserType) => {
       },
     });
   } catch (error) {
-    throw Error(error.message);
+    if (error instanceof Error) {
+      throw Error(error.message);
+    } else {
+      throw Error(String(error));
+    }
   }
 };
