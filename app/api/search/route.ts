@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get("query");
   const page = Number(searchParams.get("page")) || 1;
-  const limit = 20; // 페이지당 아이템 개수 (상수 관리 고려)
+  const limit = 20;
 
   if (!query) {
     return NextResponse.json({ error: "검색어가 필요합니다." }, { status: 400 });

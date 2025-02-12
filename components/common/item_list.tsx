@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import Pagination from "@/components/common/pagination";
 import VerticalItem from "@/components/common/vertical_item";
 
