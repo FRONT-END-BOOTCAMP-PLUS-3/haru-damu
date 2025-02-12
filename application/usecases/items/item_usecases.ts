@@ -84,7 +84,7 @@ export class ItemUsecases {
 
     return {
       count: totalItems,
-      totalPage: Math.ceil(totalItems / 20),
+      totalPage: Math.ceil(totalItems / limit),
       page: page,
       size: limit,
       items: itemsWithBlurImg,
