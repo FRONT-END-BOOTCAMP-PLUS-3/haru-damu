@@ -48,6 +48,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: `기존 ${type} 로그인 성공!`, user: updatedUser, type }, { status: 201 });
     }
   } catch (error) {
-    NextResponse.json({ message: error.message }, { status: 500 });
+    NextResponse.json({ message: (error as Error).message }, { status: 500 });
   }
 }
