@@ -1,4 +1,4 @@
-import VerticalItem from "@/components/common/vertical_itemss";
+import MainVerticalItem from "@/components/common/vertical_item_main";
 
 import styles from "@/app/(main)/_components/meal_list.module.css";
 
@@ -34,7 +34,7 @@ export default function MealList({ meal, items }: VerticalItemListProps) {
       </div>
 
       <ul className={cx("meallist__item")}>
-        {items && items.map((item) => <VerticalItem key={item.itemId} item={item} />)}
+        {items && items.map((item) => <MainVerticalItem key={item.itemId} item={item} />)}
       </ul>
     </div>
   );

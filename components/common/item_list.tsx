@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 
 import Pagination from "@/components/common/pagination";
-import VerticalItem from "@/components/common/vertical_itemss";
+import VerticalItem from "@/components/common/vertical_item";
 
 import { useStore } from "@/hooks/usestore";
 
@@ -17,18 +17,20 @@ const cx = classNames.bind(styles);
 
 interface ItemListProps {
   title: string;
-  baseUrl: string;
   items: TItem[];
   currentPage: number;
   totalPage: number;
+  baseUrl?: string;
+  onchange?: (page: number) => void;
 }
 
-export default function ItemList({ title, baseUrl, items, currentPage, totalPage }: ItemListProps) {
+export default function ItemList({ title, items, currentPage, totalPage, onchange }: ItemListProps) {
   const { isShrunk } = useStore();
-  const router = useRouter();
 
   const onClickHandler = (page: number) => {
-    router.push(`${baseUrl}?page=${page}`);
+    if (onchange) {
+      onchange(page);
+    }
   };
 
   return (

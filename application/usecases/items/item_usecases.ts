@@ -39,14 +39,16 @@ export class ItemUsecases {
   }
   async getItemsByCategory(categoryCode: string, page: number, limit: number): Promise<GetItemListResponseDto> {
     const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit - 1;
-    const items = await this.sbItemRepository.findByCategory(categoryCode, startIndex, endIndex);
+    // const endIndex = startIndex + limit - 1;
+    //const items = await this.sbItemRepository.findByCategory(categoryCode, startIndex, endIndex);
+    const endIndex = startIndex + limit;
+    const items = await this.sbItemRepository.findByCategory(categoryCode, startIndex, endIndex - 1);
     return this.mapItemsToDto(items.items, items.totalCount, page, limit);
   }
 
   async getItemsByQuery(query: string, page: number, limit: number): Promise<GetItemListResponseDto> {
     const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit - 1;
+    const endIndex = startIndex + limit;
     const items = await this.sbItemRepository.findByQuery(query, startIndex, endIndex);
     return this.mapItemsToDto(items.items, items.totalCount, page, limit);
   }
@@ -84,7 +86,7 @@ export class ItemUsecases {
 
     return {
       count: totalItems,
-      totalPage: Math.ceil(totalItems / 20),
+      totalPage: Math.ceil(totalItems / limit),
       page: page,
       size: limit,
       items: itemsWithBlurImg,
