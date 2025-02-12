@@ -30,9 +30,11 @@ export default function Header() {
   const handleScroll = useCallback(() => {
     const y = window.scrollY;
 
-    if (y > 200) return;
-
-    setIsShrunk(y > 100);
+    if (y <= 80) {
+      setIsShrunk(false);
+    } else if (y > 100 && y < 200) {
+      setIsShrunk(true);
+    }
   }, []);
 
   useEffect(() => {
