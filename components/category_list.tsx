@@ -25,7 +25,7 @@ interface CategoryListProps {
   isShrunk?: boolean;
 }
 
-export default function CategoryList({ categoryList, width = "200px", height = "auto", isShrunk }: CategoryListProps) {
+export default function CategoryList({ categoryList, width = "auto", height = "auto", isShrunk }: CategoryListProps) {
   const router = useRouter();
   const handleCategoryClick = (path: string | undefined) => {
     if (path) {
