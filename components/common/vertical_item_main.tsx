@@ -86,7 +86,7 @@ export default function MainVerticalItem({ item }: MainVerticalItemProps) {
         </Link>
         <Button onClick={handleCartClick} text="담기" iconComponent={<ShoppingBasket />} />
         <span className={cx(vertical_item__name, "text-lg")}>{itemName}</span>
-        <span className="text-lg-b">{itemPrice}원</span>
+        <span className="text-lg-b">{itemPrice.toLocaleString()}원</span>
       </div>
     </li>
   );
