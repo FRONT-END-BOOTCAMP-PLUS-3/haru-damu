@@ -1,5 +1,5 @@
-import type { Store } from "../entities";
+import type { Partner } from "../entities";
 
-export interface StoreRepository {
-  findOneById(storeId: number): Promise<Store | null>;
+export interface PartnerRepository {
+  findOneById(storeId: number): Promise<Partner | null>;
 }

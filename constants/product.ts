@@ -13,7 +13,7 @@ export const PRODUCT_DETAIL_HEADERS_GROUP_TWO = [
 
 export const PRODUCT_DETAILS_GROUP_ONE = [
   {
-    manufacture_date: "기한 없음음",
+    manufacture_date: "기한 없음",
     expiration_date: "2025-07-15",
     packaging_info: "200g, 1개입, 10cm x 5cm x 5cm",
     origin: "대한민국 경기도 ",

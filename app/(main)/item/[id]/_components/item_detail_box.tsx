@@ -11,6 +11,8 @@ import { useStore } from "@/hooks/usestore";
 
 import styles from "@/app/(main)/item/[id]/_components/item_detail_box.module.css";
 
+import { CATEGORIES } from "@/constants/categories";
+
 import classNames from "classnames/bind";
 import { ChevronRight, ChevronLeft, ShoppingCart } from "lucide-react";
 
@@ -54,6 +56,10 @@ interface ItemDetailBoxProps {
 const cx = classNames.bind(styles);
 
 export default function ItemDetailBox({ item }: ItemDetailBoxProps) {
+  const getCategoryKor = (engKey: string) => {
+    const category = CATEGORIES.find((cat) => cat.eng === engKey);
+    return category ? category.kor : engKey; // 매칭 안 되면 원래 값 반환
+  };
   return (
     <div className={cx("item")}>
       <Image
@@ -66,7 +72,7 @@ export default function ItemDetailBox({ item }: ItemDetailBoxProps) {
         itemInfo={{
           itemId: item.id,
           itemName: item.itemName,
-          categoryCode: item.categoryCode,
+          categoryCode: getCategoryKor(item.categoryCode),
           storeName: "상민컴퍼니",
           description: item.description,
         }}

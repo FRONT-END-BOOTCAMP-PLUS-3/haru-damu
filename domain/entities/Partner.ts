@@ -1,4 +1,4 @@
-export interface Store {
+export interface Partner {
   storeId: number;
   email: string;
   name: string;
