@@ -21,13 +21,13 @@ export class ItemUsecases {
     const item = await this.sbItemRepository.findOneById(id);
     if (!item) return null;
 
-    const img = item.itemImage;
-    const blurImg: string | undefined = img?.src ? await getBlurImg(img.src) : undefined;
+    const img = item.itemImage?.src;
+    const blurImg: string | undefined = img ? await getBlurImg(img) : undefined;
 
     return {
       ...item,
       itemId: item.id,
-      img: img?.src ?? undefined,
+      img: img ?? undefined,
       blurImg,
       description: item.description ?? undefined,
       categoryCode: item.categoryCode as TCategoryCode,
@@ -59,18 +59,23 @@ export class ItemUsecases {
   ): Promise<GetItemListResponseDto> {
     const itemsWithBlurImg = await Promise.all(
       items.map(async (item) => {
-        const img = item.itemImage;
-        const blurImg: string | undefined = img?.src ? await getBlurImg(img.src) : undefined;
+        const img = item.itemImage?.src;
+        const blurImg: string | undefined = img ? await getBlurImg(img) : undefined;
 
         return {
           ...item,
           itemId: item.id,
-          img: img?.src ?? undefined,
+          storeId: item.storeId,
+          itemName: item.itemName,
+          itemPrice: item.itemPrice,
+          img: img ?? undefined,
           blurImg,
-          // description: item.description ?? undefined,
-          // categoryCode: item.categoryCode as TCategoryCode,
-          // itemCode: item.itemCode as TItemCode,
-          // unitType: item.unitType as TUnit,
+          description: item.description ?? undefined,
+          categoryCode: item.categoryCode as TCategoryCode,
+          itemCode: item.itemCode as TItemCode,
+          unitType: item.unitType as TUnit,
+          volume: item.volume,
+          nutrition: item.nutrition,
           // updatedAt: item.updatedAt.toISOString(),
           // createdAt: item.createdAt.toISOString(),
         };

@@ -41,6 +41,7 @@ export default function CategoryResult({ category, page }: CategoryResultProps) 
             method: "GET",
           },
         ).then((response) => response.json());
+        console.log("아이템 이미지 URL:", res.items[0]?.itemImages[0]?.src);
         setItems(res.items);
         setPaginationInfo({
           count: res.count,

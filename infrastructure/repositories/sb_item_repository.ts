@@ -35,7 +35,7 @@ export class SbItemRepository implements ItemRepository {
     return {
       items: data.map((item) => ({
         ...camelcaseKeys(item, { deep: true }),
-        itemImage: item.item_images ?? null,
+        itemImage: item.item_images?.[0] ?? null,
       })),
       totalCount: count || 0,
     };
@@ -58,7 +58,7 @@ export class SbItemRepository implements ItemRepository {
     return {
       items: data.map((item) => ({
         ...camelcaseKeys(item, { deep: true }),
-        itemImage: item.item_images ?? null,
+        itemImage: item.item_images?.[0] ?? null,
       })),
       totalCount: count || 0,
     };
@@ -81,7 +81,7 @@ export class SbItemRepository implements ItemRepository {
     return {
       items: data.map((item) => ({
         ...camelcaseKeys(item, { deep: true }),
-        itemImage: item.item_images ?? null,
+        itemImage: item.item_images?.[0] ?? null,
       })),
       totalCount: count || 0,
     };
