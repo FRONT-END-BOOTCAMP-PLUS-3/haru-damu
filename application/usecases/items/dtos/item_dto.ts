@@ -1,6 +1,6 @@
 import type { NutritionDto } from "@/application/usecases/healths/dtos";
 
-export type TCategoryCode = "bread" | "fish" | "meet" | "milk" | "side_dish" | "vegetable";
+export type TCategoryCode = "bread" | "fish" | "meet" | "milk" | "sideDish" | "vegetable" | "snack" | "fruit";
 
 // 0 : 판매 | 1 : 품절 | 2 : 삭제
 export type TItemCode = 0 | 1 | 2;
@@ -15,7 +15,7 @@ export interface ItemDto {
   img?: string;
   blurImg?: string;
   description?: string;
-  categoryCode: TCategoryCode;
+  categoryCode: string;
   itemCode: TItemCode;
   unitType: TUnit;
   volume: number;

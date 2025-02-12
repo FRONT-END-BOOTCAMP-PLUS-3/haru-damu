@@ -1,3 +1,6 @@
+import ItemDetailBox from "@/app/(main)/item/[id]/_components/item_detail_box";
+import ItemDetailTable from "@/app/(main)/item/[id]/_components/item_detail_table";
+
 import styles from "@/app/(main)/item/[id]/item_page.module.css";
 
 import { DAILY_NUTRIENT_VALUES } from "@/constants/daily_nutrient_law";
@@ -8,9 +11,6 @@ import {
   PRODUCT_DETAILS_GROUP_ONE,
   PRODUCT_DETAILS_GROUP_TWO,
 } from "@/constants/product";
-
-import ItemDetailBox from "./_components/item_detail_box";
-import ItemDetailTable from "./_components/item_detail_table";
 
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);

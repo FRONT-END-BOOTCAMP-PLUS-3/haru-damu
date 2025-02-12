@@ -1,10 +1,15 @@
-// page : main
+import type { ItemImageDto } from "@/application/usecases/image/dtos/item_img_dto";
 
-import type { ItemDto } from "@/application/usecases/items/dtos";
-
-// GET
+export interface MainItemsDto {
+  itemId: number;
+  storeId: number;
+  itemName: string;
+  itemPrice: number;
+  categoryCode: string;
+  itemImage?: ItemImageDto | null;
+}
 export interface GetMainItemsResponseDto {
-  breakfast: ItemDto[];
-  lunch: ItemDto[];
-  dinner: ItemDto[];
+  breakfast: MainItemsDto[] | null;
+  lunch: MainItemsDto[] | null;
+  dinner: MainItemsDto[] | null;
 }

@@ -32,11 +32,11 @@ export const CATEGORIES: TCategory[] = [
     img: "/category/fruit.png",
   },
   {
-    key: "meat",
+    key: "meet",
     order: 4,
-    eng: "Meat",
+    eng: "Meet",
     kor: "축산",
-    img: "/category/meat.png",
+    img: "/category/meet.png",
   },
   {
     key: "milk",

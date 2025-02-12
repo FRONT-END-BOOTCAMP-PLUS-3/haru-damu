@@ -17,16 +17,16 @@ interface OrderItemSectionProps {
 
 const cx = classNames.bind(styles);
 
-export default function OrderItemSection({ items, totalPrice }: OrderItemSectionProps) {
+export default function OrderItemSection({ items = [], totalPrice }: OrderItemSectionProps) {
   const pathname = usePathname();
   const isOrderForm = pathname === "/order/form";
+  
   return (
     <section>
       <Subheading title={"주문 상품"} />
       <ul className={cx("order_item_section_item_list")}>
-        {items.map((item) => (
-          <HorizontalItem key={item.item_id} horizontalItem={item} isEditable={false} />
-        ))}
+        {items.length !== 0 &&
+          items.map((item, idx) => <HorizontalItem key={idx} horizontalItem={item} isEditable={false} />)}
       </ul>
       {isOrderForm && (
         <div className={cx("order_item_section_total_price")}>

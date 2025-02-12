@@ -7,13 +7,11 @@ import type { NextRequest } from "next/server";
 import { SbOrderRepository } from "@/infrastructure/repositories";
 import { OrderUsecase } from "@/application/usecases/orders/order_usecases";
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const searchParams = request.nextUrl.searchParams;
+    const { id: orderId } = await params;
 
-    const orderId = searchParams.get("id");
-
-    if (orderId) return NextResponse.json({ message: "order 페이지를 찾을 수 없음" }, { status: 404 });
+    if (!orderId) return NextResponse.json({ message: "order 페이지를 찾을 수 없음" }, { status: 404 });
 
     const user = await getUser("user");
 

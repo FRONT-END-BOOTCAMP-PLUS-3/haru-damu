@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 
 import type { Item } from "@/domain/entities/item";
-import type { ItemImage } from "@/domain/entities/item_image";
+import type { ItemImage } from "@/domain/entities/item_image"; // 수정필요요
 import type { ItemRepository } from "@/domain/repositories/item_repository";
 
 import camelcaseKeys from "camelcase-keys";
@@ -100,5 +100,24 @@ export class SbItemRepository implements ItemRepository {
     if (error) {
       throw new Error(`items 데이터 삭제 오류: ${error.message}`);
     }
+  }
+  async LatestCategory(categoryCode: string): Promise<(Item & { itemImage: ItemImage | null })[]> {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+      .from("items")
+      .select("*, item_images(*)")
+      .eq("category_code", categoryCode)
+      .order("id", { ascending: false }) // 최신 데이터 기준 정렬
+      .limit(10);
+
+    if (error) {
+      throw new Error(`items 데이터 삭제 오류: ${error.message}`);
+    }
+
+    return data.map((item) => ({
+      ...camelcaseKeys(item, { deep: true }),
+      itemImage: item.item_images ?? null,
+    }));
   }
 }

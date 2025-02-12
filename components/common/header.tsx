@@ -113,7 +113,7 @@ const ExpandedHeader = () => {
         <button className={cx("header__diet_button", "text-xsm")} onClick={openModal}>
           1일 식단 장바구니 안내
         </button>
-        {createPortal(<MealInfoModal />, document.body)}
+        <MealInfoModal />
       </div>
     </>
   );
