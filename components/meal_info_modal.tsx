@@ -24,7 +24,7 @@ export default function MealInfoModal() {
           <div>지금 상품을 담고 장바구니를 누리세요! 🎉</div>
         </div>
         <div className={cx("meal_info__img")}>
-          <Image fill src="/meal_info.gif" alt="meal-info" objectFit="cover" unoptimized />
+          <Image fill src="/meal_info.gif" alt="meal-info" style={{ objectFit: "cover" }} unoptimized/>
         </div>
       </div>
     </Modal>

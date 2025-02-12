@@ -1,13 +1,13 @@
 .meal_info__wrapper {
-    width: 80vw;
+    width: 70vw;
     height: 60vh;
 
     padding: 30px;
 
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
 
     box-sizing: border-box;
 }
