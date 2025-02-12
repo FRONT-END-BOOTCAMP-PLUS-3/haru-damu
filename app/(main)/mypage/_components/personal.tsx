@@ -45,11 +45,6 @@ export default function PersonalPage() {
     }
   }, [user, getUser]);
 
-    fetchUserData();
-
-    getUser();
-  }, [getUser]);
-
 
   const handleChange = (key: string, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
