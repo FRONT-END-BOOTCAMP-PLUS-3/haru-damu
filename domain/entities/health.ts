@@ -12,6 +12,6 @@ export interface Health {
   sodium?: number | null; // 나트륨
   sugar?: number | null; // 당
   isCustom: boolean; // 개인 수치 여부
-  createdAt: Date; // 생성일
-  updatedAt: Date; // 수정일
+  createdAt: string; // 생성일
+  updatedAt: string; // 수정일
 }

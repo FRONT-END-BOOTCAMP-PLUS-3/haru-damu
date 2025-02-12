@@ -19,7 +19,6 @@ export async function GET(req: Request) {
 
     const healthData = await healthUsecase.getHealthByUserId(user.userId);
 
-    // 건강 데이터가 없으면 빈 배열을 반환하고 오류를 발생시키지 않음
     return NextResponse.json(healthData || []);
   } catch (error) {
     console.error("Error fetching health data:", error);
