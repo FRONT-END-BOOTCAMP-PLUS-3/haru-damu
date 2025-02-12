@@ -17,7 +17,7 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 export default function PersonalPage() {
-  const { addMessage } = useStore();
+  const { getUser, addMessage } = useStore();
 
   const [formData, setFormData] = useState(
     Object.fromEntries(PERSONAL_FIELDS.map(({ key }) => [key, ""])), // 초기값은 빈 값으로 설정
@@ -38,7 +38,9 @@ export default function PersonalPage() {
     };
 
     fetchUserData();
-  }, []);
+
+    getUser();
+  }, [getUser]);
 
   const handleChange = (key: string, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
@@ -75,7 +77,6 @@ export default function PersonalPage() {
       }
       addMessage("탈퇴되었습니다.");
       window.location.href = "/";
-      
     } catch (err) {
       console.error(err);
     }
