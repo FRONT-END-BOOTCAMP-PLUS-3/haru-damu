@@ -1,3 +1,9 @@
+"use client";
+
+import { useParams } from "next/navigation";
+
+import { useEffect, useState } from "react";
+
 import ItemDetailBox from "@/app/(main)/item/[id]/_components/item_detail_box";
 import ItemDetailTable from "@/app/(main)/item/[id]/_components/item_detail_table";
 
@@ -12,24 +18,46 @@ import {
   PRODUCT_DETAILS_GROUP_TWO,
 } from "@/constants/product";
 
+import type { Item } from "@/app/(main)/item/[id]/_components/item_detail_box";
+
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
-export default async function ItemDetail({ params }: { params: { id: string } }) {
-  if (!params || !params.id) {
-    return <div>잘못된 요청입니다.</div>;
-  }
+export default function ItemDetail() {
+  const params = useParams();
 
-  const id = params.id;
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items/${Number(id)}`, {
-    cache: "no-store",
-  });
+  const [item, setItem] = useState<Item | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!response.ok) {
-    console.log("안녕");
-  }
+  useEffect(() => {
+    const fetchItem = async () => {
+      const id = params.id;
+      if (!id) return;
 
-  const item = await response.json();
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items/${id}`, {
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          console.error("Failed to fetch item data");
+          return;
+        }
+
+        const data = await response.json();
+        setItem(data);
+      } catch (error) {
+        console.error("Error fetching item data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItem();
+  }, [params.id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!item) return <div>Item not found.</div>;
 
   const nutrientBody = item.nutrition
     ? [
@@ -79,7 +107,7 @@ export default async function ItemDetail({ params }: { params: { id: string } })
     : [{ nutrient: "알림", value: "-", percentage: "상품에 영양성분이 아직 제공되지 않았습니다." }];
 
   return (
-    <div className={cx("container__item", "container")}>
+    <div className={cx("container")}>
       <ItemDetailBox item={item} />
       <ItemDetailTable headers={NUTRIENT_HEADERS} data={nutrientBody} />
       <div className={cx("container__product")}>
