@@ -12,10 +12,10 @@ export class SbCartRepository implements CartRepository {
     const supabase = await createClient();
     const snakeCart = snakecaseKeys(JSON.parse(JSON.stringify(cart)) as Record<string, unknown>, { deep: true });
     await supabase.from("carts").insert(snakeCart);
-    // 수정 필요요
+    // 수정 필요
     const { data, error } = await supabase
       .from("carts")
-      .select("*, item:items(*, {item_images(*)})")
+      .select("*, item:items(*, {item_images(*)})") // 이게 악의 근원인듯
       .eq("user_id", cart.userId)
       .eq("item_id", cart.itemId)
       .single();
@@ -23,7 +23,7 @@ export class SbCartRepository implements CartRepository {
     if (error) {
       throw new Error("Failed to retrieve item");
     }
-
+    // 이거 타입 어떻게 해야할지 모르겠음 방법이 있을까?
     return camelcaseKeys(data, { deep: true }) as Cart & { item: Item & { itemImages: ItemImage[] } };
   }
 
