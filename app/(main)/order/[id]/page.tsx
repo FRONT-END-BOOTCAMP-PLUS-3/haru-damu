@@ -7,13 +7,12 @@ import getHeader from "@/utils/get_header";
 import styles from "@/app/(main)/order/[id]/page.module.css";
 
 import classNames from "classnames/bind";
-
 const cx = classNames.bind(styles);
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
-export default async function OrderPage({ params }: { params: { id: string } }) {
-  const id = params.id;
+export default async function OrderPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
   const headers = await getHeader();
 

@@ -39,9 +39,9 @@ export default function Header() {
   const handleScroll = useCallback(() => {
     const y = window.scrollY;
 
-    if (y <= 80) {
+    if (y <= 160) {
       setIsShrunk(false);
-    } else if (y > 100 && y < 200) {
+    } else {
       setIsShrunk(true);
     }
   }, []);
