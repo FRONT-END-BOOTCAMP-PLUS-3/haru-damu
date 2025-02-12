@@ -5,8 +5,8 @@ export interface CartDto {
   itemId: number;
   item: ItemDto;
   quantity: number;
-  wrapperId: UUID;
+  wrapperId: UUID | string;
   isChecked: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date | string; // 임시로 설정
+  updatedAt: Date | string; // 임시로 설정
 }

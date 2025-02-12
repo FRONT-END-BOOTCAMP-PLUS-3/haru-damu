@@ -1,3 +1,4 @@
+import type { Cart } from "@/domain/entities";
 import type { SbOrderRepository } from "@/infrastructure/repositories";
 
 import type { GetOrderByIdResponseDto, GetOrderListResponseDto } from "./dtos";
@@ -22,7 +23,7 @@ export class OrderUsecase {
       ...order,
       userId,
       status: 0,
-      orderList: newCart,
+      orderList: newCart as Cart[], // 임시로 설정
     });
 
     return {

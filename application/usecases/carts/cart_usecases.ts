@@ -5,6 +5,33 @@ import type { SbCartRepository } from "@/infrastructure/repositories";
 
 import type { CartDto, GetCartItemsResponseDto } from "./dtos";
 
+export interface TestCart {
+  userId: number;
+  itemId: number;
+  quantity: number;
+  wrapperId?: string | number;
+  isChecked: boolean;
+  itemPrice: number;
+  item: {
+    itemId: number;
+    img?: string;
+    blurImg?: string;
+    id: number;
+    storeId: number;
+    itemName: string;
+    itemPrice: number;
+    description?: string | null;
+    categoryCode: string;
+    itemImages: ItemImage[];
+  };
+}
+
+export interface TestGetCartItemsResponseDto {
+  count: number;
+  totalPrice: number;
+  items?: CartDto[];
+}
+
 export class CartUsecase {
   private sbCartRepository: SbCartRepository;
 
@@ -12,24 +39,24 @@ export class CartUsecase {
     this.sbCartRepository = cartRepository;
   }
 
-  async createCart(cart: Cart): Promise<CartDto | null> {
+  async createCart(cart: Cart): Promise<TestCart | null | Cart> {
     const newCart = await this.sbCartRepository.create(cart);
     const img = newCart.item.itemImages;
     const blurImg = img && img[0].src ? await getBlurImg(img[0].src) : null;
 
     return {
       ...newCart,
-      itemPrice: items.itemPrice,
+      itemPrice: newCart.item.itemPrice,
       item: {
         ...newCart.item,
         itemId: newCart.itemId,
-        img: img[0].src,
-        blurImg,
+        img: img[0].src ?? undefined,
+        blurImg: blurImg ?? undefined,
       },
     };
   }
 
-  async getCartByUserId(userId: number): Promise<GetCartItemsResponseDto | null> {
+  async getCartByUserId(userId: number): Promise<TestGetCartItemsResponseDto | GetCartItemsResponseDto | null> {
     const { count, data } = await this.sbCartRepository.findByUserIdWithItem(userId);
 
     const itemsWithBlurImg = await Promise.all(
@@ -57,7 +84,7 @@ export class CartUsecase {
     return {
       count,
       totalPrice,
-      items: itemsWithBlurImg,
+      items: undefined,
     };
   }
 
@@ -78,10 +105,15 @@ export class CartUsecase {
 
     return itemId;
   }
-  async upsertCart(userId: number, itemId: number, cart: Cart, quantity?: number): Promise<Cart | CartDto | null> {
+  async upsertCart(
+    userId: number,
+    itemId: number,
+    cart: Cart,
+    quantity?: number,
+  ): Promise<TestCart | Cart | CartDto | null> {
     // 1️⃣ 현재 사용자의 장바구니 조회
     const existingCart = await this.getCartByUserId(userId);
-    const existingItem = existingCart?.items.find((cartItem) => cartItem.itemId === itemId);
+    const existingItem = existingCart?.items?.find((cartItem) => cartItem.itemId === itemId);
 
     if (existingItem) {
       // 2️⃣ 기존 수량 가져와서 quantity가 있으면 추가, 없으면 +1 증가
