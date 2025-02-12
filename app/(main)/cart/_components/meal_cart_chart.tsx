@@ -13,14 +13,25 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Lege
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, ChartDataLabels);
 
 interface MealCartChartProps {
-  userNutrition: Omit<TNutrition, "g">;
+  userNutrition: Omit<TNutrition, "g" | "calorie">;
   itemsNutrition: TNutrition[];
 }
 
 export default function MealCartChart({ userNutrition, itemsNutrition }: MealCartChartProps) {
   const labels = HEALTH_CHART_DATA.map((data) => data.kor);
 
-  const nutritionKeys = Object.keys(userNutrition);
+  const userNutritionData =
+    !userNutrition.carbohydrates || userNutrition.carbohydrates === 0
+      ? {
+          carbohydrates: 70,
+          protein: 30,
+          fat: 20,
+          sodium: 800,
+          sugar: 15,
+        }
+      : userNutrition;
+
+  const nutritionKeys = Object.keys(userNutritionData);
 
   const sumItemsNutrition = (key: keyof TNutrition, itemsNutrition: TNutrition[]) => {
     return itemsNutrition.reduce((acc, cur) => {
@@ -34,7 +45,7 @@ export default function MealCartChart({ userNutrition, itemsNutrition }: MealCar
   };
 
   const mealNutrition = nutritionKeys.map((key) => {
-    const oneMeal = Math.floor(userNutrition[key as keyof Omit<TNutrition, "g">] / 3);
+    const oneMeal = Math.floor(userNutritionData[key as keyof Omit<TNutrition, "g" | "calorie">] / 3);
     const sumItems = Math.floor(sumItemsNutrition(key as keyof TNutrition, itemsNutrition));
     return {
       key,

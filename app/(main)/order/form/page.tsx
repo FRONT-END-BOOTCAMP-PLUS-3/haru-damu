@@ -9,6 +9,8 @@ import getHeader from "@/utils/get_header";
 
 import styles from "@/app/(main)/order/form/page.module.css";
 
+import type { TCartItem } from "@/stores/cart_store";
+
 import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
@@ -24,6 +26,8 @@ export default async function OrderFormPage() {
   }).then((response) => response.json());
 
   const fetchedData = response.items;
+  const isCheckedItems = fetchedData?.filter((item: TCartItem) => item.isChecked);
+
   const totalPrice = response.totalPrice;
 
   if (response.count === 0) redirect("/");
@@ -31,10 +35,10 @@ export default async function OrderFormPage() {
   return (
     <div className={cx("container")}>
       <h2 className={cx("order_form_title__h2", "title-lg-b")}>주문서</h2>
-      <OrderItemSection items={fetchedData} totalPrice={totalPrice} />
+      <OrderItemSection items={isCheckedItems} totalPrice={totalPrice} />
       <OrdererInfoSection />
       <ShippingInfoSection />
-      <PaymentSection totalPrice={totalPrice} fetchedData={fetchedData} />
+      <PaymentSection totalPrice={totalPrice} fetchedData={isCheckedItems} />
     </div>
   );
 }

@@ -24,16 +24,20 @@ export default async function OrderPage({ params }: { params: { id: string } }) 
 
   const order = response.order;
 
-  const fetchedData = order.items ?? [];
+  const fetchedData = order.orderList ?? [];
   const totalPrice = order.totalPrice;
+  const fetchedName = order.orderName;
+  const fetchedPhone = order.orderPhone;
   const fetchedAddress = order.orderAddress;
+
+  const formattedPrice = totalPrice?.toLocaleString() ?? 0;
 
   return (
     <div className={cx("container")}>
       <h2 className={cx("order_title__h2", "title-lg-b")}>주문상세</h2>
-      {fetchedData.length > 0 && <OrderItemSection items={fetchedData} totalPrice={totalPrice} />}
-      <ShippingInfoSection fetchedAddress={fetchedAddress} />
-      <PaymentInfoSection totalPrice={totalPrice} />
+      {fetchedData.length > 0 && <OrderItemSection items={fetchedData} totalPrice={formattedPrice} />}
+      <ShippingInfoSection fetchedName={fetchedName} fetchedPhone={fetchedPhone} fetchedAddress={fetchedAddress} />
+      <PaymentInfoSection totalPrice={formattedPrice} />
     </div>
   );
 }
