@@ -53,6 +53,7 @@ export const createCartSlice: StateCreator<Partial<State>, [], [], TCartSlice> =
   fetchCart: (items) =>
     set({
       cart: [...items],
+      mealCart: [],
     }),
 
   getCartItem: (id) => {
