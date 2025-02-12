@@ -1,12 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
 
-import type { Store } from "@/domain/entities";
-import type { StoreRepository } from "@/domain/repositories/store_repository";
+import type { Partner } from "@/domain/entities";
+import type { PartnerRepository } from "@/domain/repositories/store_repository";
 
 import camelcaseKeys from "camelcase-keys";
 
-export class SbStoreRepository implements StoreRepository {
-  async findOneById(storeId: number): Promise<Store | null> {
+export class SbPartnerRepository implements PartnerRepository {
+  async findOneById(storeId: number): Promise<Partner | null> {
     const supabase = await createClient();
     const { data, error } = await supabase.from("stores").select("*").eq("id", storeId).single();
     if (error) {
