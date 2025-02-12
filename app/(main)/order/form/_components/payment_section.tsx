@@ -58,7 +58,7 @@ export default function PaymentSection({ totalPrice, fetchedData }: PaymentInfoS
 
       fetchCart([]);
 
-      router.push(`/order/${createOrder.order.orderId}`);
+      router.replace(`/order/${createOrder.order.orderId}`);
     } catch (error) {
       console.error(error);
     }
