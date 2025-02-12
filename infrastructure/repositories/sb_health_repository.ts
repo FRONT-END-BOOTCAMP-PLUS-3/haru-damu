@@ -8,15 +8,36 @@ import snakecaseKeys from "snakecase-keys";
 import camelcaseKeys from "camelcase-keys";
 
 export class SbHealthRepository implements HealthRepository {
-  // 건강 데이터 생성
+  // 건강 데이터 생성 또는 업데이트 후 최신 데이터 반환
   public async create(health: Health): Promise<Health> {
     const supabase = await createClient();
-    const snakeHealth = snakecaseKeys(JSON.parse(JSON.stringify(health)) as Record<string, unknown>, { deep: true });
-    const { data } = await supabase.from("healths").insert(snakeHealth);
-    if (!data) {
-      throw new Error("Failed to create health");
+
+    if (!health.createdAt) {
+      health.createdAt = new Date().toISOString();
     }
-    return camelcaseKeys(data, { deep: true }) as Health;
+    if (!health.updatedAt) {
+      health.updatedAt = new Date().toISOString();
+    }
+
+    // 데이터를 snake_case로 변환
+    const snakeHealth = snakecaseKeys(JSON.parse(JSON.stringify(health)) as Record<string, unknown>, { deep: true });
+
+    // 데이터 생성 또는 업데이트
+    const { data, error } = await supabase.from("healths").upsert(snakeHealth).select().single();
+    
+    // 오류 처리
+    if (error) {
+      throw new Error(`Error occurred during health data operation: ${error.message}`);
+    }
+
+    // 최신 데이터 반환
+    const latestHealthData = camelcaseKeys(data, { deep: true }) as Health;
+
+    if (!latestHealthData) {
+      throw new Error("Failed to retrieve latest health data.");
+    }
+
+    return latestHealthData;
   }
 
   // 특정 유저의 건강 데이터 조회
