@@ -85,7 +85,7 @@ export default function MealCartChart({ userNutrition, itemsNutrition }: MealCar
       },
       datalabels: {
         color: "white",
-        anchor: "center",
+        anchor: "center" as const, // as const 추가
         display: (context: Context) => {
           const chart = context.chart;
           const dataset = chart.data.datasets[context.datasetIndex];

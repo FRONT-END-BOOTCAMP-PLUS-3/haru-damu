@@ -10,6 +10,7 @@ import { useStore } from "@/hooks/usestore";
 
 import style from "@/app/(main)/cart/_components/meal_cart.module.css";
 
+import type { TNutrition } from "@/types";
 import type { TCartItem } from "@/stores/cart_store";
 
 import classNames from "classnames/bind";
@@ -51,6 +52,8 @@ export default function MealCart() {
     };
   });
 
+  const buildTest: Omit<TNutrition, "g" | "calorie">[] = itemsNutrition.map(({ g, calorie, ...rest }) => rest);
+
   useEffect(() => {
     const getCarouselItems = (items: TCartItem[], page: number, pageSize = 4): TCartItem[] => {
       const startIndex = (page - 1) * pageSize;
@@ -90,7 +93,7 @@ export default function MealCart() {
         />
       </div>
       <div className={cx("meal_cart__content__wrapper")}>
-        <MealCartChart userNutrition={userNutrition } itemsNutrition={itemsNutrition} />
+        <MealCartChart userNutrition={buildTest[0]} itemsNutrition={itemsNutrition} />
         <div className={cx("meal_cart__ul__wrapper")}>
           <button
             disabled={!isCarousel || page === 1}
