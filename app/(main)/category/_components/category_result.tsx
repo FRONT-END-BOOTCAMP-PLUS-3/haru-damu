@@ -10,11 +10,6 @@ import { CATEGORIES, CATEGORY_TITLE } from "@/constants/categories";
 
 import type { TItem } from "@/types";
 
-interface CategoryResultProps {
-  category: string;
-  page: number;
-}
-
 interface PaginationInfo {
   count: number;
   totalPage: number;
@@ -22,9 +17,12 @@ interface PaginationInfo {
   size: number;
 }
 
-export default function CategoryResult({ category, page }: CategoryResultProps) {
+export default function CategoryResult() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const category = searchParams.get("value") || "";
+  const page = Number(searchParams.get("page")) || 1;
+
   const [items, setItems] = useState<TItem[]>([]);
   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>({
     count: 0,
