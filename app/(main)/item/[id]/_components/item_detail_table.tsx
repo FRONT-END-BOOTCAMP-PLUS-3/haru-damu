@@ -27,7 +27,7 @@ export default function ItemDetailTable({ data, headers }: ItemDetailNutritionTa
         </tr>
       </thead>
       <tbody className={cx("table__body")}>
-        {data.map((row, rowIndex) => (
+        {data?.map((row, rowIndex) => (
           <tr key={rowIndex}>
             {headers.map((header) => (
               <td className={cx("table__description", "text-md")} key={header.key}>

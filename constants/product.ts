@@ -27,3 +27,9 @@ export const PRODUCT_DETAILS_GROUP_TWO = [
     customer_service: "080-123-4567",
   },
 ];
+export const NUTRIENT_HEADERS = [
+  { key: "nutrient", label: "영양소" },
+  { key: "value", label: "기준량" },
+  { key: "percentage", label: "% 기준치" },
+  // { key: "myPercentage", label: "나의 % 기준치" },
+];

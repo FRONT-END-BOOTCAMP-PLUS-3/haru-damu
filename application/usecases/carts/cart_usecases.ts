@@ -78,16 +78,14 @@ export class CartUsecase {
 
     return itemId;
   }
-
-  // 📌 [추가] 카트가 있으면 업데이트, 없으면 생성하는 메서드
-  async upsertCart(userId: number, itemId: number, cart: Cart): Promise<Cart | CartDto | null> {
+  async upsertCart(userId: number, itemId: number, cart: Cart, quantity?: number): Promise<Cart | CartDto | null> {
     // 1️⃣ 현재 사용자의 장바구니 조회
     const existingCart = await this.getCartByUserId(userId);
     const existingItem = existingCart?.items.find((cartItem) => cartItem.itemId === itemId);
 
     if (existingItem) {
-      // 2️⃣ 기존 수량 가져와서 +1 증가
-      const updatedQuantity = existingItem.quantity + 1;
+      // 2️⃣ 기존 수량 가져와서 quantity가 있으면 추가, 없으면 +1 증가
+      const updatedQuantity = existingItem.quantity + (quantity ?? 1);
 
       // 3️⃣ 업데이트할 새로운 cart 객체 생성
       const updatedCartProps: Cart = {
@@ -96,11 +94,15 @@ export class CartUsecase {
       };
 
       // 4️⃣ 업데이트 실행
-      const updatedCart = await this.updateCart(userId, itemId, updatedCartProps);
-      return updatedCart;
+      return await this.updateCart(userId, itemId, updatedCartProps);
     } else {
-      // 5️⃣ 존재하지 않는 경우에만 새로운 아이템 추가
-      return await this.createCart(cart);
+      // 새로운 아이템을 추가하는 경우
+      const newCartProps: Cart = {
+        ...cart,
+        quantity: quantity ?? 1, // quantity가 없으면 기본값 1
+      };
+
+      return await this.createCart(newCartProps);
     }
   }
 }

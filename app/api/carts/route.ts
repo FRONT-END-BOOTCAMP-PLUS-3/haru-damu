@@ -8,9 +8,13 @@ import { SbCartRepository } from "@/infrastructure/repositories";
 import { CartUsecase } from "@/application/usecases/carts/cart_usecases";
 
 export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
+    if (!body || !body.cart) {
+      return NextResponse.json({ message: "cart 데이터 누락" }, { status: 400 });
+    }
     if (!body || !body.cart) {
       return NextResponse.json({ message: "cart 데이터 누락" }, { status: 400 });
     }
@@ -23,16 +27,21 @@ export async function POST(request: NextRequest) {
     const cartRepository = new SbCartRepository();
     const cartUsecase = new CartUsecase(cartRepository);
 
-    const { itemId } = body.cart;
+    const { itemId, quantity } = body.cart;
 
-    // 📌 upsertCart 사용
-    const data = await cartUsecase.upsertCart(user.userId, itemId, {
-      userId: user.userId,
-      ...body.cart,
-    });
+    const data = await cartUsecase.upsertCart(
+      user.userId,
+      itemId,
+      {
+        userId: user.userId,
+        ...body.cart,
+      },
+      typeof quantity === "number" && quantity !== 1 ? quantity : undefined,
+    );
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
+    console.error("🚨 장바구니 추가/업데이트 오류:", error);
     console.error("🚨 장바구니 추가/업데이트 오류:", error);
     return NextResponse.json({ message: "서버 오류가 발생했습니다." }, { status: 500 });
   }
