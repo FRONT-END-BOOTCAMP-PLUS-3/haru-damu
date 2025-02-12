@@ -9,6 +9,7 @@ export type TMypageNutrition = {
   unit: string;
   value: number;
   recommendValue: number;
+  isCustom: boolean;
 };
 
 export type TMypageSlice = {

@@ -10,7 +10,7 @@ import {
 
 // 식사별 영양소 타입
 type MealNutrients = {
-  calories: number;
+  calorie: number;
   protein: number;
   carbohydrates: number;
   fat: number;
@@ -43,7 +43,7 @@ export function calcOneMeals(
   const calcMealNutrients = (mealRatio: number): MealNutrients => {
     const mealCalories = recommendedKcal * mealRatio;
     return {
-      calories: mealCalories,
+      calorie: mealCalories,
       protein: calcProtein(weight, activityLevel) * mealRatio,
       carbohydrates: calcCarbohydrates(mealCalories),
       fat: calcFat(mealCalories),
@@ -59,7 +59,7 @@ export function calcOneMeals(
 
   // 하루 총 영양소 계산
   const total: MealNutrients = {
-    calories: Math.round(breakfast.calories + lunch.calories + dinner.calories),
+    calorie: Math.round(breakfast.calorie + lunch.calorie + dinner.calorie),
     protein: Math.round(breakfast.protein + lunch.protein + dinner.protein),
     carbohydrates: Math.round(breakfast.carbohydrates + lunch.carbohydrates + dinner.carbohydrates),
     fat: Math.round(breakfast.fat + lunch.fat + dinner.fat),
