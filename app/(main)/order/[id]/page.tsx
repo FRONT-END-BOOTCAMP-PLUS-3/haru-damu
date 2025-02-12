@@ -24,7 +24,7 @@ export default async function OrderPage({ params }: { params: { id: string } }) 
 
   const order = response.order;
 
-  const fetchedData = order.items ?? [];
+  const fetchedData = order.orderList ?? [];
   const totalPrice = order.totalPrice;
   const fetchedAddress = order.orderAddress;
 
