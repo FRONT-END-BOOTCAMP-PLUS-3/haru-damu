@@ -23,8 +23,8 @@ interface PaginationInfo {
 }
 
 export default function CategoryResult({ category, page }: CategoryResultProps) {
-  const router = useRouter(); // ✅ 추가됨
-  const searchParams = useSearchParams(); // ✅ 추가됨
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [items, setItems] = useState<TItem[]>([]);
   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>({
     count: 0,
@@ -34,14 +34,14 @@ export default function CategoryResult({ category, page }: CategoryResultProps) 
   });
 
   const categoryTitle = CATEGORIES.find((cat) => cat.key === category)?.kor || CATEGORY_TITLE;
-  const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
 
+  const pageChangeHandler = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
     if (category) params.set("value", category);
     params.set("page", String(page));
-
     router.push(`/category?${params.toString()}`, { scroll: false });
   };
+
   useEffect(() => {
     if (!category) return;
     const fetchItems = async () => {
@@ -53,7 +53,6 @@ export default function CategoryResult({ category, page }: CategoryResultProps) 
             method: "GET",
           },
         ).then((response) => response.json());
-        console.log("아이템 이미지 URL:", res.items[0]?.itemImages[0]?.src);
         setItems(res.items);
         setPaginationInfo({
           count: res.count,
@@ -75,7 +74,7 @@ export default function CategoryResult({ category, page }: CategoryResultProps) 
       totalPage={paginationInfo.totalPage}
       title={categoryTitle}
       baseUrl="/category"
-      onchange={handlePageChange}
+      onchange={pageChangeHandler}
     />
   );
 }

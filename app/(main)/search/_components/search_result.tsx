@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { useEffect, useState } from "react";
 
 import ItemList from "@/components/common/item_list";
@@ -21,6 +23,8 @@ interface PaginationInfo {
 }
 
 export default function SearchResult({ query, page }: SearchResultProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [items, setItems] = useState<TItem[]>([]);
   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>({
     count: 0,
@@ -28,6 +32,13 @@ export default function SearchResult({ query, page }: SearchResultProps) {
     page: 1,
     size: 20,
   });
+
+  const pageChangeHandler = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (query) params.set("query", query);
+    params.set("page", String(page));
+    router.push(`/search?${params.toString()}`, { scroll: false });
+  };
 
   useEffect(() => {
     if (!query) return;
@@ -60,6 +71,7 @@ export default function SearchResult({ query, page }: SearchResultProps) {
       totalPage={paginationInfo.totalPage}
       title={SEARCH_TITLE}
       baseUrl="/search"
+      onchange={pageChangeHandler}
     />
   );
 }
