@@ -7,27 +7,33 @@ import type { NextRequest } from "next/server";
 import { SbCartRepository } from "@/infrastructure/repositories";
 import { CartUsecase } from "@/application/usecases/carts/cart_usecases";
 
-export async function CREATE(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    if (!body || !body.cart) return NextResponse.json({ message: "cart 데이터 누락" }, { status: 400 });
+    if (!body || !body.cart) {
+      return NextResponse.json({ message: "cart 데이터 누락" }, { status: 400 });
+    }
 
     const user = await getUser("user");
+    if (!user) {
+      return NextResponse.json({ message: "유저 정보를 찾을 수 없습니다." }, { status: 401 });
+    }
 
-    const cartRepository: SbCartRepository = new SbCartRepository();
-    const cartUsecase: CartUsecase = new CartUsecase(cartRepository);
+    const cartRepository = new SbCartRepository();
+    const cartUsecase = new CartUsecase(cartRepository);
 
-    const newCart = {
+    const { itemId } = body.cart;
+
+    // 📌 upsertCart 사용
+    const data = await cartUsecase.upsertCart(user.userId, itemId, {
       userId: user.userId,
       ...body.cart,
-    };
-
-    const data = await cartUsecase.createCart(newCart);
+    });
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("장바구니 get 에러:", error);
+    console.error("🚨 장바구니 추가/업데이트 오류:", error);
     return NextResponse.json({ message: "서버 오류가 발생했습니다." }, { status: 500 });
   }
 }

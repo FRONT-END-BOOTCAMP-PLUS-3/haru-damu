@@ -8,11 +8,15 @@ import { banners } from "@/constants/banner";
 import { CATEGORIES } from "@/constants/categories";
 
 import classNames from "classnames/bind";
-import { dummyItems } from "@/dummys/items";
 
 const cx = classNames.bind(styles);
 
-export default function Main() {
+export default async function Main() {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items/main`, { method: "GET" }).then((response) =>
+    response.json(),
+  );
+  const { breakfast, lunch, dinner } = data;
+
   return (
     <div className={cx("container")}>
       <Banner bannerItem={banners} />
@@ -26,9 +30,9 @@ export default function Main() {
         </ul>
       </div>
 
-      <MealList meal="breakfast" items={dummyItems} />
-      <MealList meal="lunch" items={dummyItems} />
-      <MealList meal="dinner" items={dummyItems} />
+      <MealList meal="breakfast" items={breakfast} />
+      <MealList meal="lunch" items={lunch} />
+      <MealList meal="dinner" items={dinner} />
     </div>
   );
 }

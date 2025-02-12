@@ -12,7 +12,7 @@ export class SbCartRepository implements CartRepository {
     const supabase = await createClient();
     const snakeCart = snakecaseKeys(JSON.parse(JSON.stringify(cart)) as Record<string, unknown>, { deep: true });
     await supabase.from("carts").insert(snakeCart);
-
+    // 수정 필요요
     const { data, error } = await supabase
       .from("carts")
       .select("*, item:items(*, {item_images(*)})")
@@ -20,7 +20,7 @@ export class SbCartRepository implements CartRepository {
       .eq("item_id", cart.itemId)
       .single();
 
-    if (!data || error) {
+    if (error) {
       throw new Error("Failed to retrieve item");
     }
 

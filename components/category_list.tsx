@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import type { ReactNode } from "react";
 
@@ -26,6 +27,14 @@ interface CategoryListProps {
 }
 
 export default function CategoryList({ categoryList, width = "200px", height = "auto", isShrunk }: CategoryListProps) {
+  const router = useRouter();
+  const handleCategoryClick = (path: string | undefined) => {
+    if (path) {
+      router.push(`/category?value=${path}`); // ✅ 동적 라우팅 처리
+    } else {
+      router.push("/"); // ✅ 기본 홈으로 이동
+    }
+  };
   return (
     <div className={cx("categorylist")} style={{ width, height }}>
       <div className={cx("categorylist__button")}>
@@ -42,14 +51,15 @@ export default function CategoryList({ categoryList, width = "200px", height = "
 
         <ul className={cx("categorylist__dropdown")}>
           {categoryList.map((category, index) => (
-            <li key={category.id ?? index + 1} className={cx("categorylist__item")}>
-              <Link
-                href={category.path ? `/category?value=${category.path}` : "/"}
-                className={cx("categorylist__link")}
-              >
+            <li
+              key={category.id ?? index + 1}
+              className={cx("categorylist__item")}
+              onClick={() => handleCategoryClick(category.path)} // ✅ 클릭 시 이동 처리
+            >
+              <div className={cx("categorylist__link")}>
                 <div>{category.icon}</div>
                 <span>{category.category}</span>
-              </Link>
+              </div>
             </li>
           ))}
         </ul>

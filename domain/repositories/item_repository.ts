@@ -11,4 +11,6 @@ export interface ItemRepository {
   create(item: Item): Promise<Item>;
   updateById(id: number, item: Partial<Item>): Promise<Item>;
   deleteById(id: number): Promise<void>;
+
+  LatestCategory(category: string): Promise<(Item & { itemImage: ItemImage | null })[]>;
 }
