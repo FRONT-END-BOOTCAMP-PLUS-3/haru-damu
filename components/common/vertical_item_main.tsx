@@ -32,14 +32,19 @@ export default function MainVerticalItem({ item }: MainVerticalItemProps) {
   } = style;
 
   const { itemId, itemName, itemPrice, itemImage } = item;
+
   const [isLoading, setIsLoading] = useState(false);
-  const { addMessage } = useStore();
+
+  const { isLogin, addMessage } = useStore();
+
   const handleCartClick = async () => {
     setIsLoading(true);
-    addMessage("장바구니 추가!");
     if (isLoading) return;
+
+    if (!isLogin) return addMessage("로그인이 필요한 서비스 입니다!", "var(--important-color");
+
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/carts`, {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/carts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,17 +57,16 @@ export default function MainVerticalItem({ item }: MainVerticalItemProps) {
             isChecked: true,
           },
         }),
-      });
-      // if (!response.ok)
+      }).then((response) => response.json());
 
-      const result = await response.json();
-      console.log("✅ 장바구니 추가 성공:", result);
+      addMessage("장바구니 추가!");
     } catch (error) {
       console.error("🚨 장바구니 추가 오류:", error);
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <li>
       <div className={vertical_item__link}>
@@ -82,7 +86,7 @@ export default function MainVerticalItem({ item }: MainVerticalItemProps) {
         </Link>
         <Button onClick={handleCartClick} text="담기" iconComponent={<ShoppingBasket />} />
         <span className={cx(vertical_item__name, "text-lg")}>{itemName}</span>
-        <span className="text-lg-b">{itemPrice}원</span>
+        <span className="text-lg-b">{itemPrice.toLocaleString()}원</span>
       </div>
     </li>
   );

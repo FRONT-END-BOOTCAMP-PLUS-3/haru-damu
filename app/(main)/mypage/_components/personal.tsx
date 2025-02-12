@@ -45,6 +45,11 @@ export default function PersonalPage() {
     }
   }, [user, getUser]);
 
+    fetchUserData();
+
+    getUser();
+  }, [getUser]);
+
 
   const handleChange = (key: string, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
@@ -88,7 +93,6 @@ export default function PersonalPage() {
       }
       addMessage("탈퇴되었습니다.");
       window.location.href = "/";
-      
     } catch (err) {
       console.error(err);
     }

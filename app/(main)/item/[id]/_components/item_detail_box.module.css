@@ -4,10 +4,12 @@
   padding: 65px 40px;
   gap: 24px;
   align-items: center;
-  justify-content: center;
 }
 .item__cartbtn{
   margin: 10px 50px
+}
+.item__info__container{
+  width: 100%;
 }
 .item__info{
   display: flex;

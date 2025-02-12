@@ -16,8 +16,12 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 export default async function ItemDetail({ params }: { params: { id: string } }) {
-  const { id } = params;
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items/${id}`, {
+  if (!params || !params.id) {
+    return <div>잘못된 요청입니다.</div>;
+  }
+
+  const id = params.id;
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items/${Number(id)}`, {
     cache: "no-store",
   });
 
@@ -75,7 +79,7 @@ export default async function ItemDetail({ params }: { params: { id: string } })
     : [{ nutrient: "알림", value: "-", percentage: "상품에 영양성분이 아직 제공되지 않았습니다." }];
 
   return (
-    <div className={cx("container")}>
+    <div className={cx("container__item", "container")}>
       <ItemDetailBox item={item} />
       <ItemDetailTable headers={NUTRIENT_HEADERS} data={nutrientBody} />
       <div className={cx("container__product")}>
