@@ -8,7 +8,6 @@ import { SbCartRepository } from "@/infrastructure/repositories";
 import { CartUsecase } from "@/application/usecases/carts/cart_usecases";
 
 export async function POST(request: NextRequest) {
-export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
@@ -21,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     const user = await getUser("user");
     if (!user) {
-      return NextResponse.json({ message: "유저 정보를 찾을 수 없습니다." }, { status: 401 });
+      return NextResponse.json({ message: "유저 정보를 찾을 수 없습니다" }, { status: 401 });
     }
 
     const cartRepository = new SbCartRepository();
