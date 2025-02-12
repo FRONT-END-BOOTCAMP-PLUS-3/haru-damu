@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import Pagination from "@/components/common/pagination";
-import VerticalItem from "@/components/common/vertical_item";
+import VerticalItem from "@/components/common/vertical_itemss";
 
 import { useStore } from "@/hooks/usestore";
 
@@ -16,20 +16,16 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 interface ItemListProps {
-  items: TItem[];
-  totalItems: number;
   title: string;
   baseUrl: string;
+  items: TItem[];
+  currentPage: number;
+  totalPage: number;
 }
 
-export default function ItemList({ items, totalItems, title, baseUrl }: ItemListProps) {
+export default function ItemList({ title, baseUrl, items, currentPage, totalPage }: ItemListProps) {
   const { isShrunk } = useStore();
-
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const itemsPerPage = 20;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const onClickHandler = (page: number) => {
     router.push(`${baseUrl}?page=${page}`);
@@ -40,12 +36,12 @@ export default function ItemList({ items, totalItems, title, baseUrl }: ItemList
       <h1 className={cx("item_list__title", "title-lg-b")}>{title}</h1>
       <ul className={cx("item_list__item_list")}>
         {items.map((item) => (
-          <VerticalItem key={item.item_id} item={item} />
+          <VerticalItem key={item.itemId} item={item} />
         ))}
       </ul>
 
       <div className={cx("item_list__pagination")}>
-        <Pagination current={currentPage} total={totalPages} onClick={onClickHandler} />
+        <Pagination current={currentPage} total={totalPage} onClick={onClickHandler} />
       </div>
     </div>
   );
