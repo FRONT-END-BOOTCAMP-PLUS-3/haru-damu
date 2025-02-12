@@ -1,5 +1,6 @@
 .meal_info__wrapper {
     width: 70vw;
+    max-width: 900px;
     height: 60vh;
 
     padding: 30px;
