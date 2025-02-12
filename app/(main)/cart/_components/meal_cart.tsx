@@ -10,11 +10,8 @@ import { useStore } from "@/hooks/usestore";
 
 import style from "@/app/(main)/cart/_components/meal_cart.module.css";
 
-import type { TItem, TNutrition } from "@/types";
 import type { TCartItem } from "@/stores/cart_store";
 
-import items from "@/dummys/items";
-import health from "@/dummys/health";
 import classNames from "classnames/bind";
 import { useDroppable } from "@dnd-kit/core";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
@@ -28,9 +25,7 @@ export default function MealCart() {
   const [totalPage, setTotalPage] = useState(1);
   const [carouselItems, setCarouselItems] = useState<TCartItem[]>([]);
 
-  const { mealCart, removeAllMealCartItems, wrappingMealItems } = useStore();
-
-  const { calorie, carbohydrates, protein, fat, sodium, sugar } = health;
+  const { mealCart, removeAllMealCartItems, wrappingMealItems, userNutrition } = useStore();
 
   const { setNodeRef } = useDroppable({
     id: "meal-cart-area",
@@ -41,17 +36,9 @@ export default function MealCart() {
 
   const isCarousel = mealCart.length > 4;
 
-  const userNutrition = {
-    calorie,
-    carbohydrates,
-    protein,
-    fat,
-    sodium,
-    sugar,
-  };
-
   const itemsNutrition = mealCart.map((cartItem) => {
-    const { g, calorie, carbohydrates, protein, fat, sodium, sugar } = cartItem.item.nutrition;
+    console.log(cartItem.item.nutrition);
+    const { g, carbohydrates, protein, fat, sodium, sugar, calorie } = cartItem.item.nutrition;
 
     return {
       g,
@@ -103,7 +90,7 @@ export default function MealCart() {
         />
       </div>
       <div className={cx("meal_cart__content__wrapper")}>
-        <MealCartChart userNutrition={userNutrition} itemsNutrition={itemsNutrition} />
+        <MealCartChart userNutrition={userNutrition } itemsNutrition={itemsNutrition} />
         <div className={cx("meal_cart__ul__wrapper")}>
           <button
             disabled={!isCarousel || page === 1}
