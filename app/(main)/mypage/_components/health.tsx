@@ -115,6 +115,7 @@ export default function HealthPage() {
         throw new Error("Failed to save health data");
       }
       addMessage("저장되었습니다.");
+      window.location.reload(); 
     } catch (error) {
       console.error("Error saving health data:", error);
     }

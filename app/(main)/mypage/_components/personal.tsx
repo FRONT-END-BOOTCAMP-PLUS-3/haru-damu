@@ -58,7 +58,7 @@ export default function PersonalPage() {
         throw new Error("Failed to update user data");
       }
       addMessage("저장되었습니다.");
-      // window.location.reload();
+      window.location.reload(); 
     } catch (err) {
       console.error(err);
     }
