@@ -8,6 +8,6 @@ export const banners: Banner[] = [
   { categoryName: "fish", image: "/banner/fish.jpg", categoryId: 2 },
   { categoryName: "meet", image: "/banner/meet.jpg", categoryId: 3 },
   { categoryName: "milk", image: "/banner/milk.jpg", categoryId: 4 },
-  { categoryName: "side_dish", image: "/banner/side_dish.jpg", categoryId: 5 },
+  { categoryName: "side_dish", image: "/banner/sideDish.jpg", categoryId: 5 },
   { categoryName: "vegetable", image: "/banner/vegetable.jpg", categoryId: 6 },
 ];

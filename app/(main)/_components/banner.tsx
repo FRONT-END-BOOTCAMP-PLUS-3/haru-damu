@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import type { MouseEvent } from "react";
 import { useState, useEffect } from "react";
 
 import styles from "@/app/(main)/_components/banner.module.css";
@@ -22,13 +23,15 @@ export default function Banner({ bannerItem }: BannerProps) {
 
   const handleBannerClick = () => {
     const currentBanner = bannerItem[currentIndex];
-    router.push(`/category?id=${encodeURIComponent(currentBanner.categoryName)}`);
+    router.push(`/category?value=${encodeURIComponent(currentBanner.categoryName)}`);
   };
-  const goToNext = () => {
+  const goToNext = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     setCurrentIndex((prev) => (prev + 1) % bannerItem.length);
   };
 
-  const goToPrev = () => {
+  const goToPrev = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     setCurrentIndex((prev) => (prev - 1 + bannerItem.length) % bannerItem.length);
   };
 
@@ -38,26 +41,23 @@ export default function Banner({ bannerItem }: BannerProps) {
   }, [currentIndex]);
 
   return (
-    <div className={cx("banner")}>
+    <div className={cx("banner")} onClick={handleBannerClick}>
       <button className={cx("banner__arrow")} onClick={goToPrev}>
         <CircleArrowLeft />
       </button>
-      <div>
-        {bannerItem.map((banner, index) => (
-          <Image
-            key={banner.categoryId}
-            src={banner.image}
-            alt={`배너 ${banner.categoryName}`}
-            width={1080}
-            height={300}
-            className={cx("banner__image", {
-              "banner__image--active": index === currentIndex,
-            })}
-            priority
-            onClick={handleBannerClick}
-          />
-        ))}
-      </div>
+      {bannerItem.map((banner, index) => (
+        <Image
+          key={banner.categoryId}
+          src={banner.image}
+          alt={`배너 ${banner.categoryName}`}
+          width={1080}
+          height={300}
+          className={cx("banner__image", {
+            "banner__image--active": index === currentIndex,
+          })}
+          priority
+        />
+      ))}
       <button className={cx("banner__arrow")} onClick={goToNext}>
         <CircleArrowRight />
       </button>
