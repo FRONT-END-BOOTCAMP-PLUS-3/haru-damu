@@ -74,8 +74,16 @@ export default function CartListHeader() {
       return;
     }
 
-    if (!user?.address || !user?.phone) {
+    // Boyun : 주소지 정보가 없으면 주소지 정보 입력 페이지로 이동
+    if (!user?.address) {
       addMessage("주소지 정보를 먼저 입력해주세요!", "var(--important-color)");
+
+      setMypagePath("personal");
+      return redirect("/mypage");
+    }
+
+    if (!user?.phone) {
+      addMessage("주문자 정보를 먼저 입력해주세요!", "var(--important-color)");
 
       setMypagePath("personal");
       return redirect("/mypage");

@@ -23,11 +23,13 @@ export type TUserSlice = {
   isLogin: boolean;
   userType: TUserType;
   isShrunk: boolean;
+  
 
   getUser: () => void;
   login: (type: TUserType, user?: Omit<TUser, "id">, img?: string) => void;
   logout: () => void;
   setIsShrunk: (isShrunk: boolean) => void;
+  setUser: (user: TUser) => void;
 };
 
 export const createUserSlice: StateCreator<Partial<State>, [], [], TUserSlice> = (set) => ({
@@ -113,6 +115,12 @@ export const createUserSlice: StateCreator<Partial<State>, [], [], TUserSlice> =
     } catch (error) {
       console.error(error);
     }
+  },
+
+  setUser: (user: TUser) => {
+    set({
+      user,  // name, email, phone, address 모두 업데이트 가능
+    });
   },
 
   logout: () =>
