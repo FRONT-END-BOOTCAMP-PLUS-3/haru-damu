@@ -26,6 +26,8 @@ export default async function OrderPage({ params }: { params: { id: string } }) 
 
   const fetchedData = order.orderList ?? [];
   const totalPrice = order.totalPrice;
+  const fetchedName = order.orderName;
+  const fetchedPhone = order.orderPhone;
   const fetchedAddress = order.orderAddress;
 
   const formattedPrice = totalPrice?.toLocaleString() ?? 0;
@@ -34,7 +36,7 @@ export default async function OrderPage({ params }: { params: { id: string } }) 
     <div className={cx("container")}>
       <h2 className={cx("order_title__h2", "title-lg-b")}>주문상세</h2>
       {fetchedData.length > 0 && <OrderItemSection items={fetchedData} totalPrice={formattedPrice} />}
-      <ShippingInfoSection fetchedAddress={fetchedAddress} />
+      <ShippingInfoSection fetchedName={fetchedName} fetchedPhone={fetchedPhone} fetchedAddress={fetchedAddress} />
       <PaymentInfoSection totalPrice={formattedPrice} />
     </div>
   );

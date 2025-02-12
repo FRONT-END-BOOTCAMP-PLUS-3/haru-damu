@@ -32,6 +32,8 @@ export default function PaymentSection({ totalPrice, fetchedData }: PaymentInfoS
   const onClickHandler = async () => {
     try {
       const newOrder = {
+        orderName: user?.name,
+        orderPhone: user?.phone,
         orderAddress: user?.address,
         totalPrice,
         orderList: fetchedData,
