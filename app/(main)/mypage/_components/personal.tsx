@@ -17,30 +17,39 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 export default function PersonalPage() {
-  const { getUser, addMessage } = useStore();
-
+  const { addMessage, user, getUser, setUser } = useStore(); 
+  
   const [formData, setFormData] = useState(
-    Object.fromEntries(PERSONAL_FIELDS.map(({ key }) => [key, ""])), // 초기값은 빈 값으로 설정
+    Object.fromEntries(PERSONAL_FIELDS.map(({ key }) => [key, ""])) 
   );
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(`/api/mypage/personal`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-        const data = await response.json();
-        setFormData(data);
-      } catch (error) {
-        console.error(error);
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(`/api/mypage/personal`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
       }
-    };
+      const data = await response.json();
+      setFormData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  
+  useEffect(() => {
+    if (!user) {
+      getUser(); 
+    } else {
+      setFormData(user); 
+    }
+  }, [user, getUser]);
 
     fetchUserData();
 
     getUser();
   }, [getUser]);
+
 
   const handleChange = (key: string, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
@@ -60,7 +69,14 @@ export default function PersonalPage() {
         throw new Error("Failed to update user data");
       }
       addMessage("저장되었습니다.");
-      window.location.reload(); 
+      
+      setUser({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+      });
+
     } catch (err) {
       console.error(err);
     }
