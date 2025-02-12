@@ -7,8 +7,6 @@ import { useStore } from "@/hooks/usestore";
 
 import styles from "./mypage.module.css";
 
-import user from "@/dummys/user";
-import health from "@/dummys/health";
 import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
@@ -21,7 +19,7 @@ export default function MypagePage() {
       <div className={cx("mypage__wrapper", isShrunk && "mypage__wrapper__padding_top")}>
         {/* 왼쪽: UserAside 고정 */}
         <div className={cx("mypage__aside-wrapper")}>
-          <UserAside user={user} health={health} />
+          <UserAside />
         </div>
 
         {/* 오른쪽: 선택된 페이지 렌더링 */}

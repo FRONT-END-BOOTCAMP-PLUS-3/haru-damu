@@ -1,11 +1,13 @@
 import { uuidGenerator } from "@/utils/uuid_generator";
 
+import type { TItem } from "@/types";
 import type { StateCreator } from "zustand";
 import type { State } from "@/hooks/usestore";
 
 export type TCartItem = {
   itemId: number;
   userId: number;
+  item: TItem;
   itemName: string;
   itemPrice: number;
   img: string | undefined;

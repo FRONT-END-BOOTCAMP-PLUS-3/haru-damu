@@ -32,6 +32,8 @@ export default function PaymentSection({ totalPrice, fetchedData }: PaymentInfoS
   const onClickHandler = async () => {
     try {
       const newOrder = {
+        orderName: user?.name,
+        orderPhone: user?.phone,
         orderAddress: user?.address,
         totalPrice,
         orderList: fetchedData,
@@ -58,7 +60,7 @@ export default function PaymentSection({ totalPrice, fetchedData }: PaymentInfoS
 
       fetchCart([]);
 
-      router.push(`/order/${createOrder.order.orderId}`);
+      router.replace(`/order/${createOrder.order.orderId}`);
     } catch (error) {
       console.error(error);
     }
@@ -70,7 +72,7 @@ export default function PaymentSection({ totalPrice, fetchedData }: PaymentInfoS
       <LabelValueText label={"결제수단 선택"} />
       <PaymentButtonList payments={PAYMENTS} />
       <Button
-        text={`${totalPrice} 원 결제하기`}
+        text={`${totalPrice?.toLocaleString() ?? 0} 원 결제하기`}
         color="primary"
         width="252px"
         height="60px"
