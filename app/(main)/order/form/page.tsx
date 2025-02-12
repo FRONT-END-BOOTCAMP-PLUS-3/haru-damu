@@ -29,17 +29,16 @@ export default async function OrderFormPage() {
   const isCheckedItems = fetchedData?.filter((item: TCartItem) => item.isChecked);
 
   const totalPrice = response.totalPrice;
-  const formattedPrice = totalPrice?.toLocaleString() ?? 0;
 
   if (response.count === 0) redirect("/");
 
   return (
     <div className={cx("container")}>
       <h2 className={cx("order_form_title__h2", "title-lg-b")}>주문서</h2>
-      <OrderItemSection items={isCheckedItems} totalPrice={formattedPrice} />
+      <OrderItemSection items={isCheckedItems} totalPrice={totalPrice} />
       <OrdererInfoSection />
       <ShippingInfoSection />
-      <PaymentSection totalPrice={formattedPrice} fetchedData={isCheckedItems} />
+      <PaymentSection totalPrice={totalPrice} fetchedData={isCheckedItems} />
     </div>
   );
 }

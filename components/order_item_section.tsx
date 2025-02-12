@@ -20,7 +20,7 @@ const cx = classNames.bind(styles);
 export default function OrderItemSection({ items = [], totalPrice }: OrderItemSectionProps) {
   const pathname = usePathname();
   const isOrderForm = pathname === "/order/form";
-  
+
   return (
     <section>
       <Subheading title={"주문 상품"} />
@@ -32,7 +32,7 @@ export default function OrderItemSection({ items = [], totalPrice }: OrderItemSe
         <div className={cx("order_item_section_total_price")}>
           <span>최종 결제 금액</span>
           <div className={cx("order_item_section_total_price__div")}>
-            <p className={cx("title-md-b")}>{totalPrice}</p>
+            <p className={cx("title-md-b")}>{totalPrice?.toLocaleString() ?? 0}</p>
             <span>원</span>
           </div>
         </div>

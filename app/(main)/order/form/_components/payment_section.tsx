@@ -70,7 +70,7 @@ export default function PaymentSection({ totalPrice, fetchedData }: PaymentInfoS
       <LabelValueText label={"결제수단 선택"} />
       <PaymentButtonList payments={PAYMENTS} />
       <Button
-        text={`${totalPrice} 원 결제하기`}
+        text={`${totalPrice?.toLocaleString() ?? 0} 원 결제하기`}
         color="primary"
         width="252px"
         height="60px"
