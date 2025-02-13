@@ -1,6 +1,5 @@
 # Haru_Damu
-
-![하루담은배너](https://github.com/user-attachments/assets/5f5caad5-4c38-48a2-b2ab-e10f6ae5d0c9)
+![하루담은배너](https://github.com/user-attachments/assets/fcb59e0e-04eb-4fc1-b815-d71087cded92)
 
 **건강한 하루 식단을 위한 맞춤형 쇼핑몰**
 
