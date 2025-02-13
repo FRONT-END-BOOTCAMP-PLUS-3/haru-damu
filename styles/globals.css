@@ -9,6 +9,11 @@ body {
   position: relative;
 }
 
+header {
+  position: relative;
+  z-index: 999;
+}
+
 main {
   padding-bottom: 230px;
 }

@@ -6,7 +6,6 @@
   overflow: hidden;
   display: flex;
   margin: 0 auto; 
-  pointer-events: none; 
 }
 
 .banner__arrow {
@@ -23,7 +22,6 @@
   transition: background 0.3s, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
   opacity: 0;
   visibility: hidden;
-
 }
 
 .banner__image {

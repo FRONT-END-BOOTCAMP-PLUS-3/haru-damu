@@ -23,7 +23,6 @@ export type TUserSlice = {
   isLogin: boolean;
   userType: TUserType;
   isShrunk: boolean;
-  
 
   getUser: () => void;
   login: (type: TUserType, user?: Omit<TUser, "id">, img?: string) => void;
@@ -119,7 +118,7 @@ export const createUserSlice: StateCreator<Partial<State>, [], [], TUserSlice> =
 
   setUser: (user: TUser) => {
     set({
-      user,  // name, email, phone, address 모두 업데이트 가능
+      user, // name, email, phone, address 모두 업데이트 가능
     });
   },
 
