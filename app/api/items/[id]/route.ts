@@ -8,9 +8,10 @@ import { ItemPageUsecase } from "@/application/usecases/items/itempage_item_usec
 const itemRepository = new SbItemRepository();
 const itemPageUsecase = new ItemPageUsecase(itemRepository);
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   try {
-    const itemId = Number(params.id);
+    const itemId = Number(id);
     if (isNaN(itemId)) {
       return NextResponse.json({ error: "Invalid item ID" }, { status: 400 });
     }

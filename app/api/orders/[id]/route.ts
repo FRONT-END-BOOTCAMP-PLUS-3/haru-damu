@@ -7,7 +7,7 @@ import type { NextRequest } from "next/server";
 import { SbOrderRepository } from "@/infrastructure/repositories";
 import { OrderUsecase } from "@/application/usecases/orders/order_usecases";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id: orderId } = await params;
 

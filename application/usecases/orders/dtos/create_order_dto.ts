@@ -1,5 +1,7 @@
 // page : mypage?order
 
+import type { Cart } from "@/domain/entities"; // 임시로 설정
+
 import type { CartDto } from "@/application/usecases/carts/dtos";
 import type { OrderDto } from "@/application/usecases/orders/dtos";
 
@@ -9,7 +11,7 @@ export interface CreateOrderRequestDto {
   order: {
     orderAddress: string;
     totalPrice: number;
-    orderList: CartDto[];
+    orderList: CartDto[] | Cart[];
   };
 }
 

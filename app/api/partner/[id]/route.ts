@@ -10,13 +10,14 @@ import { PartnerUsecase } from "@/application/usecases/partner/partner_usecase";
 const partnerRepository = new SbPartnerRepository();
 const partnerUsecase = new PartnerUsecase(partnerRepository);
 
-export async function GET(req: NextRequest, context: { params: { id?: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   try {
-    if (!context.params?.id) {
+    if (!id) {
       return NextResponse.json({ message: "Invalid store ID" }, { status: 400 });
     }
 
-    const storeId = Number(context.params.id);
+    const storeId = Number(id);
 
     if (isNaN(storeId)) {
       return NextResponse.json({ message: "Invalid store ID" }, { status: 400 });

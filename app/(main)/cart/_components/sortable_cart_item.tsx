@@ -52,7 +52,7 @@ export default function SortableCartItem({
     <div
       ref={setNodeRef}
       {...listeners}
-      id={`cart-item__${item.item_id}`}
+      id={`cart-item__${item.itemId}`}
       className={cx(
         isDragging && "cart_list_dragging",
         isWrapperTop && "cart_list__border_top_radius",
